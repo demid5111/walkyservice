@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="cp1251">
+  <title>Start Page</title>
+  {% load staticfiles %}
+  <script src="{% static "jsdev/js/jquery.js" %}"></script>
+  <script  type="text/javascript" src="{% static "jsdev/js/myscript.js" %}" ></script>
+ </head>
+ <body>
+
+
+
+ <table border="0" align="center">
+	<tr>
+		<td align="center"> <button name="city">City</button> </td>
+		<td align="center"> <button name="changeLoc"> Change location</button> </td>
+		
+		<td align="center"> <button name="signUp" onclick="signupClick()">sign up</button> </td>
+		<td align="center"> <button name="logIn" onclick="logInClick()"> Log In </button> </td>
+	</tr>
+	<tr>
+		<td align="center"> <button name="top">TOP </button> </td>
+		<td align="center"> <button name="new"> NEW </button> </td>
+		<td align="center"> <button name="add" onclick="addRoute()"> ADD + </button> </button> </td>
+		<td align="center"> <button name="around"> AROUND ME </button> </td>
+		<td align="center"> <button name="favourite"> FAVOURITE </button> </td>
+	</tr>
+ </table>
+ 
+ <table border="0" align="left">
+	<tr> <td> <button type="button" name="pedestrianOptionButton" onclick="pedestrianOptionChecked()"> Pedestrian </button> </td> </tr>
+	<tr> <td> <button type="button" name="bicycleOptionButton" onclick="bicycleOptionChecked()"> Bicycle </button> </td> </tr>
+	<tr> <td> <button type="button" name="carOptionButton" onclick="carOptionChecked()"> Car </button> </td> </tr>
+ </table>
+ 
+  <table border="0" align="center">
+	<tr id="34">
+		<td align="center" > <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p> </td>
+		<td align="center"> <button name="readMore" onclick="readMore(this)"> Read More </button> </td>
+		
+	</tr>
+	<tr id="35">
+		<td align="center"> <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p> </td>
+		<td align="center"> <button name="readMore" onclick="readMore(this)"> Read More </button> </td>
+		
+	</tr>
+ </table>
+ 
+  <!--p style="text-align: center">
+	<button name="city">City</button>
+	<button name="changeLoc"> Change location</button>
+	<button name="logo"><img src="logo.png" style="vertical-align: middle"> </button>
+	<button name="signUp">sign up</button>
+	<button name="logIn"> Log In </button>
+  </p-->
+  
+{% load staticfiles %}
+
+
+  	
+	
+
+<p>
+
+<b id="like_count">{{ category.likes }}</b> people like this category
+
+{% if user.is_authenticated %}
+        <button id ="likes" data-catid="2" class="btn btn-mini btn-primary"  onclick = "likesClicked()" type="button">Like</button>
+{% endif %}
+
+<button id ="dislikes" data-catid="{{category.id}}" class="btn btn-mini btn-primary" type="button">DisLike</button>
+
+</p>
+
+ </body>
+</html>

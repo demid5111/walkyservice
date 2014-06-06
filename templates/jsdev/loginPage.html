@@ -1,0 +1,46 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Log in</title>
+
+		<!-- Bootstrap core CSS —>
+		<!--link href="css/bootstrap.css" rel="stylesheet"-->
+
+		<!-- Custom styles for this template —>
+		<!--link href="css/bootstrap.min.css" rel="stylesheet"-->
+
+	</head>
+	<body>
+		<div class="container">
+			{%csrf_token%}
+			<div class="control-group">
+				<label>Your Name:</label>
+				<input type="text" id="user_name" value="Vasya">
+			</div>
+			<div class="control-group">
+				<label>Your Surname:</label>
+				<input type="text" id="user_surname" value="Pupkin">
+			</div>
+			<div class="control-group">
+				<label>Your e-mail:</label>
+				<input type="text" id="user_email" value="vp@mail.ru">
+			</div>
+			<div class="control-group">
+				<label>Password :</label>
+				<input type="password" id="user_password" value="123">
+			</div>
+			<div class="control-group">
+				<label>Confirm Password:</label>
+				<input type="password" id="user_password_confirm" value="123">
+			</div>
+			<div class="control-group">					
+				<button onclick="register()" >Register</button>		
+			</div>
+		</div>
+	</body>
+
+	<script src="{% static "jsdev/js/jquery.js" %}"></script>
+	<script src="{% static 'jsdev/js/login.js' %}" > </script>
+
+</html>
