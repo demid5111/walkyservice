@@ -1,0 +1,40 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Marker Test</title>
+
+<style>
+html, body {
+    width: 600px;
+	height: 450px;
+    margin: 0;
+    padding: 0;
+}
+
+
+#map-canvas, #map_canvas {
+    width: 600px;
+	height: 450px
+}
+</style>
+
+
+<!-- {% load staticfiles %} -->
+<!-- <script src="{% static "route.js" %}"> </script> -->
+<!-- {% load static %} -->
+<!-- <script type='text/javascript' src="{% static 'assets/js/jquery-1.11.0.min' %}"></script> -->
+<!-- <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+ --><script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script> var json_obj = {{ obj_as_json|safe }}; </script>
+<script src="{% static 'jsdev/js/route_from_db.js' %}" > </script>
+
+
+</head>
+    <body>
+        <div id="map-canvas"></div>
+		<!-- <input type="button" name="saveButton" value="Save route!" onclick="sendPoints()"><br/><br/> -->
+		{{text}}
+<!-- 		<img src="{% static 'assets/img/test.jpg' %}"/>
+ -->    </body>
+</html>
