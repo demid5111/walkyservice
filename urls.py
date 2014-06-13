@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 
 from jsdev import views
-print "here"
+
 urlpatterns = patterns('',
     # ex: /polls/
     url(r'^$', views.index, name='index'),
@@ -9,10 +9,12 @@ urlpatterns = patterns('',
     url(r'^mapsdraw/$', views.mapsdraw, name='mapsdraw'),
     #url(r'^maps_test/$', views.maps_test, name='maps_test'),
     #url(r'^maps_test/$', 'jsdev.views.maps_test'),
-    url(r'^pedestrian/$', views.get_info, name='get_info'),
-    
     url(r'^add/$', views.addRoutePage, name='addRoutePage'),
+    url(r'^login/$', views.loginPage, name='loginPage'),
+    url(r'^signup/$', views.signupPage, name='signupPage'),
     url(r'^addNewRoute/$', views.addRoute, name='addRoute'),
+    url(r'^addNewUser/$', views.addUser, name='addUser'),
+    url(r'^authUser/$', views.authUser, name='authUser'),
     url(r'^map_from_db/$', 'jsdev.views.get_points'),
-    url(r'^routes/#<routeId>',views.showRoute, name='showRoute'),
+    #url(r'^send_points/$', 'jsdev.views.send_points'),
 )
