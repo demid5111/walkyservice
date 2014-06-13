@@ -3,8 +3,8 @@ body {
   padding-top: 20px;
   padding-bottom: 20px;
   /*border-top: 5px solid #7e7e7e;*/
-  background-image: url(../images/bg.png);
-  background-size: 100% auto;
+  background-image: url(../images/login_bg.png);
+  background-size: auto auto;
   
 	 header {
         padding: 20px 0;

@@ -43,7 +43,7 @@ function register() {
 
 }
 
-function signup() {
+function login() {
 
 
 	var user_email = document.getElementById('user_email').value

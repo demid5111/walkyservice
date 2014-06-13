@@ -93,3 +93,13 @@ function readMore(sender){
 	var url = '../jsdev/map_from_db/#' + parentid;
 	window.location.href = url;
 }
+
+function login(){
+	var url = '../jsdev/login';
+	window.location.href = url;
+}
+
+function signup(){
+	var url = '../jsdev/signup';
+	window.location.href = url;
+}
