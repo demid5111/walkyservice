@@ -1,27 +1,53 @@
 var routesType = "pedestrian"
 
 
-function logInClick()
-{
-	alert("Log In button pressed! ");
-	window.location.href = '../jsdev/login';
-}
 
-function signupClick()
-{
-	alert("Sign Up button pressed! ");
-	window.location.href = '../jsdev/signup';
-}
-
-//alert("My routes type = " + routesType)
 function pedestrianOptionChecked()
 {
-	routesType = "pedestrian"
+	var dic = {}
+	dic ["route_type"] = "pedestrian"
 	alert("Pedestrian button pressed! " + routesType);
-
-
+$.ajax({
+    url:"/jsdev/show_info/",
+    type:"POST",
+    data: JSON.stringify(dic),
+    success:function(data){//gets info from views.get_info
+        alert(data);
+        //parse json here later
+    }
+});
 }
 
+function bicycleOptionChecked()
+{
+	var dic = {}
+	dic ["route_type"] = "bicycle"
+	alert("Bicycle button pressed! " + routesType);
+$.ajax({
+    url:"/jsdev/show_info/",
+    type:"POST",
+    data: JSON.stringify(dic),
+    success:function(data){//gets info from views.get_info
+        alert(data);
+        //parse json here later
+    }
+});
+}
+function carOptionChecked()
+{
+	var dic = {}
+	dic ["route_type"] = "car"
+	alert("Car button pressed! " + routesType);
+$.ajax({
+    url:"/jsdev/show_info/",
+    type:"POST",
+    data: JSON.stringify(dic),
+    success:function(data){//gets info from views.get_info
+        alert(data);
+        //parse json here later
+    }
+});
+}
 
 function carOptionChecked()
 {
