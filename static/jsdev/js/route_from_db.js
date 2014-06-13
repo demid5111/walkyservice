@@ -55,7 +55,7 @@ var map;
 	waypoints: waypt,
     travelMode: google.maps.TravelMode.WALKING
   };
-  console.log(request)
+  
   directionsService.route(request, function(result, status) {
   	
     if (status == google.maps.DirectionsStatus.OK) {
