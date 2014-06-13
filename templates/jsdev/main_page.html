@@ -5,7 +5,7 @@
   <title>Start Page</title>
   {% load staticfiles %}
   <script src="{% static "jsdev/js/jquery.js" %}"></script>
-  <script  type="text/javascript" src="{% static "jsdev/js/myscript.js" %}" ></script>
+  <script  type="text/javascript" src="{% static "jsdev/js/main_page.js" %}" ></script>
  </head>
  <body>
 
@@ -16,8 +16,8 @@
 		<td align="center"> <button name="city">City</button> </td>
 		<td align="center"> <button name="changeLoc"> Change location</button> </td>
 		
-		<td align="center"> <button name="signUp" onclick="signupClick()">sign up</button> </td>
-		<td align="center"> <button name="logIn" onclick="logInClick()"> Log In </button> </td>
+		<td align="center"> <button name="signUp">sign up</button> </td>
+		<td align="center"> <button name="logIn"> Log In </button> </td>
 	</tr>
 	<tr>
 		<td align="center"> <button name="top">TOP </button> </td>
@@ -35,14 +35,7 @@
  </table>
  
   <table border="0" align="center">
-	<tr id="34">
-		<td align="center" > <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p> </td>
-		<td align="center"> <button name="readMore" onclick="readMore(this)"> Read More </button> </td>
-		
-	</tr>
-	<tr id="35">
-		<td align="center"> <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p> </td>
-		<td align="center"> <button name="readMore" onclick="readMore(this)"> Read More </button> </td>
+	<tr>
 		
 	</tr>
  </table>
@@ -72,6 +65,12 @@
 <button id ="dislikes" data-catid="{{category.id}}" class="btn btn-mini btn-primary" type="button">DisLike</button>
 
 </p>
-
+{% for key,values in routes.items %}
+	
+	<li>
+			<a href="../jsdev/routes/{{key}}">{{values.route_name}}</a>
+	</li>
+		
+{% endfor %}
  </body>
 </html>

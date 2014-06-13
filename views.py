@@ -1,58 +1,32 @@
 from django.shortcuts import render
-from django.template.loader import get_template
 from django.http import HttpResponse, HttpResponseRedirect
-from django.template import Template, Context
 from django.shortcuts import render_to_response
-from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-#for json
 import json
-from django.utils import simplejson
 
+from django.utils import simplejson
 import sqlite3
-from jsdev.models import RouteInfo, RouteUser
+from jsdev.models import RouteInfo, RouteUser, RoutePoints
 
 def index(request):
-	return render(request,'jsdev/main_page.html', {})
+	routeType =  "pedestrian"
+	routesList = RouteInfo.objects.filter(route_type = routeType)				
+	
+	response  = {}
+	response["routes"] = {}
+	for i in routesList:
 
-def category(request, category_name_url):
-    context = RequestContext(request)
-    cat_list = get_category_list()
-    category_name = decode_url(category_name_url)
-
-    context_dict = {'cat_list': cat_list, 'category_name': category_name}
-
-    try:
-            category = Category.objects.get(name=category_name)
-
-            # Add category to the context so that we can access the id and likes
-            context_dict['category'] = category
-
-            pages = Page.objects.filter(category=category)
-            context_dict['pages'] = pages
-    except Category.DoesNotExist:
-            pass
-
-    return render_to_response('jsdev/main_page.html', context_dict, context)
-
-@login_required
-def like_category(request):
-	print "HERE!!!"#, request
-	#context = RequestContext(request)
-	cat_id = None
-	if request.method == 'GET':
-		print "GET"
-		print request.GET
-		cat_id = request.GET['category_id']
-		print cat_id
-	likes = 0
-	if cat_id:
-		category = Category.objects.get(id=int(cat_id))
-		if category:
-			likes = category.likes + 1
-			category.likes =  likes
-			category.save()
-	return HttpResponse(likes)
+		response["routes"][i.route_id] = {}
+		response["routes"][i.route_id]["route_name"]	= i.route_name
+		response["routes"][i.route_id]["route_likes"]	= i.route_likes
+		response["routes"][i.route_id]["route_duration"] = i.route_duration
+		response["routes"][i.route_id]["route_city"] = i.route_city
+		response["routes"][i.route_id]["route_length"] = i.route_length
+		response["routes"][i.route_id]["route_city"] = i.route_city
+		response["routes"][i.route_id]["route_author"] = i.route_author
+		response["routes"][i.route_id]["route_type"] = i.route_type
+	print "response ",response
+	return render(request,'jsdev/main_page.html', response)
 
 
 def mapsdraw(request):
@@ -88,7 +62,7 @@ def addRoutePage(request):
 def addRoute(environ):
 	data = {}
 	print "in addRoutes"
-	sqlQuery = ""
+	
 	route_name = ""
 	route_type = ""
 	route_likes = ""
@@ -200,3 +174,52 @@ def authUser(environ):
 			return HttpResponse("User Found")
 	return HttpResponse("User Not Found")
 
+@csrf_exempt
+def get_info(environ):
+	
+	print "in get_info"
+
+
+	routesList = []
+	if environ.is_ajax():
+
+		jInfo = json.loads(environ.body)
+		routeType = jInfo["route_type"]
+		routesList = RouteInfo.objects.filter(route_type = routeType) 
+
+		response = {}
+		response["routes"] = {}
+		for i in routesList:
+
+			response["routes"][i.route_id] = {}
+			response["routes"][i.route_id]["route_name"] = i.route_name
+			response["routes"][i.route_id]["route_likes"] = i.route_likes
+			response["routes"][i.route_id]["route_duration"] = i.route_duration
+			response["routes"][i.route_id]["route_city"] = i.route_city
+			response["routes"][i.route_id]["route_length"] = i.route_length
+			response["routes"][i.route_id]["route_city"] = i.route_city
+			response["routes"][i.route_id]["route_author"] = i.route_author
+			response["routes"][i.route_id]["route_type"] = i.route_type
+	print "response ",response
+	#return render(environ,'jsdev/main_page.html', response)
+	return HttpResponse(response)
+	#return render(environ,'jsdev/main_page.html', {})
+
+
+def showRoute(request,routeId):
+	#print routeId
+	routeInfo = RouteInfo.objects.filter(route_id=routeId)
+	routePoints = RoutePoints.objects.filter(route_id=routeId)
+
+	js_data = {}
+	#print allpoints[0].latitude
+	
+	points_array = {}
+	for i in routePoints:
+		points_array[i.point_id] = {"lat":i.point_latitude,"lon":i.point_longitude}
+		#print i.point_id
+	# points_array["point_0"] = {'lat':'56.268440' , 'lon':'43.877693'}
+	# points_array["point_1"] = {'lat':'56.298745' , 'lon':'43.944931'}
+	# points_array["point_2"] = {'lat':'56.325152' , 'lon':'44.022191'}
+	#return HttpResponse(json.dumps(js_data), mimetype='application/json')
+	return render_to_response('jsdev/map_from_db.html', {"obj_as_json": simplejson.dumps(points_array)})
