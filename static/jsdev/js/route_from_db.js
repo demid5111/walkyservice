@@ -1,15 +1,15 @@
-var map;
+	var map;
 	var directionsDisplay;
 	var directionsService = new google.maps.DirectionsService();
 	
 	function initialize() {
     var NY = new google.maps.LatLng(40.739112,-73.785848);
     var mapOptions = {
-        zoom: 16,
+        zoom: 10,
         center: NY,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
-    map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+    map = new google.maps.Map(document.getElementById('route_map'),mapOptions);
 
 	directionsDisplay = new google.maps.DirectionsRenderer();
 	directionsDisplay.setMap(map);
@@ -23,19 +23,19 @@ var map;
 
 	pointsId = Object.keys(json_obj)
 	
-	alert("Got " + json_obj[pointsId[0]]["lat"] + " points");
+	//alert("Got " + json_obj[pointsId[0]]["lat"] + " points");
 
 	for (var i=0; i < pointsId.length;i++) {
-		alert ("I: " + i)
+		//alert ("I: " + i)
 		if (i == 0) {
 			start = new google.maps.LatLng(json_obj[pointsId[i]]["lat"], json_obj[pointsId[i]]["lon"], true);
-			alert ("Start " + start + i)
+			//alert ("Start " + start + i)
 			console.log(start)
 		}
 		else if (i == pointsId.length -1)
 		{
 			end = new google.maps.LatLng(json_obj[pointsId[i]]["lat"], 	json_obj[pointsId[i]]["lon"], true);
-			alert ("End " + end + i)
+			//alert ("End " + end + i)
 		}
 		else {
 			waypt.push({
@@ -58,6 +58,7 @@ var map;
   
   directionsService.route(request, function(result, status) {
   	
+
     if (status == google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(result);
     }

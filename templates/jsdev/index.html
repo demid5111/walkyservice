@@ -1,0 +1,212 @@
+{% load jsdev_extras %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+    <title>Walky</title>
+
+    <!-- Bootstrap core CSS -->
+    {% load staticfiles %}
+    <link href="{% static "jsdev/css/bootstrap.css" %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static "jsdev/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "jsdev/css/hover.css" %}" rel="stylesheet">
+	<link href="{% static "jsdev/css/jumbotron.css" %}" rel="stylesheet">
+	<!-- Lobster font for the logo -->
+	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+	<!--link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'-->
+	<!-- Flexslider -->
+	<link rel="stylesheet" href="{% static "jsdev/css/flexslider.css" %}" type="text/css">
+
+	<!-- Navigation style -->
+	<link rel='stylesheet' type='text/css' href="{% static "jsdev/css/nav_style.css" %}" />
+
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+  	<div style="display:none">
+    	<input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}"/>
+	</div>
+
+  	<!-- route type -->
+  	<div id="route_type">
+  		<a href="#">
+  			<div class="type_pedestrian type_btn">  		</div>
+  		</a>
+  		<a href="#">
+  			<div class="type_bicycle type_btn">  		</div>
+  		</a>
+  		<a href="#">
+  			<div class="type_car type_btn">  		</div>
+  		</a>
+  	</div>
+  	<!-- end of left panel -->
+
+  	<!-- Login form -->
+
+  	<div id="popover_content_wrapper" style="display: none; max-width: 200px;">
+	  <form action="" role="form">
+	    <div class="form-group">
+	      <label for="user">User</label>
+	      <input type="text" class="form-control" id="login_input" placeholder="User" />
+	      <label for="password">Password</label>
+	      <input type="password" class="form-control" id="password_input" placeholder="Password" />
+	    </div>
+	      <button type="submit" class="btn btn-default">Sign in</button>
+	 
+	  </form>
+	</div>
+
+  	<!-- End of Login form -->
+
+    <div class="container">
+		<header> 
+			<div class="row center-block">
+				<div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1">
+					<a class="btn btn-link" id="city_name" role="button" style="color: #fff"> Your City </a>
+					<!--a class="btn btn-link" role="button" style="color: #fff"> Change Location </a-->
+				</div>
+				<div class="col-md-4 col-sm-4 col-md-offset-0 col-sm-offset-0 ">
+					
+						<!--img src="images/logo.png" class="center-block"-->
+						<div class="center-block logo"> Walky </div>
+					
+				</div>
+				<div class="col-md-2 col-sm-2 col-md-offset-1 col-sm-offset-1">
+					<a class="btn btn-primary" role="button"> Sign Up </a>
+					<a class="btn btn-primary" role="button" id="login_button"> Log In </a>
+				</div>
+			</div>
+			
+		</header>
+		<nav> 
+			
+		</nav>
+		<div class="row center-block" style="margin-top: 10px;">
+		
+		<div class="col-md-10 col-md-offset-1" id="content_wrapper">
+			
+			<!--div id="navigation" class="">
+				<ul class="nav nav-justified">
+					<li><a href="#" class="nav-justified">Top</a></li>
+					<li><a href="#" class="nav-justified">New</a></li>
+					<li><a href="#" class="nav-justified">Add</a></li>
+					<li><a href="#" class="nav-justified">Around Me</a></li>
+					<li><a href="#" class="nav-justified">Favourite</a></li>
+				</ul>
+			</div-->
+			<div id="navigation">
+			<div id='cssmenu'>
+				<ul>
+				   <li class='active'><a href='#'><span>Top</span></a></li>
+				   <li><a href='#'><span>New</span></a></li>
+				   <li><a href='#'><span>Add</span></a></li>
+				   <li><a href='#'><span>Around Me</span></a></li>
+				   <li class='last'><a href='#'><span>Favourite</span></a></li>
+				</ul>
+
+			</div>
+			<div class="nav-line"> </div>
+			</div>
+
+
+			<div id="navigation-anchor"> </div>
+		<!-- список маршрутов -->
+		<div class="route_list" id="mapbox">
+			{% block routes %}{% load staticfiles %}{% include "jsdev/index_routes_ext.html" %}{% endblock%}
+			<!-- Конец первого элемента -->
+						
+			
+		</div>		
+		</div>
+		
+		</div>
+		
+		</div>
+	
+	<div class="scroll-to-top"> </div>	
+
+	<!--footer>
+        <p>Walky &copy; Company 2014</p>
+    </footer-->
+    <footer>
+	    <div class="container">
+	        <div class="row">
+	            <div class="col-md-4 contact">
+	            	<h3>Contatct Us</h3>
+	            	<p> Your opinion is very important for us. Please give us <a href="#">feedback</a> on the Walky project and we will make it better </p>
+	            </div>
+	            <div class="col-md-2 sitemap">
+	            	<h3>Sitemap</h3>
+				    <div class="row">
+				        <div class="col-md-6">
+				            <a href="/home/">Home</a>
+				            <a href="/about/">About</a>
+				            <a href="/services/">Services</a>
+				        </div>
+				        <div class="col-md-6">
+				            <a href="/partners/">Partners</a>
+				            <a href="/customers/">Support</a>
+				            <a href="/contact/">Contact</a>
+				        </div>
+				    </div>
+	            </div>
+	            <div class="col-md-3 social">
+	            	<h3>Social networks</h3>
+	            	<img src="{% static "jsdev/images/social.png" %}" />
+	            </div>
+	            <div class="col-md-3 copyright">
+	            	<p>
+	            		Copyright &copy; 2014 Walky Company
+	            	</p>
+	            </div>
+	        </div>
+	    </div>
+	</footer>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="{% static "jsdev/js/jquery.flexslider.js" %}"></script>
+	<script src="{% static "jsdev/js/slider.js" %}"></script>
+	<!-- Geolocation services -->
+	<script src="{% static "jsdev/js/city_locator.js" %}"></script>
+	<!--script src="http://j.maxmind.com/app/geoip.js"></script>< For our fallback -->
+	<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+    <script src="{% static "jsdev/js/bootstrap.min.js" %}"></script>
+	<script src="{% static "jsdev/js/fixNavigation.js" %}"></script>
+
+	<!-- Login Script -->
+	<script>
+		$("#login_button").popover({
+		    html: true, 
+			content: function() {
+		          return $('#popover_content_wrapper').html();
+		        },
+		    placement: 'bottom'
+		});
+	</script>
+
+	
+  </body>
+</html>

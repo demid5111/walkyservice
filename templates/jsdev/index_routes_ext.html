@@ -1,0 +1,132 @@
+{% load jsdev_extras %}
+{% load staticfiles %}
+{% block routes %}
+
+				{% for route_id,route_values in routes_dic.items %}
+				<!-- Первый элемент -->
+				<div class="row pedestrianRoute" style="margin: 0px 0px 0px 0px; "> 
+							
+					<div id="list item content" class="row list-item" style="margin: 0px 0px 0px 0">
+
+						<!-- Left side information about route -->
+						<div id="routeInfo" class="col-md-9" >
+							
+							<div class="row">
+								<div class="col-md-12">
+									<a class="title-link" href="#" id="{{route_id}}"> <h2>#{{route_id}} {{route_values|get_item:"route_name"}}</h2> </a>	
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-md-5 col-md-offset-0">
+									<div class="clearfix content-heading" id="start_point">						
+										<!--img class="pull-left img-responsive" src="images/start.png"-->						
+										<h4 alt="Kremlin" title="Kremlin">&nbsp Kremlin &nbsp</h4>
+									</div>
+								</div>
+
+								<div class="col-md-3 col-md-offset-1">
+									<div class="clearfix content-heading" id="distance">
+										<!--img class="pull-left img-responsive" src="images/distance.png"-->
+										<h5>&nbsp {{route_values|get_item:"route_length"}} km &nbsp</h5>
+									</div>
+								</div>
+
+								<div class="col-md-3 col-md-offset-0">
+									<div class="clearfix content-heading" id="duration">
+										<!--img class="pull-left img-responsive" src="images/time.png"-->
+										<h5>&nbsp {{route_values|get_item:"route_duration"}} &nbsp</h5>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="row">
+								<div class="col-md-5 col-md-offset-0">
+									<div class="clearfix content-heading" id="finish_point">
+										<!--img class="pull-left img-responsive" src="images/finish.png"-->
+										<h4 alt="Minina square" title="Minina square">&nbsp Minina square &nbsp</h4>
+									</div>
+								</div>
+
+								<div class="col-md-3 col-md-offset-1">
+									<div class="clearfix content-heading" id="user">
+										<!--img class="pull-left img-responsive" src="images/user.png"-->
+										<h5 alt="Vasyaaaaaaa" title="Vasyaaaaaaa">&nbsp {{route_values|get_item:"route_author"}} &nbsp</h5>
+									</div>
+								</div>
+
+								<div class="col-md-3 col-md-offset-0">
+									<div class="clearfix content-heading" id="likes">
+										<!--img class="pull-left img-responsive" src="images/likes.png"-->
+										<h5>&nbsp {{route_values|get_item:"route_likes"}} &nbsp</h5>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="row">
+								<div class="col-md-5 col-md-offset-6">
+									<div class="btn-group btn-group-justified" style="margin-top: 20px">
+										<a class="btn btn-primary" href="#" role="button">Show this route 
+											<i class="glyphicon glyphicon-chevron-right"> </i>
+										</a>
+									</div>
+								</div>
+							</div>
+
+							<!--div class="row">
+								<div class="col-md-5 col-md-offset-1">
+									<div class="row">
+										
+									</div>
+								</div>
+								<div class="col-md-5 col-md-offset-1">
+									<div class="row">
+										
+									</div>
+								</div>							
+							</div>
+
+							<div class="row">
+								<div class="col-md-5 col-md-offset-1">
+									<div class="row">
+										
+									</div>
+								</div>
+								<div class="col-md-5 col-md-offset-1">
+									<div class="row">
+										
+									</div>
+								</div>							
+							</div-->
+
+						</div>
+
+						<!-- Right side route photos and button -->
+						<div class="col-md-3 col-md-offset-0" >						
+							<div class="row" style="margin-top: 20px; margin-right: 5px">
+								<!-- карусель пример-->	
+								<div class="flexslider">
+									<ul class="slides">
+									    <li>
+									      <img src="{% static "jsdev/images/pic1.jpg" %}" />
+									    </li>
+									    <li>
+									      <img src="{% static "jsdev/images/pic2.jpg" %}" />
+									    </li>
+									    <li>
+									      <img src="{% static "jsdev/images/pic3.jpg" %}" />
+									    </li>
+									</ul>
+								</div>
+								<!-- конец карусели --> 
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>								
+				{% endfor %}
+			{% endblock routes %}

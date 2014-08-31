@@ -1,0 +1,410 @@
+body {
+  padding-top: 20px;
+  /*padding-bottom: 20px;
+  border-top: 5px solid #7e7e7e;*/
+  background-image: url("../images/bg.png");
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+	 header {
+        padding: 20px 0;
+    }
+}
+
+@font-face {
+font-family: 'Myriad Pro Bold Condensed';
+font-style: normal;
+font-weight: 400;
+src: local('Myriad Pro Bold Condensed'), url('../fonts/MYRIADPRO-BOLDCOND.woff') format('woff');
+}
+
+h2{
+  font-family: 'Myriad Pro Bold Condensed';
+}
+
+.logo {
+    text-align: center;
+    font-size:80px;
+    font-family:Lobster;
+    color: #ffffff;
+    text-shadow: -1px 0 #626262, 0 1px #626262, 1px 0 #626262, 0 -1px #626262;
+    margin-top: -20px;
+}
+
+/*.row img{
+  width: 80%;
+  height: auto;
+}*/
+/* Styles for route type menu */
+.type_pedestrian, .type_bicycle, .type_car{
+  background: url(../images/leftPanel_2.png) no-repeat;
+  background-size: auto auto;
+  margin-bottom: 10px;
+  position: relative;
+  left: -36px;
+}
+.type_pedestrian:hover{
+  background-position: 0px -82px;
+  width: 94px;
+  height: 41px;
+}
+.type_pedestrian{
+
+  background-position: 0px -123px;
+  
+  /*background-position: -36px -123px;*/
+  width: 94px;
+  height: 41px;
+}
+.type_bicycle:hover{
+  background-position: 0px 0px;
+  width: 94px;
+  height: 41px;
+}
+.type_bicycle{
+  background-position: 0px -41px;
+  width: 94px;
+  height: 41px;
+}
+.type_car:hover{
+  background-position: 0px -164px;
+  width: 94px;
+  height: 41px;
+}
+.type_car{
+  background-position: 0px -205px;
+  width: 94px;
+  height: 41px;
+}
+#route_type{
+  position: fixed;
+  top: 150px;
+}
+/* END Styles for route type menu */
+
+.popover{
+  width: 100%;
+}
+
+.title-link{
+  color: #333;
+}
+.title-link:hover{
+  color: #333;
+  text-decoration: underline;
+}
+
+/* Icons for route template*/
+.icon-start{
+  background-image: url(../images/start.png);
+  background-position: left;
+  background-repeat: no-repeat;
+
+}
+.icon-finish{
+  background-image: url(../images/finish.png);
+  background-position: center center;
+}
+/* END Icons for route template*/
+
+.route_name{
+  /*margin: 10px 0px 0px 30px;*/
+  padding: 10px 0px 0px 30px;
+}
+.route_name h2{
+  margin: 0px 0px 0px 0px;
+}
+
+.likes_block {
+  display: inline;
+
+  margin-top: 10px;
+}
+.likes_block img{
+  height:35px;
+}
+.user_block {
+  display: inline-block;
+  margin-top: 10px;
+}
+.user_block img{
+  height:35px;
+}
+
+.button {
+    display: inline-block;
+    padding: 1em;
+    background-color: #428bca;
+    text-decoration: none;
+    color: white;
+    
+}
+a:hover{
+  color: white;
+  text-decoration: none;
+}
+
+.navButton{
+	background-image:none;
+}
+
+.nav-justified:hover{
+	outline: 0;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+}
+
+.listscrl{
+	/*margin-right: 9px;
+	background-image: url(images/listbg.png);
+	background-size: 100% 100%;
+	background-color: #eee;*/
+	/* max-height: 400px;
+    overflow-y:scroll;  */
+}
+
+.pedestrianRoute {
+  background-image: 
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
+    url(http://maps.googleapis.com/maps/api/staticmap?center=56.29,+43.93&zoom=13&scale=2&size=640x223&maptype=terrain&sensor=false&format=png&visual_refresh=true)
+  ;
+  width: 100%;
+  height: 100%;
+}
+
+.pedestrianRoute .list-item{
+	/*background-image: url(images/pedestrianbg.png);
+  background-image: url(images/listbg.png);
+  background: url(images/pedestrian_type.png), url(images/mapbg1.png);*/
+  background: url(../images/pedestrian_type.png), url(../images/fon.svg);
+  background-position: left bottom, center bottom;
+  background-size: 50px 49px, 100% 100%;
+  background-repeat: no-repeat, no-repeat;
+  /*background-position: 0px 0px, 0px ;
+  
+  background-color: #eee;
+	
+  */
+
+}
+
+.carousel-inner{
+  width:100%;
+  max-height: 200px !important;
+}
+
+#start_point{
+    /*margin-top: 5px;*/
+    display: block;
+    background-image: url(../images/start.png);
+    background-repeat: no-repeat;
+    background-position: 0 5px;
+}
+
+#finish_point{
+    /*margin-top: 5px;*/
+    display: block;
+    background-image: url(../images/finish.png);
+    background-repeat: no-repeat;
+    background-position: 0 5px;
+}
+
+#distance{
+  display: block;
+    background-image: url(../images/distance.png);
+    background-repeat: no-repeat;
+    background-position: 0 3px;
+}
+
+#duration{
+  display: block;
+    background-image: url(../images/time.png);
+    background-repeat: no-repeat;
+    background-position: 0 3px;
+}
+
+#likes{
+  display: block;
+    background-image: url(../images/likes.png);
+    background-repeat: no-repeat;
+    background-position: 0 3px;
+}
+
+#user{
+  display: block;
+    background-image: url(../images/user.png);
+    background-repeat: no-repeat;
+    background-position: 0 3px;
+}
+
+.clearfix h4, h5{
+  padding: 0px 0px 0px 30px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  /*max-width: 123px;*/
+}
+
+.scroll-to-top {
+  position: fixed;
+  right: 0;
+  background:url(../images/back-to-top.png) no-repeat; 
+  cursor: pointer; 
+  width:55px; 
+  height: 55px; 
+  bottom: 1em; 
+  padding-right: 1em; 
+  display: none;
+  margin: 0 30px 50px 0; 
+  z-index: 999;
+  opacity: 1;   
+}
+.scroll-to-top:hover {
+  opacity: 0.7; 
+}
+
+#navigation{
+	/*color: #ddd;
+	font-size: 2em;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  padding-left: 15px;
+  padding-right: 15px;*/
+
+  width:100%;
+}
+
+#navigation.fix{
+	position: fixed;
+    top: 0;
+    z-index: 10000;
+}
+#content_wrapper{
+  /*position: relative;*/
+
+}
+/*.fix{
+	position: fixed;
+	
+	top: 0; 
+    height: 70px; 
+    z-index: 1;
+}*/
+.hide{
+  visibility: hidden;
+}
+
+/** Footer Style */
+footer {
+    background: #9384AA;
+    color: #dbdbdb;
+    font-size: 11px;
+    /*border-top: 2px solid #9A68C2;
+    margin-top: 30px;*/
+}
+footer .container {      
+  height: 110px;
+  padding: 10px 0;
+}
+footer .container h3 {
+                border-bottom: 1px solid #919191;
+                color: #ffffff;
+                font-size: 14px;
+                line-height: 21px;
+                /*font-family: @brand-font;*/
+                margin: 0 0 10px;
+                text-transform: uppercase;
+            }
+
+footer .container p {
+                margin: 5px 0;
+            }
+
+footer .container .contact p{
+                    padding-right: 15px;
+            }
+
+footer .container a {
+                color: #dbdbdb;
+            }
+
+footer .container .sitemap a {
+                display: block;
+                font-size: 12px;
+              margin-bottom: 5px;
+            }
+
+footer .container .social img {
+               width: 120px;
+               height: 60px;
+            }
+ /** END Footer Style */  
+
+
+
+.nav-justified {
+  background-color: #eee;
+  /*border-radius: 5px;*/
+  border: 1px solid #ccc;
+}
+.nav-justified > li > a {
+  margin-bottom: 0;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  color: #777;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 1px solid #d5d5d5;
+  background-color: #e5e5e5; /* Old browsers */
+  background-repeat: repeat-x; /* Repeat the gradient */
+  background-image: -moz-linear-gradient(top, #f5f5f5 0%, #e5e5e5 100%); /* FF3.6+ */
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f5f5), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
+  background-image: -webkit-linear-gradient(top, #f5f5f5 0%,#e5e5e5 100%); /* Chrome 10+,Safari 5.1+ */
+  background-image: -o-linear-gradient(top, #f5f5f5 0%,#e5e5e5 100%); /* Opera 11.10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+  background-image: linear-gradient(top, #f5f5f5 0%,#e5e5e5 100%); /* W3C */
+}
+.nav-justified > .active > a,
+.nav-justified > .active > a:hover,
+.nav-justified > .active > a:focus {
+  background-color: #ddd;
+  background-image: none;
+  box-shadow: inset 0 3px 7px rgba(0,0,0,.15);
+}
+.nav-justified > li:first-child > a {
+  border-radius: 5px 5px 0 0;
+}
+.nav-justified > li:last-child > a {
+  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+
+@media (min-width: 768px) {
+  .nav-justified {
+    max-height: 52px;
+  }
+  .nav-justified > li > a {
+    border-left: 1px solid #fff;
+    border-right: 1px solid #d5d5d5;
+  }
+  .nav-justified > li:first-child > a {
+    border-left: 0;
+    border-radius: 5px 0 0 5px;
+  }
+  .nav-justified > li:last-child > a {
+    border-radius: 0 5px 5px 0;
+    border-right: 0;
+  }
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .masthead,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
