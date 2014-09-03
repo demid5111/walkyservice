@@ -33,9 +33,9 @@ def routes2dic(routes_list):
 	return routes_dic
 
 def index(request):
-		""" Function initializes the first page with route lists
-		if there is no route: creates three default
-		renderers in the django template"""
+# """ Function initializes the first page with route lists
+# if there is no route: creates three default
+# renderers in the django template"""
     routeType = "pedestrian"
     print RouteInfo.objects.all()
     routesList = RouteInfo.objects.filter(route_type=routeType)
@@ -63,15 +63,15 @@ def index(request):
                          route_duration=random.random())
         tmp3.save()
 
-    	routesList = RouteInfo.objects.filter(route_type=routeType)
+    routesList = RouteInfo.objects.filter(route_type=routeType)
     routes_dic = routes2dic(routesList)
     print routes_dic
     return render(request, 'jsdev/index.html', {"routes_dic": routes_dic})
 
 def getRoutes(environ,route_type):
-	"""Function gets all objects of routes of requested type 
-	and rerenders the extended template index_routes_ext.html"""
-	print "in get_info " + route_type
+	# """Function gets all objects of routes of requested type 
+	# and rerenders the extended template index_routes_ext.html"""
+  print "in get_info " + route_type
   routesList = []
   routesList = RouteInfo.objects.filter(route_type=route_type)
   routes_dic = routes2dic(routesList)

@@ -99,7 +99,7 @@ var selectType = function (event) {
 }
 
 $(document).on('click', '.type_btn', selectType);
-// $(document).on('click', 'cssmenu', selectType);
+$(document).on('click', '.cssmenu', selectCategoty);
 
 
 var selectCategoty = function(event) {
