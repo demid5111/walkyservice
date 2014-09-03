@@ -4,7 +4,9 @@ body {
   padding-bottom: 20px;
   /*border-top: 5px solid #7e7e7e;*/
   background-image: url(../images/login_bg.png);
-  background-size: auto auto;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   
 	 header {
         padding: 20px 0;
@@ -19,8 +21,12 @@ body {
 }
 
 .logo {
-  background-image: url(../images/logo.png);
-  background-size: 100% 100%;
+    text-align: center;
+    font-size:80px;
+    font-family:Lobster;
+    color: #ffffff;
+    text-shadow: -1px 0 #626262, 0 1px #626262, 1px 0 #626262, 0 -1px #626262;
+    margin-top: -20px;
 }
 
 
