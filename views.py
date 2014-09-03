@@ -15,29 +15,30 @@ import sqlite3
 from jsdev.models import RouteInfo, RouteUser, RoutePoints
 import random
 from django.core import serializers
-
+from collections import OrderedDict
 
 
 def routes2dic(routes_list):
-	"""Function gets list of RouteInfo instances and convert it to the dictionary,
-	which then renders in django template on the client side"""
-	routes_dic = {}
-	for route in routes_list:
-		routes_dic[route.route_id] = {}
-		routes_dic[route.route_id]["route_name"] = route.route_name
-		routes_dic[route.route_id]["route_type"] = route.route_type
-		routes_dic[route.route_id]["route_likes"] = route.route_likes
-		routes_dic[route.route_id]["route_city"] = route.route_city
-		routes_dic[route.route_id]["route_length"] = route.route_length
-		routes_dic[route.route_id]["route_duration"] = route.route_duration
-	return routes_dic
+  """Function gets list of RouteInfo instances and convert it to the dictionary,
+  which then renders in django template on the client side"""
+  routes_dic = OrderedDict()
+  for route in routes_list:
+    #print route.route_id
+    routes_dic[route.route_id] = {}
+    routes_dic[route.route_id]["route_name"] = route.route_name
+    routes_dic[route.route_id]["route_type"] = route.route_type
+    routes_dic[route.route_id]["route_likes"] = route.route_likes
+    routes_dic[route.route_id]["route_city"] = route.route_city
+    routes_dic[route.route_id]["route_length"] = route.route_length
+    routes_dic[route.route_id]["route_duration"] = route.route_duration
+  return routes_dic
 
 def index(request):
 # """ Function initializes the first page with route lists
 # if there is no route: creates three default
 # renderers in the django template"""
     routeType = "pedestrian"
-    print RouteInfo.objects.all()
+    print RouteInfo.objects.all().delete()
     routesList = RouteInfo.objects.filter(route_type=routeType)
     
     if len(routesList) == 0:
@@ -46,40 +47,78 @@ def index(request):
                          route_city="N.N.",
                          route_type=routeType,
                          route_length=random.random(),
-                         route_duration=random.random())
+                         route_duration=random.random(),
+                         route_likes = 1)
         tmp1.save()
         tmp2 = RouteInfo(route_name="My second {} route".format(routeType),
                          route_author=2,
                          route_city="N.N.",
                          route_type=routeType,
                          route_length=random.random(),
-                         route_duration=random.random())
+                         route_duration=random.random(),
+                         route_likes = 2)
         tmp2.save()
         tmp3 = RouteInfo(route_name="My third {} route".format(routeType),
                          route_author=3,
                          route_city="N.N.",
                          route_type=routeType,
                          route_length=random.random(),
-                         route_duration=random.random())
+                         route_duration=random.random(),
+                         route_likes = 3)
         tmp3.save()
 
     routesList = RouteInfo.objects.filter(route_type=routeType)
+    # j = 1
+    # for i in routesList:
+    #   i.route_likes = j
+    #   j += 1
+    #   i.save()
     routes_dic = routes2dic(routesList)
     print routes_dic
     return render(request, 'jsdev/index.html', {"routes_dic": routes_dic})
 
-def getRoutes(environ,route_type):
-	# """Function gets all objects of routes of requested type 
-	# and rerenders the extended template index_routes_ext.html"""
+def getRoutes(request,route_type):
+  # """Function gets all objects of routes of requested type 
+  # and rerenders the extended template index_routes_ext.html"""
   print "in get_info " + route_type
-  routesList = []
-  routesList = RouteInfo.objects.filter(route_type=route_type)
-  routes_dic = routes2dic(routesList)
+
   
-  topic_list = json.dumps({'routes_dic': routes_dic})
-  if environ.method == "GET":
-  	print "Get request"
-  	return render_to_response('jsdev/index_routes_ext.html', {'routes_dic': routes_dic})
+  if request.method == "GET":
+    routes_dic = {}
+    print "Get request"
+    route_type = request.GET["route_type"]
+    category_type = request.GET["category_type"]
+    print category_type
+    print route_type
+    routesList = []
+    sort_order = {}
+    # routesList = RouteInfo.objects.filter(route_type=route_type)
+    if category_type == "top":
+      routesList = RouteInfo.objects.filter(route_type=route_type)\
+                                    .order_by('-route_likes')
+    elif category_type == "new":
+      routesList = RouteInfo.objects.filter(route_type=route_type)\
+                                    .order_by('-route_likes')
+      # i = 0
+      # for route in routesList:
+      #   # print route.route_id
+      #   sort_order[route.route_id] = i
+      #   i += 1
+      # print "sort order: ",sort_order
+    res =  routes2dic(routesList)
+    # print res
+    # res_list = sorted(routes2dic(routesList).keys(), \
+    #                     key=lambda x:sort_order[x])
+    # print res_list
+    # for i in res_list:
+    #   if i not in routes_dic.keys():
+    #     routes_dic[i] = {}
+    #   print routes_dic
+    #   print res[i]  
+    #   routes_dic[i] = res[i]
+    # print routes_dic
+    topic_list = json.dumps({'routes_dic': routes_dic})
+    return render_to_response('jsdev/index_routes_ext.html', {'routes_dic': res})
   return HttpResponse(topic_list)
 
 

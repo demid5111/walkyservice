@@ -11,6 +11,7 @@ class RouteInfo(models.Model):
 	route_length = models.FloatField(blank=False)
 	route_duration = models.FloatField(blank=False)
 	route_type = models.CharField(default="pedestrian",blank="False",max_length=45)
+	route_date = models.DateTimeField(auto_now_add=True, blank=True)
 	def __unicode__(self):
 		return self.route_name
 
@@ -47,7 +48,6 @@ class RouteComments(models.Model):
 class RouteUser(models.Model):
 	user_id = models.AutoField(primary_key=True,blank=False)
 	user_name = models.CharField(max_length=45,blank=False)
-	user_surname = models.CharField(max_length=45,blank=False)
 	user_password = models.CharField(max_length=45,blank=False)
 	user_email = models.EmailField(blank=False)
 
