@@ -1,4 +1,4 @@
-
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,20 +12,20 @@
     <title>Walky</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="{% static "jsdev/css/bootstrap.css" %}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/hover.css" rel="stylesheet">
-	<link href="jumbotron.css" rel="stylesheet">
+    <link href="{% static "jsdev/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "jsdev/css/hover.css" %}" rel="stylesheet">
+	<link href="{% static "jsdev/css/jumbotron.css" %}" rel="stylesheet">
 	<!-- Lobster font for the logo -->
 	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 	<!--link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'-->
 	<!-- Flexslider -->
-	<link rel="stylesheet" href="css/flexslider.css" type="text/css">
+	<link rel="stylesheet" href="{% static "jsdev/css/flexslider.css" %}" type="text/css">
 
 	<!-- Navigation style -->
-	<link rel='stylesheet' type='text/css' href='css/nav_style.css' />
+	<link rel='stylesheet' type='text/css' href="{% static 'jsdev/css/nav_style.css' %}" />
 
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
@@ -233,13 +233,13 @@
 								<div class="flexslider">
 									<ul class="slides">
 									    <li>
-									      <img src="images/pic1.jpg" />
+									      <img src="{% static "jsdev/images/pic1.jpg" %}"/>
 									    </li>
 									    <li>
-									      <img src="images/pic2.jpg" />
+									      <img src="{% static "jsdev/images/pic2.jpg" %}" />
 									    </li>
 									    <li>
-									      <img src="images/pic3.jpg" />
+									      <img src="{% static "jsdev/images/pic3.jpg" %}"/>
 									    </li>
 									</ul>
 								</div>
@@ -361,13 +361,13 @@
 								<div class="flexslider">
 									<ul class="slides">
 									    <li>
-									      <img src="images/pic1.jpg" />
+									      <img src="{% static "jsdev/images/pic1.jpg" %}"/>
 									    </li>
 									    <li>
-									      <img src="images/pic2.jpg" />
+									      <img src="{% static "jsdev/images/pic2.jpg" %}"/>
 									    </li>
 									    <li>
-									      <img src="images/pic3.jpg" />
+									      <img src="{% static "jsdev/images/pic3.jpg" %}"/>
 									    </li>
 									</ul>
 								</div>
@@ -489,13 +489,13 @@
 								<div class="flexslider">
 									<ul class="slides">
 									    <li>
-									      <img src="images/pic1.jpg" />
+									      <img src="{% static "jsdev/images/pic1.jpg" %}"/>
 									    </li>
 									    <li>
-									      <img src="images/pic2.jpg" />
+									      <img src="{% static "jsdev/images/pic2.jpg" %}"/>
 									    </li>
 									    <li>
-									      <img src="images/pic3.jpg" />
+									      <img src="{% static "jsdev/images/pic3.jpg" %}"/>
 									    </li>
 									</ul>
 								</div>
@@ -570,7 +570,7 @@
 	            </div>
 	            <div class="col-md-3 social">
 	            	<h3>Social networks</h3>
-	            	<img src="images/social.png">
+	            	<img src="{% static "jsdev/images/social.png" %}">
 	            </div>
 	            <div class="col-md-3 copyright">
 	            	<p>
@@ -585,16 +585,16 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script type="text/javascript" src="js/jquery.flexslider.js"></script>
-	<script src="js/slider.js"></script>
+    <script type="text/javascript" src="{% static "jsdev/js/jquery.flexslider.js" %}"></script>
+	<script src="{% static "jsdev/js/slider.js" %}"></script>
 	<!-- Geolocation services -->
-	<script src="js/city_locator.js"></script>
+	<script src="{% static "jsdev/js/city_locator.js" %}"></script>
 	<!--script src="http://j.maxmind.com/app/geoip.js"></script>< For our fallback -->
-	<!--script src="http://maps.google.com/maps/api/js?sensor=false"></script-->
 
-    <script src="js/bootstrap.min.js"></script>
-	<script src="js/fixNavigation.js"></script>
+    <script src="{% static "jsdev/js/bootstrap.min.js" %}"></script>
+	<script src="{% static "jsdev/js/fixNavigation.js" %}"></script>
 
 	<!-- Login Script -->
 	<script>
@@ -621,16 +621,6 @@
 		    })
 		}
 	</script>
-	<!--script src='https://api.tiles.mapbox.com/mapbox.js/v2.0.0/mapbox.js'></script>
-	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.0.0/mapbox.css' rel='stylesheet' />
-	<script>
-		// Provide your access token
-		L.mapbox.accessToken = 'pk.eyJ1IjoieWFhYWFhcmlrIiwiYSI6IlppWUxXRk0ifQ.3AkVec1QdNXcsitU7MAetg';
-		// Create a map in the div #map
-		L.mapbox.map('mapbox', 'yaaaaarik.j5624lof', {
-        	scrollWheelZoom: false,
-        	zoomControl: false})
-        .setView([40, -74.50], 9);
-	</script-->
+
   </body>
 </html>

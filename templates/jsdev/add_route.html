@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,16 +12,16 @@
     <title>Add Route @ Walky</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="{% static "jsdev/css/bootstrap.css" %}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="add_route.css" rel="stylesheet">
-	<link href="css/4sq_item.css" rel="stylesheet">
+    <link href="{% static "jsdev/css/bootstrap.min.css" %}" rel="stylesheet">
+	<link href="{% static "jsdev/css/add_route.css" %}" rel="stylesheet">
+	<link href="{% static "jsdev/css/4sq_item.css" %}" rel="stylesheet">
 	<!-- jQuery UI CSS -->
-	<link rel="stylesheet" href="css/jquery-ui.min.css">
-	<link href="css/route_timeline.css" rel="stylesheet">
-	<link href="css/walky_icons.css" rel="stylesheet">
+	<link rel="stylesheet" href="{% static "jsdev/css/jquery-ui.min.css" %}">
+	<link href="{% static "jsdev/css/route_timeline.css" %}" rel="stylesheet">
+	<link href="{% static "jsdev/css/walky_icons.css" %}" rel="stylesheet">
 	<!-- Lobster font for the logo -->
 	<!--link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'-->
 	<!--link href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css" rel="stylesheet" media="screen"--> 
@@ -51,44 +52,41 @@
 							<button type="button" class="btn btn-default btn-circle" disabled="disabled">
 								<i class="icon-distance"></i>
 							</button>			
-							<div class="route_distance" data-toggle="tooltip" data-placement="bottom" title="2.0 km">&nbsp 2.0 km &nbsp</div>
+							<div id="distance_value" class="route_distance" data-toggle="tooltip" data-placement="bottom" title="2.0 km">&nbsp N / A &nbsp</div>
 						</div>
 						<div class="info_item clearfix content-heading">						
 							<!--div id="duration">		</div-->
 							<button type="button" class="btn btn-default btn-circle"  disabled="disabled">
 								<i class="icon-time"></i>
 							</button>
-							<div class="route_duration" data-toggle="tooltip" data-placement="bottom" title="20 min">&nbsp 20 min &nbsp</div>
+							<div id="duration_value" class="route_duration" data-toggle="tooltip" data-placement="bottom" title="20 min">&nbsp N / A &nbsp</div>
 						</div>
 						<div class="info_item clearfix content-heading">
-							<!--div id="likes">		</div-->
-							<button type="button" class="btn btn-default btn-circle" disabled="disabled">
-								<i class="icon-like"></i>
-							</button>						
-							<div class="route_likes" data-toggle="tooltip" data-placement="bottom" title="151">&nbsp 151 &nbsp</div>
+							<!-- Route type select -->
+							<div class="btn-group dropdown">							
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+									<span class="concept" id="selected_route_type" data-type="pedestrian">Pedestrian</span> 
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									
+									<li><a  id="pedestrian_link">Pedestrian</a></li>
+								    <li><a  id="bicycle_link">Bicycle</a></li>
+								    <li><a  id="car_link">Car</a></li>
+								</ul>
+							</div>
 						</div>
 						<div class="info_item clearfix content-heading">
-							<!--div id="user">		</div-->
-							<button type="button" class="btn btn-default btn-circle" disabled="disabled">
-								<i class="icon-user"></i>
-							</button>							
-							<div class="route_user" data-toggle="tooltip" data-placement="right" title="Vasyaaaaaa">&nbsp Vasyaaaaaa &nbsp</div>
+							<!-- Build Route button -->
+							<button type="button" class="btn btn-primary disabled" id="build_route_button">Build Route </button>
 						</div>
-						<div class="info_item clearfix content-heading route_actions" style="margin-left:50px;">
-							<button type="button" class="btn btn-success btn-circle" >
-								<i class="icon-favourite"></i>
-							</button>
+						<div class="info_item clearfix content-heading">
+							<!-- Continue Button -->
+							<a class="btn btn-success center-block" id="continue_button" > 
+								Continue <i class="glyphicon glyphicon-chevron-right"> </i> 
+							</a>
 						</div>
-						<div class="info_item clearfix content-heading route_actions">
-							<button type="button" class="btn btn-success btn-circle" >
-								<i class="icon-share"></i>
-							</button>
-						</div>
-						<div class="info_item clearfix content-heading route_actions">
-							<button type="button" class="btn btn-success btn-circle" >
-								<i class="icon-download"></i>
-							</button>
-						</div>						
+												
 					</div>
 				</div>
 
@@ -107,7 +105,13 @@
 				</div-->
 				<div class="col-md-2">
 					<div class="auth_user_container text-center"> 
-						<a class="btn btn-primary pull-right" role="button" id="login_button"> Log In </a>
+						<div class="info_item clearfix content-heading">
+							<!--div id="user">		</div-->
+							<button type="button" class="btn btn-default btn-circle" disabled="disabled">
+								<i class="icon-user"></i>
+							</button>							
+							<div class="route_user" data-toggle="tooltip" data-placement="right" title="Vasyaaaaaa">&nbsp Vasyaaaaaa &nbsp</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -152,7 +156,7 @@
 											<b> Foursquare Widget </b>
 											<ul>
 												<li> Search venues in chosen city </li>
-												<li> Drag and Drop founded places on map </li>
+												<li> Drag and Drop founded places to map </li>
 	 										</ul>
 										</div>
 										<!-- Search Form -->
@@ -172,7 +176,7 @@
 									<div id="venues_list_wrapper"><ul id="venues_list">
 										<li class="venue hidden draggable">
 											<div class="img_wrapper">
-												<img src="images/foursquare_photo_icon.png">
+												<img src="{% static "jsdev/images/foursquare_photo_icon.png" %}">
 											</div>
 											<div class="info_wrapper ">
 												<span class="bold venue_title">Venue Sample Title</span>
@@ -180,7 +184,7 @@
 												
 												<div class="icon_wrapper" >
 													<div class="center-block venue_type">
-														<img alt="" title="" data-placement="bottom" src="images/venue_type_icon.png">
+														<img alt="" title="" data-placement="bottom" src="{% static "jsdev/images/venue_type_icon.png" %}">
 													</div>
 												</div>
 												<div class="icon_wrapper" >
@@ -209,12 +213,66 @@
 					</div>
 					<!-- Second Item -->
 					<div class="item">
-						<div id="second_step" class="step-item">
+						<div class="second_item step-item">
+
+							<div class="row warning">
+								<div class="col-md-8 col-md-offset-2">
+									<div class="alert alert-danger" role="alert">
+										<b> Oops! </b> First you need to build route on map in order to name and describe it. 
+									</div>
+								</div>
+							</div>
 							
 							<!-- Second Step (Route Timeline) -->
-							<div class="row"> <div class="col-md-12">
+							<div class="hidden" id="second_step"><div class=" row " >
+								<div class="col-md-12" >
+									<div class="row"> 
+										<div class="col-md-6 col-md-offset-3">
+											<div class="input-group input-group-lg">
+												<input type="text" class="form-control validate-text required" name="validate-text" placeholder="Your Route Name" required id="route_name">
+												<span class="input-group-addon danger">
+													<span class="glyphicon glyphicon-remove"></span>
+												</span>
+											</div>
+										</div>
+									</div>
 
+									<ul class="timeline">
+								        <li class="odd_li" id="point_1"> <!-- timeline-inverted -->
+								          <div class="timeline-badge"><!--i class="glyphicon glyphicon-check"--></i></div>
+								          <div class="timeline-panel">
+								            <div class="timeline-heading">
+								              <!--h4 class="timeline-title" id="first_point_title">Mussum ipsum cacilds</h4-->
+								              	<div class="input-group">
+													<input type="text" class="point_title form-control validate-text required" name="validate-text" placeholder="Point Title" required>
+													<span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
+												</div>
+								            </div>
+								            <div class="timeline-body" >
+								              	<div class="input-group" data-validate="length" data-length="6" id="first_point_description">
+													<textarea type="text" class="point_description form-control" name="validate-optional" placeholder="Point Description" required></textarea>
+													<span class="input-group-addon info"><span class="glyphicon glyphicon-asterisk"></span></span>
+												</div>
+								            </div>
+								          </div>
+								        </li>
+
+								    </ul>
+								</div>
 							</div> </div>
+
+							<!-- Save Route button -->
+							<div class="row">
+								<div class="col-md-2 col-md-offset-1">
+									<div class="center-block" style="padding-left:10px;">
+										<button id="save_route_button" type=submit class="btn btn-success btn-lg center-block disabled"> 
+											<i class="glyphicon glyphicon-floppy-disk"> </i>
+											Save Route
+										</button>
+									</div>
+								</div>
+							</div>
+
 						</div>
 					</div>
 				</div>
@@ -240,34 +298,84 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script-->
-    <script src="js/jquery.js"></script>
+    <script src="{% static "jsdev/js/jquery.js" %}"></script>
     
     <!--script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script-->
 
     <!-- jQuery UI -->
-    <script src="js/jquery-ui/drag-n-drop-places.js"></script>
-    <script src="js/jquery-ui/jquery.js"></script>
-	<script src="js/jquery-ui/jquery-ui.min.js"></script>
+    <script src="{% static "jsdev/js/jquery-ui/drag-n-drop-places.js" %}"></script>
+    <script src="{% static "jsdev/js/jquery-ui/jquery.js" %}"></script>
+	<script src="{% static "jsdev/js/jquery-ui/jquery-ui.min.js" %}"></script>
 
-	<script src="js/bootstrap.min.js"></script>
+	<script src="{% static "jsdev/js/bootstrap.min.js" %}"></script>
 
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-    <script src="js/draw_on_map.js"></script>
-    <script src="js/scroll-to-top.js"></script>
-    <script src="js/getPlaces4sq.js" > </script>
-    <script type="text/javascript" src="js/file_chooser.js"></script>
-    <script  type="text/javascript" src="js/save_route.js"> </script>
+    <script src="{% static "jsdev/js/draw_on_map.js" %}"></script>
+    <script src="{% static "jsdev/js/scroll-to-top.js" %}"></script>
+    <script src="{% static "jsdev/js/getPlaces4sq.js" %}"> </script>
+    <script  type="text/javascript" src="{% static "jsdev/js/save_route.js" %}"> </script>
+
+	<script>
+    	//*******
+    	//* Scroll to top script for second step of carousel
+    	//*******
+    	jQuery(document).ready(function() {
+			var offset = 200;
+			var duration = 500;
+			jQuery('#second_step').scroll(function() {
+				if (jQuery(this).scrollTop() > offset) {
+				jQuery('.scroll-to-top').fadeIn(duration);
+				} else {
+					jQuery('.scroll-to-top').fadeOut(duration);
+				}
+			});
+
+			jQuery('.scroll-to-top').click(function(event) {
+				event.preventDefault();
+				jQuery('#second_step').animate({scrollTop: 0}, duration);
+				return false;
+			})
+		});
+    </script>
 
 	<script type="text/javascript">
-		//карусель шагов
-	  $(document).ready(function() {
-	  	
-	  	$('.carousel').carousel({
-		    pause: true,
-		    interval: false
+		//*******
+		//* Stops automatic carousel sliding
+		//*******
+	  	$(document).ready(function() {
+		  	
+		  	$('#step-carousel').carousel({
+			    pause: true,
+			    interval: false
+			});
+
+		  	$('#prev_step_button').hide();
+
 		});
-	    
-	  });
+
+	  	//*******
+		//* Carousel sliding 
+		//*******
+	  	jQuery(function($) {
+			$('#next_step_button').click(function() {
+				$('#step-carousel').carousel('next');
+				$('.timeline').show();
+				$('#next_step_button').hide();
+				$('#prev_step_button').show();
+				if (jQuery('#second_step').scrollTop() > 200) {
+					jQuery('.scroll-to-top').fadeIn(300);
+				}
+			});
+
+			$('#prev_step_button').click(function() {
+				$('#step-carousel').carousel('prev');
+				$('#prev_step_button').hide();
+				$('#next_step_button').show();
+
+				jQuery('.scroll-to-top').fadeOut(300);
+			});
+	    });
+	  
 	</script>
 
     <script type="text/javascript">
@@ -284,10 +392,20 @@
 		  $('#selected_route_type').text("Car").data('type', "car");
 		});
 
-    	//______ build_route_button handler
+    	//***************
+		//* build_route_button handler
+		//***************
     	$('#build_route_button').click(function(){
     		//alert($('#selected_route_type').data('type'));
     		showRoute(path.getArray(), $('#selected_route_type').data('type'));
+
+    		$('#build_route_button').addClass('disabled');
+    		$('.warning').hide();
+
+    		$('#second_step').removeClass('hidden');
+    		create_timeline();
+			enable_timeline_validation();
+			$('.timeline').show();
     		
     	});
 
@@ -298,29 +416,12 @@
 
 		    $('#continue_button').click(function() {
 		    	
-		    	if($('#first_step').hasClass('on_screen')){
-		  		$('#first_step').removeClass('on_screen');
-				$('#second_step').addClass('on_screen');
-				$('.carousel').carousel('next');
-				$('#continue_button').addClass('disabled');
-				$('#second_step_indicator').removeClass('btn-default').addClass('btn-success');
 				create_timeline();
 				enable_timeline_validation();
 				$('.timeline').show();
+
+				$('#next_step_button').trigger('click');
 				return false;
-		  	} else if($('#second_step').hasClass('on_screen')){
-		  		$('body').animate({
-	            	scrollTop: 0
-	        	}, 500, function(){
-					$('#second_step').removeClass('on_screen');
-					$('#third_step').addClass('on_screen');
-					$('.carousel').carousel('next');
-					$('#continue_button').hide();
-		    		$('#third_step_indicator').removeClass('btn-default').addClass('btn-success');
-	    		});
-	    		return false;
-	    			
-		  	}
 
 		    });
 
@@ -331,6 +432,9 @@
 	//* Create timeline from pushpins dynamicly 
 	//***************
 	function create_timeline(){
+
+		$('.timeline li:not(:first)').remove();
+
 		for (var i = 1; i < markers.length; i++) {
 			$new_li = $("#point_1").clone();
 			$new_li.attr("id", "point_"+(i+1) );
@@ -385,9 +489,9 @@
 		    });
 
 		    if (empty_flds) { 
-		         $('#continue_button').addClass('disabled');
+		         $('#save_route_button').addClass('disabled');
 		    } else {
-		        $('#continue_button').removeClass('disabled');
+		        $('#save_route_button').removeClass('disabled');
 		    }
 		//});
 	
@@ -399,39 +503,5 @@
     </script>
 
 
-    <script type="text/javascript">
-    //*** File upload script
-    (function ($){
-        $(function (){
-            $('.btn-file').each(function (){
-                var self = this;
-                $('input[type=file]', this).change(function (){
-                    // remove existing file info
-                    $(self).next().remove();
-                    // get value
-                    var value = $(this).val();
-                    // get file name
-                    var fileName = value.substring(value.lastIndexOf('/')+1);
-                    // get file extension
-                    var fileExt = fileName.split('.').pop().toLowerCase();
-                    // append file info
-                    $('<span><i class="glyphicon glyphicon-picture"></i> ' + fileName + '</span>').insertAfter(self);
-                });
-            });
-        });
-    })(jQuery);
-	</script>
-
-    <!--Loads source code of File upload widget and paste it to the page  >
-    <script>
-    jQuery('#file_upload_wrapper').ready(function(){
-    	$(function(){
-    		$("#file_upload_wrapper").load("file_upload_widget.html", function() {
-  				alert( "Load was performed." );
-			}); 
-    	});
-    });
-    </script-->
-    <!--script type="text/javascript" src="js/step_slider.js"></script-->
   </body>
 </html>
