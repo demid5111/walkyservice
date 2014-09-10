@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Sign Up</title>
+		<title>Register</title>
 
 		<!-- Bootstrap core CSS —>
 		<!--link href="css/bootstrap.css" rel="stylesheet"-->
@@ -16,19 +16,25 @@
 			{%csrf_token%}
 			<div class="control-group">
 				<label>Your e-mail:</label>
-				<input type="text" id="user_email" value="vp@mail.ru">
+				<input type="text" id="user_email" >
 			</div>
 			<div class="control-group">
-				<label>Password :</label>
-				<input type="password" id="user_password" value="123">
+				<label>Your name :</label>
+				<input type="text" id="user_name" >
 			</div>
+			
+			<div class="control-group">
+				<label>Password :</label>
+				<input type="password" id="user_password" >
+			</div>		
+
 			<div class="control-group">					
-				<button onclick="signup()" >signup</button>		
+				<button onclick="Register()" >Register</button>		
 			</div>
 		</div>
 	</body>
 
 	<script src="{% static "jsdev/js/jquery.js" %}"></script>
-	<script src="{% static 'jsdev/js/signup.js' %}" > </script>
+	<script src="{% static "jsdev/js_old/authorisation.js" %}" > </script>
 
 </html>

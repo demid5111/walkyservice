@@ -1,5 +1,5 @@
 ########################
-##author : Demidovskij A.
+##author : Demidovskij A., Tarkan Y., Fatekhov M.
 ##last update : 16.03 31.08.14
 ########################
 
@@ -12,113 +12,81 @@ import json
 from django.template import loader
 from django.utils import simplejson
 import sqlite3
-from jsdev.models import RouteInfo, RouteUser, RoutePoints
+from jsdev.models import RouteInfo, RouteUser, RoutePoints, RouteUser
 import random
 from django.core import serializers
-from collections import OrderedDict
+from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import User
+from django.contrib import auth
+from django.core.context_processors import csrf
+from django.contrib.auth.forms import UserCreationForm
+from jsdev.forms import MyRegistrationForm
+
+
 
 
 def routes2dic(routes_list):
-  """Function gets list of RouteInfo instances and convert it to the dictionary,
-  which then renders in django template on the client side"""
-  routes_dic = OrderedDict()
-  for route in routes_list:
-    #print route.route_id
-    routes_dic[route.route_id] = {}
-    routes_dic[route.route_id]["route_name"] = route.route_name
-    routes_dic[route.route_id]["route_type"] = route.route_type
-    routes_dic[route.route_id]["route_likes"] = route.route_likes
-    routes_dic[route.route_id]["route_city"] = route.route_city
-    routes_dic[route.route_id]["route_length"] = route.route_length
-    routes_dic[route.route_id]["route_duration"] = route.route_duration
-  return routes_dic
+	"""Function gets list of RouteInfo instances and convert it to the dictionary,
+	which then renders in django template on the client side"""
+	routes_dic = {}
+	for route in routes_list:
+		routes_dic[route.route_id] = {}
+		routes_dic[route.route_id]["route_name"] = route.route_name
+		routes_dic[route.route_id]["route_type"] = route.route_type
+		routes_dic[route.route_id]["route_likes"] = route.route_likes
+		routes_dic[route.route_id]["route_city"] = route.route_city
+		routes_dic[route.route_id]["route_length"] = route.route_length
+		routes_dic[route.route_id]["route_duration"] = route.route_duration
+	return routes_dic
 
 def index(request):
-# """ Function initializes the first page with route lists
-# if there is no route: creates three default
-# renderers in the django template"""
-    routeType = "pedestrian"
-    print RouteInfo.objects.all().delete()
-    routesList = RouteInfo.objects.filter(route_type=routeType)
-    
-    if len(routesList) == 0:
-        tmp1 = RouteInfo(route_name="My first {} route".format(routeType),
-                         route_author=1,
-                         route_city="N.N.",
-                         route_type=routeType,
-                         route_length=random.random(),
-                         route_duration=random.random(),
-                         route_likes = 1)
-        tmp1.save()
-        tmp2 = RouteInfo(route_name="My second {} route".format(routeType),
-                         route_author=2,
-                         route_city="N.N.",
-                         route_type=routeType,
-                         route_length=random.random(),
-                         route_duration=random.random(),
-                         route_likes = 2)
-        tmp2.save()
-        tmp3 = RouteInfo(route_name="My third {} route".format(routeType),
-                         route_author=3,
-                         route_city="N.N.",
-                         route_type=routeType,
-                         route_length=random.random(),
-                         route_duration=random.random(),
-                         route_likes = 3)
-        tmp3.save()
-
-    routesList = RouteInfo.objects.filter(route_type=routeType)
-    # j = 1
-    # for i in routesList:
-    #   i.route_likes = j
-    #   j += 1
-    #   i.save()
-    routes_dic = routes2dic(routesList)
-    print routes_dic
-    return render(request, 'jsdev/index.html', {"routes_dic": routes_dic})
-
-def getRoutes(request,route_type):
-  # """Function gets all objects of routes of requested type 
-  # and rerenders the extended template index_routes_ext.html"""
-  print "in get_info " + route_type
-
+	# """ Function initializes the first page with route lists
+	# if there is no route: creates three default
+	# renderers in the django template"""
+  routeType = "pedestrian"
+  print RouteInfo.objects.all()
+  routesList = RouteInfo.objects.filter(route_type=routeType)
   
-  if request.method == "GET":
-    routes_dic = {}
-    print "Get request"
-    route_type = request.GET["route_type"]
-    category_type = request.GET["category_type"]
-    print category_type
-    print route_type
-    routesList = []
-    sort_order = {}
-    # routesList = RouteInfo.objects.filter(route_type=route_type)
-    if category_type == "top":
-      routesList = RouteInfo.objects.filter(route_type=route_type)\
-                                    .order_by('-route_likes')
-    elif category_type == "new":
-      routesList = RouteInfo.objects.filter(route_type=route_type)\
-                                    .order_by('-route_likes')
-      # i = 0
-      # for route in routesList:
-      #   # print route.route_id
-      #   sort_order[route.route_id] = i
-      #   i += 1
-      # print "sort order: ",sort_order
-    res =  routes2dic(routesList)
-    # print res
-    # res_list = sorted(routes2dic(routesList).keys(), \
-    #                     key=lambda x:sort_order[x])
-    # print res_list
-    # for i in res_list:
-    #   if i not in routes_dic.keys():
-    #     routes_dic[i] = {}
-    #   print routes_dic
-    #   print res[i]  
-    #   routes_dic[i] = res[i]
-    # print routes_dic
-    topic_list = json.dumps({'routes_dic': routes_dic})
-    return render_to_response('jsdev/index_routes_ext.html', {'routes_dic': res})
+  if len(routesList) == 0:
+    tmp1 = RouteInfo(route_name="My first {} route".format(routeType),
+                     route_author=1,
+                     route_city="N.N.",
+                     route_type=routeType,
+                     route_length=random.random(),
+                     route_duration=random.random())
+    tmp1.save()
+    tmp2 = RouteInfo(route_name="My second {} route".format(routeType),
+                     route_author=2,
+                     route_city="N.N.",
+                     route_type=routeType,
+                     route_length=random.random(),
+                     route_duration=random.random())
+    tmp2.save()
+    tmp3 = RouteInfo(route_name="My third {} route".format(routeType),
+                     route_author=3,
+                     route_city="N.N.",
+                     route_type=routeType,
+                     route_length=random.random(),
+                     route_duration=random.random())
+    tmp3.save()
+    routesList = RouteInfo.objects.filter(route_type=routeType)
+  routes_dic = routes2dic(routesList)
+  print routes_dic
+  return render(request, 'jsdev/index.html', {"routes_dic": routes_dic})
+
+def getRoutes(environ,route_type):
+  """Function gets all objects of routes of requested type 
+  and rerenders the extended template index_routes_ext.html"""
+  print "in get_info " + route_type
+  routesList = []
+  routesList = RouteInfo.objects.filter(route_type=route_type)
+  routes_dic = routes2dic(routesList)
+  
+  topic_list = json.dumps({'routes_dic': routes_dic})
+  if environ.method == "GET":
+  	print "Get request"
+  	return render_to_response('jsdev/index_routes_ext.html', {'routes_dic': routes_dic})
   return HttpResponse(topic_list)
 
 
@@ -218,13 +186,57 @@ def loginPage(request):
     return render(request, 'jsdev/loginPage.html', {})
 
 
+def login(request):
+  c = {}
+  c.update(csrf(request))
+  return render_to_response('jsdev/marat_login.html', c)
+
+def auth_view(request):
+  username = request.POST.get('username', '')  
+  password = request.POST.get('password', '') 
+  user = auth.authenticate(username = username,  password = password)
+
+  if user is not None:
+    auth.login(request, user)
+    return HttpResponseRedirect('../loggedin') 
+  else:
+    return HttpResponseRedirect('../invalid')
+
+
+def loggedin(request):
+  return render_to_response("jsdev/loggedin.html", {'full_name': request.user.username}) 
+
+def logout(request):
+  auth.logout(request)
+  return render_to_response('jsdev/logout.html')
+
+def invalid(request):
+  return render_to_response('jsdev/invalid.html')  
+
+def register_user(request):
+  if request.method == 'POST':
+    form = MyRegistrationForm(request.POST)
+    if form.is_valid():
+      form.save()
+      return HttpResponseRedirect('../register_success')
+
+  args = {}
+  args.update(csrf(request)) 
+  args['form'] = MyRegistrationForm()
+
+  return render_to_response('jsdev/register.html', args)   
+
+
+def register_success(request):
+  return render_to_response('jsdev/register_success.html')
+
 @csrf_exempt
 def addUser(environ):
+
     data = {}
     print "in addUser"
     sqlQuery = ""
     user_name = ""
-    user_surname = ""
     user_email = ""
     user_password = ""
 
@@ -236,24 +248,30 @@ def addUser(environ):
             data[i] = jData[i]
         # print data["route_name"]
         user_name = data["user_name"]
-        user_surname = data["user_surname"]
         user_email = data["user_email"]
         user_password = data["user_password"]
-        print "user_name = ",  user_name,  " user_surname = ", user_surname, " user_email = ", user_email, " user_password = ", user_password
+        print "user_name = ",  user_name,   " user_email = ", user_email, " user_password = ", user_password
 
-        # sqlQuery = "INSERT INTO jsdev_routeinfo(route_name, route_likes, route_city, route_length, route_duration) values(" + route_name + "," + route_likes + "," + route_city + "," + route_length + "," + route_duration + ")"
+        # sqlQuery = "INSERT INTO jsdev_routeuser(user_name, user_password, user_email) values(" + user_name + "," + user_password + "," + user_email + ")"
         # conn.execute(sqlQuery)
         # conn.commit()
         # conn.close
-        new_user = RouteUser()
-        new_user.user_name = user_name
-        new_user.user_surname = user_surname
-        new_user.user_email = user_email
-        new_user.user_password = user_password
-        new_user.save()
+        print "before RouteUser()"
+        # new_user = RouteUser()
+        # new_user.user_name = user_name
+        # new_user.user_email = user_email
+        # new_user.user_password = user_password
+        # new_user.save()
+        user = User.objects.create_user(
+        username = user_name,
+        password = user_password,
+        email = user_email
+        )
+        user.save( )
+        print "saved"
 
     # return render(environ,'jsdev/main_page.html', {})
-    return HttpResponse()
+    return HttpResponse("User created")
 
 
 def signupPage(request):
@@ -274,11 +292,13 @@ def authUser(environ):
         # print data["route_name"]
         user_email = data["user_email"]
         user_password = data["user_password"]
+       
         print "user_email = ", user_email, " user_password = ", user_password
-        authUser = RouteUser.objects.filter(user_email=user_email)
-        if (authUser[0].user_password == user_password):
+        authUser = User.objects.filter(email=user_email)
+        if (authUser[0].password == user_password):
             return HttpResponse("User Found")
     return HttpResponse("User Not Found")
+
 
 
 
@@ -302,3 +322,5 @@ def showRoute(request, routeId):
     # points_array["point_2"] = {'lat':'56.325152' , 'lon':'44.022191'}
     # return HttpResponse(json.dumps(js_data), mimetype='application/json')
     return render_to_response('jsdev/map_from_db.html', {"obj_as_json": simplejson.dumps(points_array)})
+
+

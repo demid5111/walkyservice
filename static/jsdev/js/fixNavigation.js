@@ -1,7 +1,7 @@
 /*
 Created: 0:00 0.0.0
 Author: Tarkan Y.
-Last modified: 16:19 3.09.14
+Last modified: 15:55 31.08.14
 Author: Demidovskij A.
 */
 function sticky_relocate() {
@@ -55,8 +55,6 @@ jQuery(document).ready(function() {
 //****  ROUTE TYPE ANIMATION
 //function gets the chosen route type by its div id and makes 
 // "get" query, the response is the rendered in template django
-var route_type = "pedestrian"
-var category = "top"
 var selectType = function (event) {
     
     event.preventDefault();	
@@ -77,46 +75,36 @@ var selectType = function (event) {
     	$(this).addClass("selected");
     }  
     var classList = this.className.split(' ')
-    
+    var type = "pedestrian"
     if (classList.indexOf("type_pedestrian") > -1  ){
         // alert("pedestrian call")
-        route_type = "pedestrian"
+        type = "pedestrian"
     }
     else if (classList.indexOf("type_bicycle") > -1  ){
         // alert("bicycle")
-        route_type = "bicycle"
+        type = "bicycle"
     }
     else if (classList.indexOf("type_car") > -1  ){
         // alert("car")
-        route_type = "car"
+        type = "car"
     }
     $.ajax({
-      route_type: "get",
-      url: route_type,
-      data: {"route_type":route_type,'category_type':category},
-      success : function(data){
-               $('#mapbox').html(data);
-             }
-    })
-
-}
-
-
-//function gets the type of category chosen and sends "GET"
-//request to the server
-function selectCategory (category) {
-    alert("Category chosen! " + category + ' in ' + route_type);
-    
-    $.ajax({
       type: "get",
-      url: category,
-      data: {"route_type":route_type,'category_type':category},
-      success : function(data){
+      url: type
+      success : function(data, status, xhr){
                $('#mapbox').html(data);
              }
     })
+
 }
 
 $(document).on('click', '.type_btn', selectType);
-// $(document).on('click', '.cssmenu', selectCategory);
+// $(document).on('click', 'cssmenu', selectType);
 
+
+var selectCategoty = function(event) {
+    event.preventDefault(); 
+    alert("Category chosen!")
+    // $selected_types = $('#category_menu').find('.selected');
+
+}
