@@ -1,0 +1,205 @@
+
+		<div class="row-fluid center-block" id="step_slider_wrapper">
+			
+			<div id="step-carousel" class="carousel slide" data-ride="carousel">
+
+			  <!-- Wrapper for slides -->
+			  <div class="carousel-inner">
+			    <div class="item active">
+			      <div class="step-item">
+			      		<!-- First step -->
+			        	<div class="on_screen" id="first_step"><div class="row " >
+
+							<!-- Foursquare Places column -->
+							<div class="col-md-3 " >
+								<!-- Search Form -->
+								<div class="input-group custom-search-form">
+									<span class="input-group-addon"><i class="icon-foursquare2"></i></span>
+									<input type="text" class="form-control" id="search_venue_input">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" id="search_venues_button">
+											<span class="glyphicon glyphicon-search"></span>
+										</button>
+									</span>
+								</div>
+								<!-- Foursquare places -->
+								<div id="venues_list_wrapper"><ul id="venues_list">
+									<li class="venue hidden draggable">
+										<div class="img_wrapper">
+											<img src="images/foursquare_photo_icon.png">
+										</div>
+										<div class="info_wrapper ">
+											<span class="bold venue_title">Venue Sample Title</span>
+											<br>
+											
+											<div class="icon_wrapper" >
+												<div class="center-block venue_type">
+													<img alt="" title="" data-placement="bottom" src="images/venue_type_icon.png">
+												</div>
+											</div>
+											<div class="icon_wrapper" >
+												<div class="center-block rating_wrapper" title="Rating" data-placement="bottom">
+													<i class="glyphicon glyphicon-stats"> </i><text class="venue_rating"> 8.9</text>
+												</div>
+											</div>
+											<div class="icon_wrapper">
+												<div class="center-block">
+													<a class="venue_link" title="Show on Foursquare" data-placement="bottom" target="_blank" href="#" class="center-block"><i class="glyphicon glyphicon-share-alt"></i> </a>
+												</div>
+											</div>
+											
+										</div>
+									</li>
+								</ul> </div>
+
+							</div>
+							<!-- Map column -->
+							<div class="col-md-7">
+								<!-- Route Map -->
+								<div class="row" id="route_map_wrapper">
+									<div class="col-md-12" id="route_map">
+
+									</div>	
+								</div>
+							</div>
+							<!-- Route Buttons column -->
+							<div class="col-md-2 on-map-center">
+								<div class="row center-block">
+										<div class="btn-group dropup">
+											
+											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+												<span class="concept" id="selected_route_type" data-type="pedestrian">Pedestrian</span> 
+												<span class="caret"></span>
+											</button>
+											<ul class="dropdown-menu" role="menu">
+												
+												<li><a  id="pedestrian_link">Pedestrian</a></li>
+											    <li><a  id="bicycle_link">Bicycle</a></li>
+											    <li><a  id="car_link">Car</a></li>
+											</ul>
+										</div>
+								</div>
+								<div class="row center-block">						
+									<button type="button" class="btn btn-primary disabled" id="build_route_button">Build Route </button>
+								</div>
+								<!-- Route Info row -->
+								<div class="row center-block"> 
+									<!-- Distance -->
+									<div class="col-md-6">
+										<div id="distance">		</div>				
+										<h5 id="distance_value" style="text-align: center;">N/A</h5>
+									</div>
+									<!-- Duration -->
+									<div class="col-md-6">
+										<div id="duration">		</div>
+									<h5 id="duration_value" style="text-align: center;">N/A</h5>
+									</div>
+								</div>
+
+							</div>
+						</div> </div>
+			      </div>
+			    </div>
+			    <div class="item">
+			      <div class="step-item">
+			        	<!-- Second step -->
+						<div class="" id="second_step"><div class=" row " >
+							<div class="col-md-12" >
+								<div class="row"> <div class="col-md-6 col-md-offset-3">
+									<div class="input-group input-group-lg">
+										<input type="text" class="form-control validate-text required" name="validate-text" placeholder="Your Route Name" required id="route_name">
+										<span class="input-group-addon danger">
+											<span class="glyphicon glyphicon-remove"></span>
+										</span>
+									</div>
+								</div> </div>
+
+								<ul class="timeline">
+							        <li class="odd_li" id="point_1"> <!-- timeline-inverted -->
+							          <div class="timeline-badge"><!--i class="glyphicon glyphicon-check"--></i></div>
+							          <div class="timeline-panel">
+							            <div class="timeline-heading">
+							              <!--h4 class="timeline-title" id="first_point_title">Mussum ipsum cacilds</h4-->
+							              	<div class="input-group">
+												<input type="text" class="point_title form-control validate-text required" name="validate-text" placeholder="Point Title" required>
+												<span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
+											</div>
+							            </div>
+							            <div class="timeline-body" >
+							              	<div class="input-group" data-validate="length" data-length="6" id="first_point_description">
+												<textarea type="text" class="point_description form-control" name="validate-optional" placeholder="Point Description" required></textarea>
+												<span class="input-group-addon info"><span class="glyphicon glyphicon-asterisk"></span></span>
+											</div>
+							            </div>
+							          </div>
+							        </li>
+
+							    </ul>
+							</div>
+						</div> </div>
+			      </div>
+			    </div>
+			    <div class="item">
+			      	<div class="step-item">
+			      		<!-- Third step -->
+						<div class="" id="third_step"><div class="row  " >
+							<div class="col-md-6 col-md-offset-3">
+								
+								<div class="row" id="file_upload_wrapper">
+									<!-- Widget source code will be entered here -->
+									<div class="form-group multiple-form-group input-group active" data-max="5">
+				                        <div class="input-group-btn input-group-select">
+				                            <span class="btn btn-primary btn-file">
+				                            	<i class="glyphicon glyphicon-plus"></i>
+				                                <span class="concept">Add photo</span>
+				                                <input class="input-file" type="file" />
+				                            </span>
+				                        </div>
+				                        <input type="text" name="contacts['value'][]" class="form-control" placeholder="You can add some photos here" readonly>
+				                        <span class="input-group-btn">
+				                            <button type="button" class="btn btn-danger btn-remove hidden">
+				                            	<i class="glyphicon glyphicon-trash"></i>
+				                            </button>
+				                        </span>
+				                    </div>
+								</div>
+
+								<!-- Save Route button -->
+								<div class="row">
+									<div class="center-block" style="padding-left:10px;">
+										<button id="save_route_button" type=submit class="btn btn-success btn-lg center-block"> 
+											<i class="glyphicon glyphicon-floppy-disk"> </i>
+											Save Route
+										</button>
+									</div>
+								</div>
+
+							</div>
+						</div> </div>
+			      	</div>
+			    </div>	
+
+			  </div>
+
+			  <!-- Controls -->
+			  <!--a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+			    <span class="glyphicon glyphicon-chevron-left"></span>
+			  </a>
+			  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+			    <span class="glyphicon glyphicon-chevron-right"></span>
+			  </a-->
+			</div>
+
+		</div>
+
+		<!-- 
+		======================================= -->
+
+		<!-- Continue Button row -->
+		<div class="row center-block">
+			<div class="col-md-2 col-md-offset-5">
+				<a class="btn btn-success center-block" id="continue_button" > 
+					Continue <i class="glyphicon glyphicon-chevron-right"> </i> 
+				</a>
+			</div>
+		</div>

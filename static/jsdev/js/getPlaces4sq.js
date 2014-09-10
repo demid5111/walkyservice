@@ -2,7 +2,8 @@
 
 var ll = ''; //instead of city
 var APIkeys = '&client_id=IIO3YOYCFVJUQKFTZ50KJUY5BNLXYFDKJUEXPO4CVYX5GKB1&client_secret=MDUITSE51VRWGJXD3EEGHYGRZEQOBQCHSFUCIG1WL0SHU0FH';
-var located_city = $('#city_name').text();
+//var located_city = $('#city_name').text();
+var located_city = "Moscow";
 loadPlacesByCity(located_city, "");
 
 
@@ -11,7 +12,7 @@ function loadPlacesByCity(target_city, places_query){
 	var city = target_city; //instead of ll (longitude latitude)
 	//var city = located_city;
 	var query = places_query;
-	var adress = url+'near='+city+'&query='+query+'&limit=25'+'&venuePhotos=1'+APIkeys+'&v=20140808';
+	var adress = url+'near='+city+'&query='+query+'&limit=25'+'&venuePhotos=1'+APIkeys+'&v=20140910';
 	var $venue = $('.venue.hidden');
 
 	$.getJSON(adress,

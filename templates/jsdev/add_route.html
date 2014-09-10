@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+    <title>Add Route @ Walky</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="add_route.css" rel="stylesheet">
+	<link href="css/4sq_item.css" rel="stylesheet">
+	<!-- jQuery UI CSS -->
+	<link rel="stylesheet" href="css/jquery-ui.min.css">
+	<link href="css/route_timeline.css" rel="stylesheet">
+	<link href="css/walky_icons.css" rel="stylesheet">
+	<!-- Lobster font for the logo -->
+	<!--link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'-->
+	<!--link href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css" rel="stylesheet" media="screen"--> 
+
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container">
+		<header>
+			<div class="row">
+				<div class="col-md-2">
+				 	<div class="logo"> Walky </div>
+				 </div>
+				 <div class="col-md-8">
+				 	<div class="route_info text-center">
+					 	<div class="info_item clearfix content-heading">
+							<!--div id="distance">		</div-->	
+							<button type="button" class="btn btn-default btn-circle" disabled="disabled">
+								<i class="icon-distance"></i>
+							</button>			
+							<div class="route_distance" data-toggle="tooltip" data-placement="bottom" title="2.0 km">&nbsp 2.0 km &nbsp</div>
+						</div>
+						<div class="info_item clearfix content-heading">						
+							<!--div id="duration">		</div-->
+							<button type="button" class="btn btn-default btn-circle"  disabled="disabled">
+								<i class="icon-time"></i>
+							</button>
+							<div class="route_duration" data-toggle="tooltip" data-placement="bottom" title="20 min">&nbsp 20 min &nbsp</div>
+						</div>
+						<div class="info_item clearfix content-heading">
+							<!--div id="likes">		</div-->
+							<button type="button" class="btn btn-default btn-circle" disabled="disabled">
+								<i class="icon-like"></i>
+							</button>						
+							<div class="route_likes" data-toggle="tooltip" data-placement="bottom" title="151">&nbsp 151 &nbsp</div>
+						</div>
+						<div class="info_item clearfix content-heading">
+							<!--div id="user">		</div-->
+							<button type="button" class="btn btn-default btn-circle" disabled="disabled">
+								<i class="icon-user"></i>
+							</button>							
+							<div class="route_user" data-toggle="tooltip" data-placement="right" title="Vasyaaaaaa">&nbsp Vasyaaaaaa &nbsp</div>
+						</div>
+						<div class="info_item clearfix content-heading route_actions" style="margin-left:50px;">
+							<button type="button" class="btn btn-success btn-circle" >
+								<i class="icon-favourite"></i>
+							</button>
+						</div>
+						<div class="info_item clearfix content-heading route_actions">
+							<button type="button" class="btn btn-success btn-circle" >
+								<i class="icon-share"></i>
+							</button>
+						</div>
+						<div class="info_item clearfix content-heading route_actions">
+							<button type="button" class="btn btn-success btn-circle" >
+								<i class="icon-download"></i>
+							</button>
+						</div>						
+					</div>
+				</div>
+
+				<!--div class="col-md-3">
+					<div class="route_actions text-center"> 
+						<button type="button" class="btn btn-default btn-circle" >
+								<i class="icon-favourite"></i>
+						</button>	
+						<button type="button" class="btn btn-default btn-circle" >
+								<i class="icon-share"></i>
+						</button>
+						<button type="button" class="btn btn-default btn-circle" >
+							<i class="icon-download"></i>
+						</button>
+					</div>
+				</div-->
+				<div class="col-md-2">
+					<div class="auth_user_container text-center"> 
+						<a class="btn btn-primary pull-right" role="button" id="login_button"> Log In </a>
+					</div>
+				</div>
+			</div>
+			
+		</header>
+		
+		<!-- Process Steps Row -->
+		<!--div class="row center-block" style="margin-top: 10px;">
+			<div class="col-md-12">
+				/////////////// Process Steps 
+				<div class="process">
+					<div class="process-row">
+				        <div class="process-step">
+				        	<p>Draw on map</p>
+				            <button type="button" class="btn btn-success btn-circle" disabled="disabled" id="first_step_indicator"><i class="glyphicon glyphicon-map-marker"></i></button>
+				        </div>
+				        <div class="process-step">
+				        	<p>Name & Make notes</p>
+				            <button type="button" class="btn btn-default btn-circle" disabled="disabled" id="second_step_indicator"><i class="glyphicon glyphicon-pencil"></i></button>
+				        </div>
+				         <div class="process-step">
+				         	<p>Add photos & Save</p>
+				            <button type="button" class="btn btn-default btn-circle" disabled="disabled" id="third_step_indicator"><i class="glyphicon glyphicon-camera"></i></button>
+				        </div> 
+				    </div>
+				</div>
+			</div>
+		</div-->
+
+		<!-- Carousel Starts -->
+		<div class="row-fluid center-block" id="step_slider_wrapper">
+		  	<div id="step-carousel" class="carousel slide" data-ride="carousel">
+		  		<div class="carousel-inner">
+				    <div class="item active">
+				      	<div class="step-item">
+				      		<!-- First Step (Map) -->
+					      	<!--div class="row"> <div id="first_step" class="col-md-9 col-md-offset-3"-->
+					      		<!-- Foursquare Places column -->
+								<div class="foursquare_wrapper" >
+									<div class="widget_heading">
+										<div class="alert alert-info" role="alert">
+											<b> Foursquare Widget </b>
+											<ul>
+												<li> Search venues in chosen city </li>
+												<li> Drag and Drop founded places on map </li>
+	 										</ul>
+										</div>
+										<!-- Search Form -->
+										<div class="row"> <div class="col-md-12">
+											<div class="input-group custom-search-form">
+												<span class="input-group-addon"><i class="icon-foursquare2"></i></span>
+												<input type="text" class="form-control" id="search_venue_input">
+												<span class="input-group-btn">
+													<button class="btn btn-default" type="button" id="search_venues_button">
+														<span class="glyphicon glyphicon-search"></span>
+													</button>
+												</span>
+											</div>
+										</div> </div>
+									</div>
+									<!-- Foursquare places -->
+									<div id="venues_list_wrapper"><ul id="venues_list">
+										<li class="venue hidden draggable">
+											<div class="img_wrapper">
+												<img src="images/foursquare_photo_icon.png">
+											</div>
+											<div class="info_wrapper ">
+												<span class="bold venue_title">Venue Sample Title</span>
+												<br>
+												
+												<div class="icon_wrapper" >
+													<div class="center-block venue_type">
+														<img alt="" title="" data-placement="bottom" src="images/venue_type_icon.png">
+													</div>
+												</div>
+												<div class="icon_wrapper" >
+													<div class="center-block rating_wrapper" title="Rating" data-placement="bottom">
+														<i class="glyphicon glyphicon-stats"> </i><text class="venue_rating"> 8.9</text>
+													</div>
+												</div>
+												<div class="icon_wrapper">
+													<div class="center-block">
+														<a class="venue_link" title="Show on Foursquare" data-placement="bottom" target="_blank" href="#" class="center-block"><i class="glyphicon glyphicon-share-alt"></i> </a>
+													</div>
+												</div>
+												
+											</div>
+										</li>
+									</ul> </div>
+
+								</div>
+					      		<!-- Map as a background -->
+  								<div id="route_map">	</div>
+								<!-- Main information -->
+								<!--div class="row center-block" style="/*width:100%;height:100px;background-color:white;*/"> </div-->
+							<!--/div> </div-->
+			
+						</div>
+					</div>
+					<!-- Second Item -->
+					<div class="item">
+						<div id="second_step" class="step-item">
+							
+							<!-- Second Step (Route Timeline) -->
+							<div class="row"> <div class="col-md-12">
+
+							</div> </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Side Next Button -->
+		<a id="next_step_button" class="right carousel-control step_button" role="button">
+		    <span class="glyphicon glyphicon-chevron-right"></span>
+		</a>
+		<!-- Side Previous Button -->
+		<a id="prev_step_button" class="left carousel-control step_button" role="button">
+		    <span class="glyphicon glyphicon-chevron-left"></span>
+		</a>
+
+
+	</div>
+	
+	<!-- Scroll To Top button -->
+	<div class="scroll-to-top"> </div>	
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script-->
+    <script src="js/jquery.js"></script>
+    
+    <!--script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script-->
+
+    <!-- jQuery UI -->
+    <script src="js/jquery-ui/drag-n-drop-places.js"></script>
+    <script src="js/jquery-ui/jquery.js"></script>
+	<script src="js/jquery-ui/jquery-ui.min.js"></script>
+
+	<script src="js/bootstrap.min.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="js/draw_on_map.js"></script>
+    <script src="js/scroll-to-top.js"></script>
+    <script src="js/getPlaces4sq.js" > </script>
+    <script type="text/javascript" src="js/file_chooser.js"></script>
+    <script  type="text/javascript" src="js/save_route.js"> </script>
+
+	<script type="text/javascript">
+		//карусель шагов
+	  $(document).ready(function() {
+	  	
+	  	$('.carousel').carousel({
+		    pause: true,
+		    interval: false
+		});
+	    
+	  });
+	</script>
+
+    <script type="text/javascript">
+    	//***************
+    	//* Route type select
+    	//***************
+    	$('#pedestrian_link').click(function(){
+		  $('#selected_route_type').text("Pedestrian").data('type', "pedestrian");
+		});
+		$('#bicycle_link').click(function(){
+		  $('#selected_route_type').text("Bicycle").data('type', "bicycle");
+		});
+    	$('#car_link').click(function(){
+		  $('#selected_route_type').text("Car").data('type', "car");
+		});
+
+    	//______ build_route_button handler
+    	$('#build_route_button').click(function(){
+    		//alert($('#selected_route_type').data('type'));
+    		showRoute(path.getArray(), $('#selected_route_type').data('type'));
+    		
+    	});
+
+    	//***************
+		//* Steps animation and Continue button handler
+		//***************
+		jQuery(function($) {
+
+		    $('#continue_button').click(function() {
+		    	
+		    	if($('#first_step').hasClass('on_screen')){
+		  		$('#first_step').removeClass('on_screen');
+				$('#second_step').addClass('on_screen');
+				$('.carousel').carousel('next');
+				$('#continue_button').addClass('disabled');
+				$('#second_step_indicator').removeClass('btn-default').addClass('btn-success');
+				create_timeline();
+				enable_timeline_validation();
+				$('.timeline').show();
+				return false;
+		  	} else if($('#second_step').hasClass('on_screen')){
+		  		$('body').animate({
+	            	scrollTop: 0
+	        	}, 500, function(){
+					$('#second_step').removeClass('on_screen');
+					$('#third_step').addClass('on_screen');
+					$('.carousel').carousel('next');
+					$('#continue_button').hide();
+		    		$('#third_step_indicator').removeClass('btn-default').addClass('btn-success');
+	    		});
+	    		return false;
+	    			
+		  	}
+
+		    });
+
+		});
+
+
+	//***************
+	//* Create timeline from pushpins dynamicly 
+	//***************
+	function create_timeline(){
+		for (var i = 1; i < markers.length; i++) {
+			$new_li = $("#point_1").clone();
+			$new_li.attr("id", "point_"+(i+1) );
+			if(Math.abs(i) % 2 == 1){
+				$new_li.addClass('timeline-inverted');
+			} 
+			$('.timeline').append($new_li);
+		};
+	}
+
+
+	//***************
+	//* Timeline form validation
+	//***************
+	//$(document).ready(function() {
+	function enable_timeline_validation(){
+    	$('.input-group input[required]').on('keyup change', function() {
+		var $form = $(this).closest('.timeline'),
+            $group = $(this).closest('.input-group'),
+			$addon = $group.find('.input-group-addon'),
+			$icon = $addon.find('span'),
+			state = false;
+            
+    	if (!$group.data('validate')) {
+			state = $(this).val() ? true : false;
+		}
+		if (state) {
+				$addon.removeClass('danger');
+				$addon.addClass('success');
+				$icon.attr('class', 'glyphicon glyphicon-ok');
+		}else{
+				$addon.removeClass('success');
+				$addon.addClass('danger');
+				$icon.attr('class', 'glyphicon glyphicon-remove');
+		}
+		//alert($form.find('.input-group-addon.danger').length);
+        /*if ($form.find('.input-group-addon.danger').length == 0) {
+            $form.find('[type="submit"]').prop('disabled', false);
+            $('#continue_button').removeClass('disabled');
+        }else{
+            $form.find('[type="submit"]').prop('disabled', true);
+            if($('#second_step').hasClass('on_screen')){
+            	$('#continue_button').addClass('disabled');
+            }
+        }*/
+        //$('.required').blur(function() {
+		    var empty_flds = 0;
+		    $(".required").each(function() {
+		        if(!$.trim($(this).val())) {
+		            empty_flds++;
+		        }    
+		    });
+
+		    if (empty_flds) { 
+		         $('#continue_button').addClass('disabled');
+		    } else {
+		        $('#continue_button').removeClass('disabled');
+		    }
+		//});
+	
+		});
+    
+    	$('.input-group input[required], .input-group textarea[required], .input-group select[required]').trigger('change');
+  	};
+	//});
+    </script>
+
+
+    <script type="text/javascript">
+    //*** File upload script
+    (function ($){
+        $(function (){
+            $('.btn-file').each(function (){
+                var self = this;
+                $('input[type=file]', this).change(function (){
+                    // remove existing file info
+                    $(self).next().remove();
+                    // get value
+                    var value = $(this).val();
+                    // get file name
+                    var fileName = value.substring(value.lastIndexOf('/')+1);
+                    // get file extension
+                    var fileExt = fileName.split('.').pop().toLowerCase();
+                    // append file info
+                    $('<span><i class="glyphicon glyphicon-picture"></i> ' + fileName + '</span>').insertAfter(self);
+                });
+            });
+        });
+    })(jQuery);
+	</script>
+
+    <!--Loads source code of File upload widget and paste it to the page  >
+    <script>
+    jQuery('#file_upload_wrapper').ready(function(){
+    	$(function(){
+    		$("#file_upload_wrapper").load("file_upload_widget.html", function() {
+  				alert( "Load was performed." );
+			}); 
+    	});
+    });
+    </script-->
+    <!--script type="text/javascript" src="js/step_slider.js"></script-->
+  </body>
+</html>

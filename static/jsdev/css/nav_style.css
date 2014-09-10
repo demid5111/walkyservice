@@ -1,16 +1,16 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:700);
-.cssmenu {
+#cssmenu {
   background: #c8ccc8;
   /*width: 100%;
   text-align: justify;*/
   background-image: url(../images/navbg.png);
 }
 
-.cssmenu * {
+#cssmenu * {
   display: inline;
 }
 
-.cssmenu ul {
+#cssmenu ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -19,14 +19,14 @@
   zoom: 1;
 }
 
-.cssmenu span {
+#cssmenu span {
   display: inline-block;
   position: relative;
   width: 100%;
   height: 0;
 }
 
-.cssmenu ul:after {
+#cssmenu ul:after {
   content: ' ';
   display: block;
   font-size: 0;
@@ -34,7 +34,7 @@
   clear: both;
   visibility: hidden;
 }
-.cssmenu ul li {
+#cssmenu ul li {
   float: left;
   display: block;
   display: inline-block;
@@ -43,12 +43,12 @@
   
 }
 
-.cssmenu ul li.active {
+#cssmenu ul li.active {
   /*background: url('../images/nav-arrow.png') center 100% no-repeat;*/
 
 }
 
-.cssmenu ul li a {
+#cssmenu ul li a {
   color: #000000;
   text-decoration: none;
   display: block;
@@ -65,15 +65,15 @@
   -o-transition: color .25s;
   transition: color .25s;
 }
-.cssmenu ul li a:hover {
+#cssmenu ul li a:hover {
   /*color:  #9281bf;*/
 
 }
-.cssmenu ul li a:hover:before {
+#cssmenu ul li a:hover:before {
   width: 100%;
   /*margin-left: 5%; */
 }
-.cssmenu ul li a:after {
+#cssmenu ul li a:after {
   content: '';
   display: block;
   position: absolute;
@@ -84,7 +84,7 @@
   background: #08070C;
   opacity: .5;
 }
-.cssmenu ul li a:before {
+#cssmenu ul li a:before {
   
   content: '';
   display: block;
@@ -100,14 +100,14 @@
   -o-transition: width .25s;
   transition: width .25s;
 }
-.cssmenu ul li.last > a:after,
-.cssmenu ul li:last-child > a:after {
+#cssmenu ul li.last > a:after,
+#cssmenu ul li:last-child > a:after {
   display: none;
 }
-.cssmenu ul li.active a {
+#cssmenu ul li.active a {
   color: #333333;
 }
-.cssmenu ul li.active a:before {
+#cssmenu ul li.active a:before {
   width: 100%;
 }
 
@@ -117,26 +117,26 @@
 }
 
 @media screen and (max-width: 768px) {
-  .cssmenu ul li {
+  #cssmenu ul li {
     float: none;
   }
-  .cssmenu ul li a {
+  #cssmenu ul li a {
     width: 100%;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
   }
-  .cssmenu ul li a:after {
+  #cssmenu ul li a:after {
     display: none;
   }
-  .cssmenu ul li a:before {
+  #cssmenu ul li a:before {
     height: 1px;
     background: #ffffff;
     width: 100%;
     opacity: .2;
   }
-  .cssmenu ul li.last > a:before,
-  .cssmenu ul li:last-child > a:before {
+  #cssmenu ul li.last > a:before,
+  #cssmenu ul li:last-child > a:before {
     display: none;
   }
 }

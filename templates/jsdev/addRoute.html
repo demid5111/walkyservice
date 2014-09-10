@@ -1,80 +1,56 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Add Route</title>
+<head>
+<title>Add Route</title>
 
-		<!-- Bootstrap core CSS —>
-		<!--link href="css/bootstrap.css" rel="stylesheet"-->
+    <!-- Bootstrap core CSS -->
+    <!--link href="css/bootstrap.css" rel="stylesheet"-->
 
-		<!-- Custom styles for this template —>
-		<!--link href="css/bootstrap.min.css" rel="stylesheet"-->
-
-		<style>
-			html, body {
-	    		width: 600px;
-				height: 450px;
-			    margin: 0;
-			    padding: 0;
-			}
+    <!-- Custom styles for this template -->
+    <!--link href="css/bootstrap.min.css" rel="stylesheet"-->
 
 
-			#map-canvas, #map_canvas {
-			    width: 600px;
-				height: 450px
-			}
-		</style>
-
-	</head>
-	<body>
-		<div class="container">
-			<div class="well">
-
-				{%csrf_token%}
-				<legend>Add Route</legend>
-				<div class="control-group">
-					<label>Route Name:</label>
-					<input type="text" id="route_name" value="First Route">
-				</div>
-				<div class="control-group">
-					<label>Route type:</label>
-					<input type="radio" name="route_type" value="pedestrian" checked> pedestrian
-					<input type="radio" name="route_type" value="bicycle"> bicycle
-					<input type="radio" name="route_type" value="car"> car
-				</div>
-				<div class="control-group ">
-					<label >Likes</label>
-					<input type="text" id="route_likes" value="151">
-				</div>
-				<div class="control-group">
-					<label>Route City</label>
-					<input type="text" id="route_city" value="NN">
-				</div>
-				<div class="control-group">
-					<label class="control-label">Length</label>
-					<input type="text" id="route_length" value="2">
-				</div>
-				<div class="control-group">
-					<label class="control-label">Duration</label>
-					<input type="text" id="route_duration" value="25">
-				</div>
-
-				<div class="control-group">
-					<div id="map-canvas">
-					</div>
-					<!--input type="button" name="saveButton" value="Send points!" onclick="sendPoints()"-->
-					<button onclick="addRoute()" >Add Route</button>
-				</div>
-
-
-			</div>
+</head>
+    <body>
+         	    <div class="container">
+<div class="well">
+      <form id="signup" class="form-horizontal" method="post" >
+		<legend>Add Route</legend>
+		<div class="control-group">
+	        <label>Route Name:</label>
+			<input type="text" id="route_name">
 		</div>
-	</body>
+		<div class="control-group ">
+	        <label >Likes</label>
+			<input type="text" id="route_likes" >
+		</div>
+		<div class="control-group">
+	        <label>Route City</label>
+			<input type="text" id="route_city" >
+		</div>
+		<div class="control-group">
+	        <label class="control-label">Length</label>
+			<input type="text" id="route_length">
+		</div>
+		<div class="control-group">
+	        <label class="control-label">Duration</label>
+			<input type="text" id="route_duration">
+		</div>
 
-	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+		<div class="control-group">
+	       <button type="submit" onclick="addRoute()" >Add Route</button>
+		</div>
 
-	<script src="{% static 'jsdev/js/load_map.js' %}" > </script>
-	<script src="{% static "jsdev/js/jquery.js" %}"></script>
-	<script src="{% static 'jsdev/js/addRoute.js' %}" > </script>
+	  </form>
+
+   </div>
+</div>
+
+    </body>
+
+
+	<script src="{% static 'jsdev/js/route.js' %}" > </script>
+	<script src="addRoute.js" > </script>
 
 </html>
