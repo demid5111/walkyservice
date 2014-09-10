@@ -56,3 +56,8 @@ class RouteUser(models.Model):
 	def __unicode__(self):
 		return self.user_name
 
+class CitiesList(models.Model):
+	city_id = models.AutoField(primary_key = True, blank = False)
+	city_name = models.CharField(max_length = 45, blank=False)
+	city_longitude = models.FloatField(blank=False)
+	city_latitude = models.FloatField(blank = False)

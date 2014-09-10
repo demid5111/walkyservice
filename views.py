@@ -12,7 +12,7 @@ import json
 from django.template import loader
 from django.utils import simplejson
 import sqlite3
-from jsdev.models import RouteInfo, RouteUser, RoutePoints, RouteUser
+from jsdev.models import RouteInfo, CitiesList, RouteUser, RoutePoints, RouteUser
 import random
 from django.core import serializers
 from django.conf import settings
@@ -324,3 +324,7 @@ def showRoute(request, routeId):
     return render_to_response('jsdev/map_from_db.html', {"obj_as_json": simplejson.dumps(points_array)})
 
 
+def city_info_from_db(request):
+  city_info = CitiesList.objects.all()
+  print city_info.[0].user_name
+  return  render(request, 'jsdev/index.html')

@@ -19,6 +19,8 @@ urlpatterns = patterns('',
     url(r'^addNewRoute/$', views.addRoute, name='addRoute'),
     url(r'^addNewUser/$', views.addUser, name='addUser'),
     url(r'^auth_view/$', views.auth_view, name='auth_view'),
+    url(r'^city_info/$', views.city_info_from_db, name='city_info_from_db'),
+
     # url(r'^map_from_db/$', 'jsdev.views.get_points'),
     url(r'^routes/(?P<routeId>[0-9])$',views.showRoute, name='showRoute'),
     url(r'^(pedestrian|car|bicycle)',views.getRoutes, name='getRoutes'),
