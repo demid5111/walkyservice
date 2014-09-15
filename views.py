@@ -15,6 +15,13 @@ import sqlite3
 from jsdev.models import RouteInfo, RouteUser, RoutePoints
 import random
 from django.core import serializers
+from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import User
+from django.contrib import auth
+from django.core.context_processors import csrf
+from django.contrib.auth.forms import UserCreationForm
+from jsdev.forms import MyRegistrationForm
 from collections import OrderedDict
 
 
@@ -121,7 +128,53 @@ def getRoutes(request,route_type):
     return render_to_response('jsdev/index_routes_ext.html', {'routes_dic': res})
   return HttpResponse(topic_list)
 
-
+def addRoute(request):
+    json_info = """{
+        "route_name":"NAMEE",
+        "user_name":"ADMIN",
+        "route_distance":"0.799",
+        "route_duration":10,
+        "route_type":"pedestrian",
+        "route_city":"N.N.",
+        "route_points":[
+        {
+        "point_id":0,
+        "point_lat":40.73855929950343,
+        "point_lng":-73.78789186477661,
+        "point_name":"N1",
+        "point_description":"D1"
+        },
+        {
+        "point_id":1,
+        "point_lat":40.73756753107997,
+        "point_lng":-73.78499507904053,
+        "point_name":"n2",
+        "point_description":"d2"
+        },
+        {
+        "point_id":2,
+        "point_lat":40.73995750527805,
+        "point_lng":-73.78284931182861,
+        "point_name":"n3",
+        "point_description":"d3"
+        }
+        ]
+        }"""
+    route_dic = json.loads(json_info)
+    #TODO: make user mdels and save in routes using authors
+    route = RouteInfo(route_name=route_dic["route_name"],
+                     route_author=1,
+                     route_city=route_dic["route_city"],
+                     route_type=route_dic["route_type"],
+                     route_length=route_dic["route_distance"],
+                     route_duration=route_dic["route_duration"],
+                     route_likes = 0)
+    route.save()
+    route_points = []
+    # for point in route_dic["route_points"]:
+    #     p = RoutePoints(route_id = models.IntegerField(blank=False),
+    #                     point_longitude = models.FloatField(blank=False),
+    #                     point_latitude = )
 #############################################################
 #####Deprecated functionality
 #####Needs to be rewritten if important or to be got rid of in future releases
@@ -156,7 +209,7 @@ def get_points(request):
 
 
 def addRoutePage(request):
-    return render(request, 'jsdev/addRoute.html', {})
+    return render(request, 'jsdev/add_route.html', {})
 
 
 @csrf_exempt
@@ -216,6 +269,145 @@ def send_points(environ):
 
 def loginPage(request):
     return render(request, 'jsdev/loginPage.html', {})
+
+def login(request):
+  c = {}
+  c.update(csrf(request))
+  return render_to_response('jsdev/marat_login.html', c)
+
+def auth_view(request):
+  username = request.POST.get('username', '')  
+  password = request.POST.get('password', '') 
+  user = auth.authenticate(username = username,  password = password)
+
+  if user is not None:
+    auth.login(request, user)
+    return HttpResponseRedirect('../loggedin') 
+  else:
+    return HttpResponseRedirect('../invalid')
+
+
+def loggedin(request):
+  return render_to_response("jsdev/loggedin.html", {'full_name': request.user.username}) 
+
+def logout(request):
+  auth.logout(request)
+  return render_to_response('jsdev/logout.html')
+
+def invalid(request):
+  return render_to_response('jsdev/invalid.html')  
+
+def register_user(request):
+  if request.method == 'POST':
+    form = MyRegistrationForm(request.POST)
+    if form.is_valid():
+      form.save()
+      return HttpResponseRedirect('../register_success')
+
+  args = {}
+  args.update(csrf(request)) 
+  args['form'] = MyRegistrationForm()
+
+  return render_to_response('jsdev/register.html', args)   
+
+
+def register_success(request):
+  return render_to_response('jsdev/register_success.html')
+
+@csrf_exempt
+def addUser(environ):
+
+    data = {}
+    print "in addUser"
+    sqlQuery = ""
+    user_name = ""
+
+    user_email = ""
+    user_password = ""
+
+    conn = sqlite3.connect('db.sqlite3')
+    if environ.is_ajax():
+        print "is ajax"
+        jData = json.loads(environ.body)
+        for i in jData.keys():
+            data[i] = jData[i]
+        # print data["route_name"]
+        user_name = data["user_name"]
+
+        user_email = data["user_email"]
+        user_password = data["user_password"]
+        print "user_name = ",  user_name,   " user_email = ", user_email, " user_password = ", user_password
+
+        # sqlQuery = "INSERT INTO jsdev_routeuser(user_name, user_password, user_email) values(" + user_name + "," + user_password + "," + user_email + ")"
+        # conn.execute(sqlQuery)
+        # conn.commit()
+        # conn.close
+        print "before RouteUser()"
+        # new_user = RouteUser()
+        # new_user.user_name = user_name
+        # new_user.user_email = user_email
+        # new_user.user_password = user_password
+        # new_user.save()
+        user = User.objects.create_user(
+        username = user_name,
+        password = user_password,
+        email = user_email
+        )
+        user.save( )
+        print "saved"
+
+    # return render(environ,'jsdev/main_page.html', {})
+    return HttpResponse("User created")
+
+
+def signupPage(request):
+    return render(request, 'jsdev/signupPage.html', {})
+
+
+@csrf_exempt
+def authUser(environ):
+    data = {}
+    print "in authUser"
+    user_email = ""
+    user_password = ""
+    if environ.is_ajax():
+        print "is ajax"
+        jData = json.loads(environ.body)
+        for i in jData.keys():
+            data[i] = jData[i]
+        # print data["route_name"]
+        user_email = data["user_email"]
+        user_password = data["user_password"]
+       
+        print "user_email = ", user_email, " user_password = ", user_password
+        authUser = User.objects.filter(email=user_email)
+        if (authUser[0].password == user_password):
+            return HttpResponse("User Found")
+    return HttpResponse("User Not Found")
+
+
+
+
+
+
+def showRoute(request, routeId):
+    # print routeId
+    routeInfo = RouteInfo.objects.filter(route_id=routeId)
+    routePoints = RoutePoints.objects.filter(route_id=routeId)
+
+    js_data = {}
+    # print allpoints[0].latitude
+
+    points_array = {}
+    for i in routePoints:
+        points_array[i.point_id] = {
+            "lat": i.point_latitude, "lon": i.point_longitude}
+        # print i.point_id
+    # points_array["point_0"] = {'lat':'56.268440' , 'lon':'43.877693'}
+    # points_array["point_1"] = {'lat':'56.298745' , 'lon':'43.944931'}
+    # points_array["point_2"] = {'lat':'56.325152' , 'lon':'44.022191'}
+    # return HttpResponse(json.dumps(js_data), mimetype='application/json')
+    return render_to_response('jsdev/map_from_db.html', {"obj_as_json": simplejson.dumps(points_array)})
 
 
 @csrf_exempt
