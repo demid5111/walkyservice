@@ -1,5 +1,5 @@
 ########################
-##author : Demidovskij A., Tarkan Y., Fatekhov M.
+##author : Demidovskij A.
 ##last update : 16.03 31.08.14
 ########################
 
@@ -22,6 +22,7 @@ from django.contrib import auth
 from django.core.context_processors import csrf
 from django.contrib.auth.forms import UserCreationForm
 from jsdev.forms import MyRegistrationForm
+from jsdev.models import Cities
 
 
 
@@ -323,4 +324,14 @@ def showRoute(request, routeId):
     # return HttpResponse(json.dumps(js_data), mimetype='application/json')
     return render_to_response('jsdev/map_from_db.html', {"obj_as_json": simplejson.dumps(points_array)})
 
-
+def city_info(request):
+  print "yo"
+  queryset = Cities.objects.all()
+  print([p.city_name for p in queryset])
+  response_data = {}
+  i = 0
+  for p in queryset:
+    response_data[i] = {"city_id":p.city_id, "city_name": p.city_name, "city_lattitude": p.city_lattitude, "city_longitude": p.city_longitude}
+    i=i+1
+  print json.dumps(response_data)   
+  return render_to_response('jsdev/cities_view.html', {"obj_as_json": json.dumps(response_data)})

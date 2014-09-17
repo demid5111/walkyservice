@@ -22,4 +22,5 @@ urlpatterns = patterns('',
     # url(r'^map_from_db/$', 'jsdev.views.get_points'),
     url(r'^routes/(?P<routeId>[0-9])$',views.showRoute, name='showRoute'),
     url(r'^(pedestrian|car|bicycle)',views.getRoutes, name='getRoutes'),
+    url(r'^city_info',views.city_info, name='city_info'),
 )
