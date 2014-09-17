@@ -45,9 +45,10 @@ def index(request):
 # if there is no route: creates three default
 # renderers in the django template"""
     routeType = "pedestrian"
-    print RouteInfo.objects.all().delete()
-    routesList = RouteInfo.objects.filter(route_type=routeType)
-    
+    # print RouteInfo.objects.all().delete()
+    routesList = RouteInfo.objects.filter(route_type=routeType)\
+                                    .order_by('-route_date')
+    print "list: ",routesList
     if len(routesList) == 0:
         tmp1 = RouteInfo(route_name="My first {} route".format(routeType),
                          route_author=1,
@@ -74,7 +75,8 @@ def index(request):
                          route_likes = 3)
         tmp3.save()
 
-    routesList = RouteInfo.objects.filter(route_type=routeType)
+        routesList = RouteInfo.objects.filter(route_type=routeType)\
+                                    .order_by('-route_date')
     # j = 1
     # for i in routesList:
     #   i.route_likes = j
@@ -105,7 +107,7 @@ def getRoutes(request,route_type):
                                     .order_by('-route_likes')
     elif category_type == "new":
       routesList = RouteInfo.objects.filter(route_type=route_type)\
-                                    .order_by('-route_likes')
+                                    .order_by('-route_date')
       # i = 0
       # for route in routesList:
       #   # print route.route_id
@@ -128,10 +130,10 @@ def getRoutes(request,route_type):
     return render_to_response('jsdev/index_routes_ext.html', {'routes_dic': res})
   return HttpResponse(topic_list)
 
-def addRoute(request):
+def save_route(request):
     json_info = """{
         "route_name":"NAMEE",
-        "user_name":"ADMIN",
+        "user_name":"walkyuser",
         "route_distance":"0.799",
         "route_duration":10,
         "route_type":"pedestrian",
@@ -162,19 +164,31 @@ def addRoute(request):
         }"""
     route_dic = json.loads(json_info)
     #TODO: make user mdels and save in routes using authors
+    author = User.objects.get(username = route_dic["user_name"])
+    print "author: ", author
+    if author == None:
+        print "No such author"
+        return
     route = RouteInfo(route_name=route_dic["route_name"],
-                     route_author=1,
+                     route_author=author.id,
                      route_city=route_dic["route_city"],
                      route_type=route_dic["route_type"],
                      route_length=route_dic["route_distance"],
                      route_duration=route_dic["route_duration"],
                      route_likes = 0)
     route.save()
+    print "route: ", route.route_type
     route_points = []
-    # for point in route_dic["route_points"]:
-    #     p = RoutePoints(route_id = models.IntegerField(blank=False),
-    #                     point_longitude = models.FloatField(blank=False),
-    #                     point_latitude = )
+    for point in route_dic["route_points"]:
+        p = RoutePoints(route_id = route.route_id,
+                        point_longitude = point["point_lng"],
+                        point_latitude = point["point_lat"],
+                        point_name = point["point_name"],
+                        point_description = point["point_description"],
+                        point_order = point["point_id"])
+        p.save()
+        print p
+    return HttpResponse()
 #############################################################
 #####Deprecated functionality
 #####Needs to be rewritten if important or to be got rid of in future releases

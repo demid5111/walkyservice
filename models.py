@@ -12,8 +12,9 @@ class RouteInfo(models.Model):
 	route_duration = models.FloatField(blank=False)
 	route_type = models.CharField(default="pedestrian",blank="False",max_length=45)
 	route_date = models.DateTimeField(auto_now_add=True, blank=True)
+	route_hash = models.CharField(max_length=1000,blank=False)
 	def __unicode__(self):
-		return self.route_name
+		return "<RouteInfo name:{}>".format(self.route_name) 
 
 class RoutePoints(models.Model):
 
@@ -21,7 +22,9 @@ class RoutePoints(models.Model):
 	route_id = models.IntegerField(blank=False)
 	point_longitude = models.FloatField(blank=False)
 	point_latitude = models.FloatField(blank=False)
-
+	point_name = models.CharField(max_length=140,blank=True)
+	point_description = models.CharField(max_length=420,blank=True)
+	point_order = models.IntegerField(blank=False)
 	def __unicode__(self):
 		return str(self.route_id)
 

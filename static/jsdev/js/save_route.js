@@ -38,7 +38,7 @@ jQuery(document).ready(function() {
 		console.log(saving_route_json);
 
 		$.ajax ({
-			url: "/jsdev/addNewRoute/",
+			url: "/jsdev/saveroute/",
 			type: "POST",
 			data: JSON.stringify(saving_route),
 			contentType: 'application/json; charset=utf-8',
