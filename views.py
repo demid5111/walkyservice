@@ -326,5 +326,16 @@ def showRoute(request, routeId):
 
 def city_info_from_db(request):
   city_info = CitiesList.objects.all()
-  print city_info.[0].user_name
-  return  render(request, 'jsdev/index.html')
+  record = {}
+  
+  
+  info_dic = {}
+  j = 0
+  for i in city_info:
+    info_dic[str(j)] = {"city_name":i.city_name, "city_longitude": i.city_longitude, "city_latitude":i.city_latitude}
+    # info_array.append(record)
+    j += 1
+    
+   
+  # print json.dumps(info_dic)  
+  return  render_to_response('jsdev/cities_view.html', {"obj_as_json":json.dumps(info_dic)})
