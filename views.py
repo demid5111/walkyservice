@@ -223,6 +223,7 @@ def get_points(request):
 
 
 def addRoutePage(request):
+    #return render(request, 'jsdev/addRoute.html', {})
     return render(request, 'jsdev/add_route.html', {})
 
 
@@ -507,4 +508,5 @@ def showRoute(request, routeId):
     # points_array["point_1"] = {'lat':'56.298745' , 'lon':'43.944931'}
     # points_array["point_2"] = {'lat':'56.325152' , 'lon':'44.022191'}
     # return HttpResponse(json.dumps(js_data), mimetype='application/json')
-    return render_to_response('jsdev/map_from_db.html', {"obj_as_json": simplejson.dumps(points_array)})
+    #return render_to_response('jsdev/map_from_db.html', {"obj_as_json": simplejson.dumps(points_array)})
+    return render_to_response('jsdev/route_view.html', {"obj_as_json": simplejson.dumps(points_array)})

@@ -1,4 +1,4 @@
-{% load jsdev_extras %}
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,7 +12,6 @@
     <title>Walky</title>
 
     <!-- Bootstrap core CSS -->
-    {% load staticfiles %}
     <link href="{% static "jsdev/css/bootstrap.css" %}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
@@ -26,7 +25,7 @@
 	<link rel="stylesheet" href="{% static "jsdev/css/flexslider.css" %}" type="text/css">
 
 	<!-- Navigation style -->
-	<link rel='stylesheet' type='text/css' href="{% static "jsdev/css/nav_style.css" %}" />
+	<link rel='stylesheet' type='text/css' href="{% static 'jsdev/css/nav_style.css' %}" />
 
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
@@ -40,9 +39,6 @@
   </head>
 
   <body>
-  	<div style="display:none">
-    	<input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}"/>
-	</div>
 
   	<!-- route type -->
   	<div id="route_type">
@@ -112,13 +108,13 @@
 				</ul>
 			</div-->
 			<div id="navigation">
-			<div class='cssmenu'>
-				<ul >
-				   <li class='active' id="top" onClick="selectCategory(this.id)"><a href='#'><span>Top</span></a></li>
-				   <li id="new" onClick="selectCategory(this.id)"><a href='#' ><span>New</span></a></li>
-				   <li><a href='add' ><span>Add</span></a></li>
-				   <li id="around" onClick="selectCategory(this.id)"><a href='#' id="around_category"><span>Around Me</span></a></li>
-				   <li class='last' id="favourite" onClick="selectCategory(this.id)"><a href='#'><span>Favourite</span></a></li>
+			<div id='cssmenu'>
+				<ul>
+				   <li class='active'><a href='#'><span>Top</span></a></li>
+				   <li><a href='#'><span>New</span></a></li>
+				   <li><a href='#'><span>Add</span></a></li>
+				   <li><a href='#'><span>Around Me</span></a></li>
+				   <li class='last'><a href='#'><span>Favourite</span></a></li>
 				</ul>
 
 			</div>
@@ -129,15 +125,420 @@
 			<div id="navigation-anchor"> </div>
 		<!-- список маршрутов -->
 		<div class="route_list" id="mapbox">
-			{% block routes %}{% load staticfiles %}{% include "jsdev/index_routes_ext.html" %}{% endblock%}
+
+				<!-- Первый элемент -->
+				<div class="row pedestrianRoute" style="margin: 0px 0px 0px 0px; "> 
+							
+					<div id="list item content" class="row list-item" style="margin: 0px 0px 0px 0">
+
+						<!-- Left side information about route -->
+						<div id="routeInfo" class="col-md-9" >
+							
+							<div class="row">
+								<div class="col-md-12">
+									<a class="title-link" href="#"> <h2>First Route</h2> </a>	
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-md-5 col-md-offset-0">
+									<div class="clearfix content-heading" id="start_point">						
+										<!--img class="pull-left img-responsive" src="images/start.png"-->						
+										<h4 alt="Kremlin" title="Kremlin">&nbsp Kremlin &nbsp</h4>
+									</div>
+								</div>
+
+								<div class="col-md-3 col-md-offset-1">
+									<div class="clearfix content-heading" id="distance">
+										<!--img class="pull-left img-responsive" src="images/distance.png"-->
+										<h5>&nbsp 2.0 km &nbsp</h5>
+									</div>
+								</div>
+
+								<div class="col-md-3 col-md-offset-0">
+									<div class="clearfix content-heading" id="duration">
+										<!--img class="pull-left img-responsive" src="images/time.png"-->
+										<h5>&nbsp 35 min &nbsp</h5>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="row">
+								<div class="col-md-5 col-md-offset-0">
+									<div class="clearfix content-heading" id="finish_point">
+										<!--img class="pull-left img-responsive" src="images/finish.png"-->
+										<h4 alt="Minina square" title="Minina square">&nbsp Minina square &nbsp</h4>
+									</div>
+								</div>
+
+								<div class="col-md-3 col-md-offset-1">
+									<div class="clearfix content-heading" id="user">
+										<!--img class="pull-left img-responsive" src="images/user.png"-->
+										<h5 alt="Vasyaaaaaaa" title="Vasyaaaaaaa">&nbsp Vasyaaaaaaa &nbsp</h5>
+									</div>
+								</div>
+
+								<div class="col-md-3 col-md-offset-0">
+									<div class="clearfix content-heading" id="likes">
+										<!--img class="pull-left img-responsive" src="images/likes.png"-->
+										<h5>&nbsp 151 &nbsp</h5>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="row">
+								<div class="col-md-5 col-md-offset-6">
+									<div class="btn-group btn-group-justified" style="margin-top: 20px">
+										<a class="btn btn-primary" href="#" role="button">Show this route 
+											<i class="glyphicon glyphicon-chevron-right"> </i>
+										</a>
+									</div>
+								</div>
+							</div>
+
+							<!--div class="row">
+								<div class="col-md-5 col-md-offset-1">
+									<div class="row">
+										
+									</div>
+								</div>
+								<div class="col-md-5 col-md-offset-1">
+									<div class="row">
+										
+									</div>
+								</div>							
+							</div>
+
+							<div class="row">
+								<div class="col-md-5 col-md-offset-1">
+									<div class="row">
+										
+									</div>
+								</div>
+								<div class="col-md-5 col-md-offset-1">
+									<div class="row">
+										
+									</div>
+								</div>							
+							</div-->
+
+						</div>
+
+						<!-- Right side route photos and button -->
+						<div class="col-md-3 col-md-offset-0" >						
+							<div class="row" style="margin-top: 20px; margin-right: 5px">
+								<!-- карусель пример-->	
+								<div class="flexslider">
+									<ul class="slides">
+									    <li>
+									      <img src="{% static "jsdev/images/pic1.jpg" %}"/>
+									    </li>
+									    <li>
+									      <img src="{% static "jsdev/images/pic2.jpg" %}" />
+									    </li>
+									    <li>
+									      <img src="{% static "jsdev/images/pic3.jpg" %}"/>
+									    </li>
+									</ul>
+								</div>
+								<!-- конец карусели --> 
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>								
+			
 			<!-- Конец первого элемента -->
 						
-			
+			<!-- Второй элемент -->
+			<div class="row bicycleRoute" style="margin: 0px 0px 0px 0px; "> 
+							
+					<div id="list item content" class="row list-item" style="margin: 0px 0px 0px 0">
+
+						<!-- Left side information about route -->
+						<div id="routeInfo" class="col-md-9" >
+							
+							<div class="row">
+								<div class="col-md-12">
+									 <a class="title-link" href="#"> <h2>Second Route</h2>	</a>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-md-5 col-md-offset-0">
+									<div class="clearfix content-heading" id="start_point">						
+										<!--img class="pull-left img-responsive" src="images/start.png"-->						
+										<h4 alt="Kremlin" title="Kremlin">&nbsp Kremlin &nbsp</h4>
+									</div>
+								</div>
+
+								<div class="col-md-3 col-md-offset-1">
+									<div class="clearfix content-heading" id="distance">
+										<!--img class="pull-left img-responsive" src="images/distance.png"-->
+										<h5>&nbsp 2.0 km &nbsp</h5>
+									</div>
+								</div>
+
+								<div class="col-md-3 col-md-offset-0">
+									<div class="clearfix content-heading" id="duration">
+										<!--img class="pull-left img-responsive" src="images/time.png"-->
+										<h5>&nbsp 35 min &nbsp</h5>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="row">
+								<div class="col-md-5 col-md-offset-0">
+									<div class="clearfix content-heading" id="finish_point">
+										<!--img class="pull-left img-responsive" src="images/finish.png"-->
+										<h4 alt="Minina square" title="Minina square">&nbsp Minina square &nbsp</h4>
+									</div>
+								</div>
+
+								<div class="col-md-3 col-md-offset-1">
+									<div class="clearfix content-heading" id="user">
+										<!--img class="pull-left img-responsive" src="images/user.png"-->
+										<h5 alt="Vasyaaaaaaa" title="Vasyaaaaaaa">&nbsp Vasyaaaaaaa &nbsp</h5>
+									</div>
+								</div>
+
+								<div class="col-md-3 col-md-offset-0">
+									<div class="clearfix content-heading" id="likes">
+										<!--img class="pull-left img-responsive" src="images/likes.png"-->
+										<h5>&nbsp 151 &nbsp</h5>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="row">
+								<div class="col-md-5 col-md-offset-6">
+									<div class="btn-group btn-group-justified" style="margin-top: 20px">
+										<a class="btn btn-primary" href="#" role="button">Show this route 
+											<i class="glyphicon glyphicon-chevron-right"> </i>
+										</a>
+									</div>
+								</div>
+							</div>
+
+							<!--div class="row">
+								<div class="col-md-5 col-md-offset-1">
+									<div class="row">
+										
+									</div>
+								</div>
+								<div class="col-md-5 col-md-offset-1">
+									<div class="row">
+										
+									</div>
+								</div>							
+							</div>
+
+							<div class="row">
+								<div class="col-md-5 col-md-offset-1">
+									<div class="row">
+										
+									</div>
+								</div>
+								<div class="col-md-5 col-md-offset-1">
+									<div class="row">
+										
+									</div>
+								</div>							
+							</div-->
+
+						</div>
+
+						<!-- Right side route photos and button -->
+						<div class="col-md-3 col-md-offset-0" >						
+							<div class="row" style="margin-top: 20px; margin-right: 5px">
+								<!-- карусель пример-->	
+								<div class="flexslider">
+									<ul class="slides">
+									    <li>
+									      <img src="{% static "jsdev/images/pic1.jpg" %}"/>
+									    </li>
+									    <li>
+									      <img src="{% static "jsdev/images/pic2.jpg" %}"/>
+									    </li>
+									    <li>
+									      <img src="{% static "jsdev/images/pic3.jpg" %}"/>
+									    </li>
+									</ul>
+								</div>
+								<!-- конец карусели --> 
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+			<!-- Конец второго элемента -->
+
+
+			<!-- Третий элемент -->
+			<div class="row carRoute" style="margin: 0px 0px 0px 0px; "> 
+							
+					<div id="list item content" class="row list-item" style="margin: 0px 0px 0px 0">
+
+						<!-- Left side information about route -->
+						<div id="routeInfo" class="col-md-9" >
+							
+							<div class="row">
+								<div class="col-md-12">
+									<a class="title-link" href="#"> <h2>Third Route</h2> </a>	
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-md-5 col-md-offset-0">
+									<div class="clearfix content-heading" id="start_point">						
+										<!--img class="pull-left img-responsive" src="images/start.png"-->						
+										<h4 alt="Kremlin" title="Kremlin">&nbsp Kremlin &nbsp</h4>
+									</div>
+								</div>
+
+								<div class="col-md-3 col-md-offset-1">
+									<div class="clearfix content-heading" id="distance">
+										<!--img class="pull-left img-responsive" src="images/distance.png"-->
+										<h5>&nbsp 2.0 km &nbsp</h5>
+									</div>
+								</div>
+
+								<div class="col-md-3 col-md-offset-0">
+									<div class="clearfix content-heading" id="duration">
+										<!--img class="pull-left img-responsive" src="images/time.png"-->
+										<h5>&nbsp 35 min &nbsp</h5>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="row">
+								<div class="col-md-5 col-md-offset-0">
+									<div class="clearfix content-heading" id="finish_point">
+										<!--img class="pull-left img-responsive" src="images/finish.png"-->
+										<h4 alt="Minina square" title="Minina square">&nbsp Minina square &nbsp</h4>
+									</div>
+								</div>
+
+								<div class="col-md-3 col-md-offset-1">
+									<div class="clearfix content-heading" id="user">
+										<!--img class="pull-left img-responsive" src="images/user.png"-->
+										<h5 alt="Vasyaaaaaaa" title="Vasyaaaaaaa">&nbsp Vasyaaaaaaa &nbsp</h5>
+									</div>
+								</div>
+
+								<div class="col-md-3 col-md-offset-0">
+									<div class="clearfix content-heading" id="likes">
+										<!--img class="pull-left img-responsive" src="images/likes.png"-->
+										<h5>&nbsp 151 &nbsp</h5>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="row">
+								<div class="col-md-5 col-md-offset-6">
+									<div class="btn-group btn-group-justified" style="margin-top: 20px">
+										<a class="btn btn-primary" href="#" role="button">Show this route 
+											<i class="glyphicon glyphicon-chevron-right"> </i>
+										</a>
+									</div>
+								</div>
+							</div>
+
+							<!--div class="row">
+								<div class="col-md-5 col-md-offset-1">
+									<div class="row">
+										
+									</div>
+								</div>
+								<div class="col-md-5 col-md-offset-1">
+									<div class="row">
+										
+									</div>
+								</div>							
+							</div>
+
+							<div class="row">
+								<div class="col-md-5 col-md-offset-1">
+									<div class="row">
+										
+									</div>
+								</div>
+								<div class="col-md-5 col-md-offset-1">
+									<div class="row">
+										
+									</div>
+								</div>							
+							</div-->
+
+						</div>
+
+						<!-- Right side route photos and button -->
+						<div class="col-md-3 col-md-offset-0" >						
+							<div class="row" style="margin-top: 20px; margin-right: 5px">
+								<!-- карусель пример-->	
+								<div class="flexslider">
+									<ul class="slides">
+									    <li>
+									      <img src="{% static "jsdev/images/pic1.jpg" %}"/>
+									    </li>
+									    <li>
+									      <img src="{% static "jsdev/images/pic2.jpg" %}"/>
+									    </li>
+									    <li>
+									      <img src="{% static "jsdev/images/pic3.jpg" %}"/>
+									    </li>
+									</ul>
+								</div>
+								<!-- конец карусели --> 
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+			<!-- Конец третьего элемента -->
 		</div>		
-		</div>
+						
+												
+						
+<!-- 					</li>
+					
+					<li><a href="#">English</a></li>
+					<li><a href="#">Art and Design</a></li>
+					<li><a href="#">Drama</a></li>
+					<li><a href="#">Music</a></li>
+					<li><a href="#">Physics</a></li>
+					<li><a href="#">Chemistry</a></li>
+					<li><a href="#">Biology</a></li>
+					<li><a href="#">Home economics</a></li>
+					<li><a href="#">Physical Education</a></li>
+					<li><a href="#">Computing Science</a></li>
+					<li><a href="#">French</a></li>
+					<li><a href="#">German</a></li>
+					<li><a href="#">Mandarin</a></li>
+					<li><a href="#">Religious Education</a></li>
+					<li><a href="#">Modern Studies</a></li>
+					<li><a href="#">Geography</a></li>
+					<li><a href="#">History</a></li>
+					<li><a href="#">Creative computing</a></li>
+					<li><a href="#">Craft, Design and Technology</a></li>
+				</ul>
+ -->			</div>
 		
 		</div>
 		
+
 		</div>
 	
 	<div class="scroll-to-top"> </div>	
@@ -169,7 +570,7 @@
 	            </div>
 	            <div class="col-md-3 social">
 	            	<h3>Social networks</h3>
-	            	<img src="{% static "jsdev/images/social.png" %}" />
+	            	<img src="{% static "jsdev/images/social.png" %}">
 	            </div>
 	            <div class="col-md-3 copyright">
 	            	<p>
@@ -184,14 +585,13 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    
     <script type="text/javascript" src="{% static "jsdev/js/jquery.flexslider.js" %}"></script>
 	<script src="{% static "jsdev/js/slider.js" %}"></script>
 	<!-- Geolocation services -->
 	<script src="{% static "jsdev/js/city_locator.js" %}"></script>
 	<!--script src="http://j.maxmind.com/app/geoip.js"></script>< For our fallback -->
-	<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
     <script src="{% static "jsdev/js/bootstrap.min.js" %}"></script>
 	<script src="{% static "jsdev/js/fixNavigation.js" %}"></script>
@@ -207,6 +607,20 @@
 		});
 	</script>
 
-	
+	<script>
+		if($('body').find('.container').height() + $('footer').height() < $(window).height() ){
+		    $('footer').css({
+		        position:'absolute',
+		        bottom: 0,
+		        left: 0,
+		        right: 0
+		    })
+		}else{
+		    $('footer').css({
+		        position:'relative'
+		    })
+		}
+	</script>
+
   </body>
 </html>
