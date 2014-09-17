@@ -30,6 +30,7 @@ jQuery(document).ready(function() {
 			route_distance : (totalDistance / 1000).toString(), /* Distance in KM */
 			route_duration : Math.round(totalDuration / 60), /* Duration in minutes */
 			route_type : $('#selected_route_type').data('type'),
+			encoded_path : encoded_route,
 			route_points : route_points
 		}); 
 			

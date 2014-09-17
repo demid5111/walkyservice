@@ -88,7 +88,37 @@ header{
   */
 }
 
-.clearfix div{
+.selected_city{
+  cursor: pointer;
+}
+.selected_city:hover{
+ text-decoration: underline;
+}
+
+.info_item > .dropdown{
+  margin-top: 0;
+}
+.route_type{
+  display: inherit !important;
+  cursor: pointer;
+}
+.route_type:hover{
+  text-decoration: underline;
+}
+
+.route_type_button{
+  display: inline-block;
+  width: 40px !important;
+  height: 40px;
+  text-align: center !important;
+  padding: 5.5px 0 !important;
+  font-size: 22px !important;
+  line-height: 1.428571429;
+  border-radius: 30px !important;
+  -moz-border-radius: 30px;
+}
+
+.clearfix .button_title{
   display: block;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -127,7 +157,7 @@ html,body{height:100%;overflow: hidden;}
   height: 100%; 
   position: relative;
 
-  padding-left: 110px;
+  padding-left: 135px;
   padding-right: 80px;
 
   background-image: url(../images/bgnew.png);
@@ -340,9 +370,18 @@ html,body{height:100%;overflow: hidden;}
   width: 100%;
 }
 
+.build_route_button_container{
+  margin-right: 10px;
+}
+.save_route_button_container{
+  margin-left: 10px;
+}
+
 #build_route_button{
   width: 100%;
-  margin-top: 15px;
+}
+#save_route_button{
+  width: 100%;
 }
 
 #continue_button{

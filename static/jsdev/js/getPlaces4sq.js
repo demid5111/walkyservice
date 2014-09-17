@@ -101,5 +101,5 @@ function getVenueLink(venue){
 $('#search_venues_button').click(function(){
 	var search_query = $('#search_venue_input').val();
 	$('#venues_list').find('li:not(.hidden)').remove();
-	loadPlacesByCity(located_city, search_query);
+	loadPlacesByCity(city_name, search_query);
 });

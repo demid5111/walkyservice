@@ -1,6 +1,7 @@
 	var map;
 	var directionsDisplay;
 	var directionsService = new google.maps.DirectionsService();
+	var bounds = new google.maps.LatLngBounds();
 	
 	function initialize() {
 	    var NY = new google.maps.LatLng(40.739112,-73.785848);
@@ -30,44 +31,43 @@
 			//Check if point is first			
 			if (route_points[p]['point_id']==0){
 				start = new google.maps.LatLng(route_points[p]['point_lat'], route_points[p]['point_lng'], true);
-				console.log(start);
+				bounds.extend(start);
+
+				//Add Marker on the map
+				var marker = new google.maps.Marker({
+					position: start,
+					map: map
+				});
+				//console.log(start);
 			}
 			//Check if point is last
 			else if (route_points[p]['point_id']==route_points.length-1){
 				end = new google.maps.LatLng(route_points[p]['point_lat'], route_points[p]['point_lng'], true);
-				console.log(end);
+				bounds.extend(end);
+
+				//Add Marker on the map
+				var marker = new google.maps.Marker({
+					position: end,
+					map: map
+				});
+				//console.log(end);
 			}
 			else{
+				var point = new google.maps.LatLng(route_points[p]['point_lat'], route_points[p]['point_lng'], true);
 				waypt.push({
-					location: new google.maps.LatLng(route_points[p]['point_lat'], route_points[p]['point_lng'], true),
+					location: point,
 					stopover: true
+				});
+				bounds.extend(point);
+
+				//Add Marker on the map
+				var marker = new google.maps.Marker({
+					position: point,
+					map: map
 				});
 			}
 		}
 		
-		/*
-		for (var i=0; i < pointsId.length;i++) {
-			//alert ("I: " + i)
-			if (i == 0) {
-				start = new google.maps.LatLng(json_obj[pointsId[i]]["lat"], json_obj[pointsId[i]]["lon"], true);
-				//alert ("Start " + start + i)
-				console.log(start)
-			}
-			else if (i == pointsId.length -1)
-			{
-				end = new google.maps.LatLng(json_obj[pointsId[i]]["lat"], 	json_obj[pointsId[i]]["lon"], true);
-				//alert ("End " + end + i)
-			}
-			else {
-				waypt.push({
-					location: new google.maps.LatLng(json_obj[pointsId[i]]["lat"], json_obj[pointsId[i]]["lon"], true),
-					stopover: true
-				});
-			}
-		}
-		console.log(start)
-		console.log(end)
-		*/
 		var route_type;
 		if (json_obj['route_type']=="pedestrian"){
 			route_type = google.maps.TravelMode.WALKING;
@@ -85,16 +85,77 @@
 		    travelMode: route_type
 	  	};
 	  
+
+	  //* DIRECTION SERVICES (REPLACED WITH POLYLINES)
+	  /*
 	  directionsService.route(request, function(result, status) {
 	  	
 
 	    if (status == google.maps.DirectionsStatus.OK) {
-	      directionsDisplay.setDirections(result);
+	      //directionsDisplay.setDirections(result);
+
+      	  	//**** Route with POLYINES
+		  	var polyline = new google.maps.Polyline({
+			  path: [],
+			  strokeColor: '#0080ff',
+			  strokeOpacity: 0.8,
+			  strokeWeight: 5
+			});
+			var bounds = new google.maps.LatLngBounds();
+
+
+			var legs = result.routes[0].legs;
+			for (i=0;i<legs.length;i++) {
+			  var steps = legs[i].steps;
+			  for (j=0;j<steps.length;j++) {
+			    var nextSegment = steps[j].path;
+			    for (k=0;k<nextSegment.length;k++) {
+			      polyline.getPath().push(nextSegment[k]);
+			      bounds.extend(nextSegment[k]);
+			    }
+			  }
+			}
+
+			//***********Add polylines on the map
+
+			polyline.setMap(map);
+			map.fitBounds(bounds);
+
+			var encode_string = google.maps.geometry.encoding.encodePath( polyline.getPath() );
+			console.log(encode_string);
+
+			var decodedPath = google.maps.geometry.encoding.decodePath(encode_string);
+
+			var setPath = new google.maps.Polyline({
+		        path: decodedPath,
+		        strokeColor: "#0080ff",
+		        strokeOpacity: 0.8,
+		        strokeWeight: 5,
+		        map: map
+		    });
+		    map.fitBounds(bounds);
+			//decodedPath.setMap(map);
+
+
 	    }
 	    if (status == google.maps.DirectionsStatus.ZERO_RESULT) {
 	      alert("Error. Not able to build route (ZERO_RESULT)")
 	    }
-	  });
+	  });*/
+
+		// Route via polylines
+		var encoded_route = json_obj['encoded_path'];
+		var decoded_route = google.maps.geometry.encoding.decodePath(encoded_route);
+		var setPath = new google.maps.Polyline({
+		        path: decoded_route,
+		        strokeColor: "#0080ff",
+		        strokeOpacity: 0.8,
+		        strokeWeight: 5,
+		        map: map
+		    });
+
+	    map.fitBounds(bounds);
+
  
  }
 google.maps.event.addDomListener(window, 'load', initialize);
