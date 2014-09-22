@@ -2,11 +2,11 @@ body {
   padding-top: 20px;
   /*padding-bottom: 20px;
   border-top: 5px solid #7e7e7e;*/
-  background-image: url("../images/bg.png");
+  background-image: url(../images/bg.png);
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-attachment: fixed;
-	 header {
+   header {
         padding: 20px 0;
     }
 }
@@ -82,6 +82,106 @@ h2{
 }
 /* END Styles for route type menu */
 
+#loginModalLabel{
+  text-align: center;
+}
+#login_input{
+  margin-bottom: 10px;
+}
+.modal-footer{
+  margin-top: 0px;
+}
+.register_label h4{
+  display: inline;
+}
+.register_label button{
+  display: inline;
+}
+
+#thumbnail_wrapper{
+  margin: 0 -3px 0 -3px;
+}
+.thumbnail{
+  margin-bottom: 0px;
+}
+.thumbnail:hover{
+  border-color: #3276b1;
+  border: solid #3276b1 1px;
+}
+.thumbnail h3{
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+#thumbnail_wrapper div[class^="col-"]{
+  padding: 0 3px 6px 3px;
+}
+.pedestrian_route{
+  background: rgb(238,238,238);
+  background: url(../images/pedestrian_type.png) no-repeat;
+  background: url(../images/pedestrian_type.png) left bottom/50px 49px no-repeat, -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(238,238,238,1)), color-stop(100%,rgba(173, 190, 211, 1)))
+  /*background-position: left bottom;
+  background-size: 50px 49px;
+  background-repeat: no-repeat;*/
+}
+
+.caption h3{
+  margin-top: 10px;
+  text-align: center;
+  font-family: 'Myriad Pro Bold Condensed';
+}
+.caption h3 a{
+  color: #333;
+  font-weight: bold;
+}
+.caption h3 a:hover{
+ color: #000;
+ text-decoration: underline;
+ cursor: pointer; 
+}
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center !important;
+  padding: 6px 6px !important;
+  font-size: 15px !important;
+  /*line-height: 1.428571429;*/
+  border-radius: 30px !important;
+  -moz-border-radius: 30px;
+}
+.route_point a{
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 5px;
+}
+.route_point h4{
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 85%;
+  white-space: nowrap;
+  padding-left: 10px;
+}
+
+.route_info a{
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 5px;
+}
+.route_info h4{
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: 10px;
+  margin-top: 10px;
+  width: 100px;
+}
+.show_button{
+  text-align: center;
+  margin-top: 5px;
+}
+
 .popover{
   width: 100%;
 }
@@ -96,14 +196,14 @@ h2{
 
 /* Icons for route template*/
 .icon-start{
-  background-image: url(../images/start.png);
+  /*background-image: url("images/start.png");
   background-position: left;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat;*/
 
 }
 .icon-finish{
-  background-image: url(../images/finish.png);
-  background-position: center center;
+  /*background-image: url("images/finish.png");
+  background-position: center center;*/
 }
 /* END Icons for route template*/
 
@@ -145,46 +245,64 @@ a:hover{
 }
 
 .navButton{
-	background-image:none;
+  background-image:none;
 }
 
 .nav-justified:hover{
-	outline: 0;
+  outline: 0;
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
           box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
 }
 
 .listscrl{
-	/*margin-right: 9px;
-	background-image: url(images/listbg.png);
-	background-size: 100% 100%;
-	background-color: #eee;*/
-	/* max-height: 400px;
+  /*margin-right: 9px;
+  background-image: url(images/listbg.png);
+  background-size: 100% 100%;
+  background-color: #eee;*/
+  /* max-height: 400px;
     overflow-y:scroll;  */
 }
 
 .pedestrianRoute {
-  background-image: 
+  /*background-image: 
     linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
     url(http://maps.googleapis.com/maps/api/staticmap?center=56.29,+43.93&zoom=13&scale=2&size=640x223&maptype=terrain&sensor=false&format=png&visual_refresh=true)
-  ;
+  ;*/
   width: 100%;
   height: 100%;
 }
 
 .pedestrianRoute .list-item{
-	/*background-image: url(images/pedestrianbg.png);
+  /*background-image: url(images/pedestrianbg.png);
   background-image: url(images/listbg.png);
-  background: url(images/pedestrian_type.png), url(images/mapbg1.png);*/
-  background: url(../images/pedestrian_type.png), url(../images/fon.svg);
+  background: url(images/pedestrian_type.png), url(images/fon.svg);*/
+  background: url(../images/pedestrian_type.png), url(../images/mapbg1.png);
   background-position: left bottom, center bottom;
   background-size: 50px 49px, 100% 100%;
   background-repeat: no-repeat, no-repeat;
   /*background-position: 0px 0px, 0px ;
   
   background-color: #eee;
-	
+  
   */
+
+}
+
+.bicycleRoute .list-item{
+
+  background: url(../images/bicycle_type.png), url(../images/mapbg1.png);
+  background-position: left bottom, center bottom;
+  background-size: 50px 49px, 100% 100%;
+  background-repeat: no-repeat, no-repeat;
+
+}
+
+.carRoute .list-item{
+
+  background: url(../images/car_type.png), url(../images/mapbg1.png);
+  background-position: left bottom, center bottom;
+  background-size: 50px 49px, 100% 100%;
+  background-repeat: no-repeat, no-repeat;
 
 }
 
@@ -255,7 +373,7 @@ a:hover{
   bottom: 1em; 
   padding-right: 1em; 
   display: none;
-  margin: 0 30px 50px 0; 
+  margin: 0 30px 110px 0; 
   z-index: 999;
   opacity: 1;   
 }
@@ -264,8 +382,8 @@ a:hover{
 }
 
 #navigation{
-	/*color: #ddd;
-	font-size: 2em;
+  /*color: #ddd;
+  font-size: 2em;
   position: absolute;
   right: 0px;
   top: 0px;
@@ -276,18 +394,19 @@ a:hover{
 }
 
 #navigation.fix{
-	position: fixed;
+  position: fixed;
     top: 0;
     z-index: 10000;
 }
 #content_wrapper{
   /*position: relative;*/
 
+
 }
 /*.fix{
-	position: fixed;
-	
-	top: 0; 
+  position: fixed;
+  
+  top: 0; 
     height: 70px; 
     z-index: 1;
 }*/
@@ -296,17 +415,21 @@ a:hover{
 }
 
 /** Footer Style */
+
+
 footer {
     background: #9384AA;
     color: #dbdbdb;
     font-size: 11px;
-    /*border-top: 2px solid #9A68C2;
-    margin-top: 30px;*/
+    /*border-top: 2px solid #9A68C2;*/
+    margin-top: 20px;
+
 }
 footer .container {      
   height: 110px;
   padding: 10px 0;
 }
+
 footer .container h3 {
                 border-bottom: 1px solid #919191;
                 color: #ffffff;

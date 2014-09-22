@@ -32,19 +32,6 @@
 			if (route_points[p]['point_id']==0){
 				start = new google.maps.LatLng(route_points[p]['point_lat'], route_points[p]['point_lng'], true);
 				bounds.extend(start);
-			}
-			//Check if point is last
-			else if (route_points[p]['point_id']==route_points.length-1){
-				end = new google.maps.LatLng(route_points[p]['point_lat'], route_points[p]['point_lng'], true);
-				console.log(end);
-			}
-			else{
-				waypt.push({
-					location: new google.maps.LatLng(route_points[p]['point_lat'], route_points[p]['point_lng'], true),
-					stopover: true
-				});
-			}
-		}
 		
 				//Add Marker on the map
 				var marker = new google.maps.Marker({
