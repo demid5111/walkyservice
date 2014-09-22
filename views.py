@@ -84,19 +84,7 @@ def index(request):
     #   i.save()
     routes_dic = routes2dic(routesList)
     print routes_dic
-    print request.user
-    #user = auth.authenticate(username='walkyuser', password='walkypassword')
-    #if user is not None and user.is_active:
-    #    auth.login(request, user)
-    #    print "ok"
-    #else:
-    #    print "wrong"
-    if not request.user.is_authenticated():
-        print 'not auth'
-        return render(request, 'jsdev/index.html', {"routes_dic": routes_dic, "username":''})
-    else:
-        print 'is auth'
-        return render(request, 'jsdev/index.html', {"routes_dic": routes_dic, "username":request.user})    
+    return render(request, 'jsdev/index.html', {"routes_dic": routes_dic})
 
 def getRoutes(request,route_type):
   # """Function gets all objects of routes of requested type 
@@ -319,8 +307,7 @@ def loggedin(request):
 
 def logout(request):
   auth.logout(request)
-  #return render_to_response('jsdev/logout.html')
-  return HttpResponseRedirect('../')
+  return render_to_response('jsdev/logout.html')
 
 def invalid(request):
   return render_to_response('jsdev/invalid.html')  

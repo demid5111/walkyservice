@@ -104,9 +104,29 @@ h2{
 .thumbnail{
   margin-bottom: 0px;
 }
+.thumbnail .img_wrapper{
+  overflow: hidden;
+}
+.thumbnail img{
+  -webkit-transform: scale(1,1);
+  -webkit-transition-timing-function: ease-out;
+  -webkit-transition-duration: 250ms;
+  -moz-transform: scale(1,1);
+  -moz-transition-timing-function: ease-out;
+  -moz-transition-duration: 250ms;
+  width: 100%;
+}
 .thumbnail:hover{
   border-color: #3276b1;
   border: solid #3276b1 1px;
+}
+.thumbnail:hover img{
+  -webkit-transform: scale(1.05,1.07);
+  -webkit-transition-timing-function: ease-out;
+  -webkit-transition-duration: 250ms;
+  -moz-transform: scale(1.05,1.07);
+  -moz-transition-timing-function: ease-out;
+  -moz-transition-duration: 250ms;
 }
 .thumbnail h3{
   overflow: hidden;
