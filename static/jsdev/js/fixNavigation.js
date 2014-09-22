@@ -69,8 +69,10 @@ jQuery(document).ready(function() {
 });
 
 //****  ROUTE TYPE ANIMATION
-
+var route_type = "pedestrian"
+var category = "top"
 var selectType = function (event) {
+    
     event.preventDefault(); 
     $selected_types = $('#route_type').find('.selected');
     //If nothing selected
@@ -88,6 +90,29 @@ var selectType = function (event) {
         }, 400);
         $(this).addClass("selected");
     }  
+    var classList = this.className.split(' ')
+    
+    if (classList.indexOf("type_pedestrian") > -1  ){
+        // alert("pedestrian call")
+        route_type = "pedestrian"
+    }
+    else if (classList.indexOf("type_bicycle") > -1  ){
+        // alert("bicycle")
+        route_type = "bicycle"
+    }
+    else if (classList.indexOf("type_car") > -1  ){
+        // alert("car")
+        route_type = "car"
+    }
+    //alert ("get route type: " + route_type)
+    $.ajax({
+      route_type: "get",
+      url: route_type,
+      data: {"route_type":route_type,'category_type':category},
+      success : function(data){
+               $('#thumbnail_wrapper').html(data);
+             }
+    })
 
 }
 

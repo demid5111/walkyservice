@@ -133,11 +133,11 @@
 			<div id="navigation">
 			<div id='cssmenu'>
 				<ul>
-				   <li class='active'><a href='#'><span>Top</span></a></li>
-				   <li><a href='#'><span>New</span></a></li>
-				   <li><a href='#'><span>Add</span></a></li>
-				   <li><a href='#'><span>Around Me</span></a></li>
-				   <li class='last'><a href='#'><span>Favourite</span></a></li>
+				   <li class='active' id="top" onClick="selectCategory(this.id)"><a href='#'><span>Top</span></a></li>
+				<li id="new" onClick="selectCategory(this.id)"><a href='#' ><span>New</span></a></li>
+				<li><a href='add' ><span>Add</span></a></li>
+				<li id="around" onClick="selectCategory(this.id)"><a href='#' id="around_category"><span>Around Me</span></a></li>
+				<li class='last' id="favourite" onClick="selectCategory(this.id)"><a href='#'><span>Favourite</span></a></li>
 				</ul>
 
 			</div>

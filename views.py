@@ -127,6 +127,7 @@ def getRoutes(request,route_type):
     #   routes_dic[i] = res[i]
     # print routes_dic
     topic_list = json.dumps({'routes_dic': routes_dic})
+    print routesList
     return render_to_response('jsdev/index_routes_ext.html', {'routes_dic': res})
   return HttpResponse(topic_list)
 
