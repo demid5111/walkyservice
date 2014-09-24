@@ -8,7 +8,7 @@ for (var i in Object.keys(json_obj)){
   
   var list = document.getElementById("list");
   var li = document.createElement("li");
-  var liValue = document.createTextNode(json_obj[i]["city_name"]);
+  var liValue = document.createTextNode(json_obj[i]["city_name"]);  
   li.appendChild(liValue);
   list.appendChild(li);
 

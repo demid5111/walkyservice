@@ -74,7 +74,16 @@ def index(request):
     routesList = RouteInfo.objects.filter(route_type=routeType)
   routes_dic = routes2dic(routesList)
   print routes_dic
-  return render(request, 'jsdev/index.html', {"routes_dic": routes_dic})
+  #List of cities for city box
+  queryset = Cities.objects.all()
+  response_data = {}
+  i = 0
+  for p in queryset:
+    response_data[i] = {"city_id":p.city_id, "city_name": p.city_name, "city_lattitude": p.city_lattitude, "city_longitude": p.city_longitude}
+    i=i+1
+  print json.dumps(response_data) 
+
+  return render(request, 'jsdev/index.html', {"routes_dic": routes_dic, "obj_as_json": json.dumps(response_data)})
 
 def getRoutes(environ,route_type):
   """Function gets all objects of routes of requested type 

@@ -40,6 +40,7 @@
   </head>
 
   <body>
+  
   	<div style="display:none">
     	<input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}"/>
 	</div>
@@ -60,26 +61,41 @@
 
   	<!-- Login form -->
 
-  	<div id="popover_content_wrapper" style="display: none; max-width: 200px;">
-	  <form action="" role="form">
-	    <div class="form-group">
-	      <label for="user">User</label>
-	      <input type="text" class="form-control" id="login_input" placeholder="User" />
-	      <label for="password">Password</label>
-	      <input type="password" class="form-control" id="password_input" placeholder="Password" />
-	    </div>
-	      <button type="submit" class="btn btn-default">Sign in</button>
-
-	  </form>
-	</div>
-
+  	
   	<!-- End of Login form -->
+  	<!-- City box -->
+
+<!-- Modal -->
+<div class="modal fade" id="cityModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+<label for="City_choose">Choose your city</label>
+<input type="text" class="form-control"   placeholder="Enter your city" onkeyup="filter(this)">
+
+</div>
+<div class="modal-body">
+<div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+	<ul id = "list">
+
+	</ul>
+</div>
+<div class="modal-footer">
+<div class="register_label">
+
+</div>
+</div>
+</div>
+</div>
+</div>
 
     <div class="container">
 		<header> 
 			<div class="row center-block">
 				<div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1">
-					<a class="btn btn-link" id="city_name" role="button" style="color: #fff"> Your City </a>
+					<a class="btn btn-link" data-toggle="modal" data-target="#cityModal" id="city_name" role="button" style="color: #fff"> Your City </a>
 					<!--a class="btn btn-link" role="button" style="color: #fff"> Change Location </a-->
 				</div>
 				<div class="col-md-4 col-sm-4 col-md-offset-0 col-sm-offset-0 ">
@@ -186,6 +202,10 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script> var json_obj = {{ obj_as_json|safe }}; </script>
+    <script src="{% static "jsdev/js/jquery.js" %}"></script>
+    <script src="{% static "jsdev/js/city_info_from_db.js" %}"> </script>
+   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     
     <script type="text/javascript" src="{% static "jsdev/js/jquery.flexslider.js" %}"></script>
@@ -197,7 +217,8 @@
 
     <script src="{% static "jsdev/js/bootstrap.min.js" %}"></script>
 	<script src="{% static "jsdev/js/fixNavigation.js" %}"></script>
-
+	
+	
 	<!-- Login Script -->
 	<script>
 		$("#login_button").popover({
