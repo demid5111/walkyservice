@@ -74,11 +74,11 @@
 				      <label for="password">Password</label>
 				      <input type="password" class="form-control" name = "password" id="password" placeholder="Password">
 				    </div>
-				    <div class="checkbox">
+				    <!--div class="checkbox">
 		                <label>
 		                	<input id="login-remember" type="checkbox" name="remember"> Remember me
 		                </label>
-                  	</div>
+                  	</div-->
 				    <button type="submit" class="btn btn-primary center-block">Log In</button>
 			  	</form>
 	      </div>
@@ -108,8 +108,25 @@
 					
 				</div>
 				<div class="col-md-2 col-sm-2 col-md-offset-1 col-sm-offset-1">
-					<p>{{username}}</p>
-					<a class="btn btn-primary" role="button" id="login_button" data-toggle="modal" data-target="#loginModal"> Log In or Sign Up </a>
+					{%if is_auth%}
+						<div class="auth_user_container text-center"> 
+							<div class="info_item clearfix content-heading">
+								<!--div id="user">		</div-->
+								<button type="button" class="btn btn-default btn-circle" disabled="disabled">
+									<i class="icon-user"></i>
+								</button>							
+								<a class="username button_title"> {{username}}</a>
+							</div>
+						</div>
+
+						<!-- Logout popover -->
+					  	<div id="popover_content_wrapper" class="hidden" style="">
+						    <a class="btn btn-default center-block" href="logout/"> Log out </a>						
+						</div>
+					  	<!-- End of Logout popover -->
+					{%else%}
+						<a class="btn btn-primary" role="button" id="login_button" data-toggle="modal" data-target="#loginModal"> Log In or Sign Up </a>
+					{%endif%}
 				</div>
 			</div>
 			
@@ -245,17 +262,39 @@
 
 	<!-- Login Script -->
 	<script>
-		/*$("#login_button").popover({
-		    html: true, 
+		//************
+		//* Top menu animation
+		//************
+		 $(document).ready(function() 
+		 {
+		    $('#cssmenu ul li').click(function(e) 
+		    { 
+		    	$('#cssmenu ul li').removeClass('active');
+		    	$(this).addClass('active');
+		    });
+		 });
+
+		//***************
+	    // User logout popover 
+	    //***************
+		$(".username").popover({
+		    html: true,
+		    trigger: 'click', 
 			content: function() {
 		          return $('#popover_content_wrapper').html();
 		        },
 		    placement: 'bottom'
-		});*/
+		});
 	</script>
 
 	<script>
-		$('#mapbox').css('min-height', $(window).height() - ($('#mapbox').offset().top + $('footer').height()) );
+	$(document).ready(function() 
+	{
+		console.log($(window).height());
+		console.log($('#mapbox').offset().top);
+		console.log($('footer').height());
+
+		$('#mapbox').css('min-height', $(window).height() - ($('#mapbox').offset().top + $('footer').height() + 20)  );
 		if($('body').find('.container').height() + $('footer').height() < $(window).height() ){
 		    $('footer').css({
 		        position:'absolute',
@@ -268,6 +307,7 @@
 		        position:'relative'
 		    })
 		}
+	});
 	</script>
 
   </body>

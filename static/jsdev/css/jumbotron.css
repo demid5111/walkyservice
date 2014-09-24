@@ -82,6 +82,41 @@ h2{
 }
 /* END Styles for route type menu */
 
+#city_name{
+  color: rgb(255, 255, 255);
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Auth User styles */
+.auth_user_container > .info_item > .btn-circle {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  text-align: center !important;
+  padding: 5.5px 0 !important;
+  font-size: 22px !important;
+  line-height: 1.428571429;
+  border-radius: 30px !important;
+  -moz-border-radius: 30px;
+}
+.auth_user_container > .info_item > .button_title {
+  cursor: pointer;
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: center;
+  color: white;
+  font-size: 15px;
+}
+.auth_user_container > .info_item > .button_title:hover{
+  text-decoration: underline;
+}
+/* END Auth User styles */
+
 #loginModalLabel{
   text-align: center;
 }

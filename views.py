@@ -84,7 +84,7 @@ def index(request):
     #   i.save()
     routes_dic = routes2dic(routesList)
     print routes_dic
-    return render(request, 'jsdev/index.html', {"routes_dic": routes_dic})
+    return render(request, 'jsdev/index.html', {"routes_dic": routes_dic, "is_auth":request.user.is_authenticated(), "username":request.user})
 
 def getRoutes(request,route_type):
   # """Function gets all objects of routes of requested type 
@@ -308,7 +308,8 @@ def loggedin(request):
 
 def logout(request):
   auth.logout(request)
-  return render_to_response('jsdev/logout.html')
+  #return render_to_response('jsdev/logout.html')
+  return HttpResponseRedirect('../')
 
 def invalid(request):
   return render_to_response('jsdev/invalid.html')  
