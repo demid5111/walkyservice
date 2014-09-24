@@ -10,7 +10,8 @@ from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.template import loader
-from django.utils import simplejson
+# from django.utils import simplejson
+import json
 import sqlite3
 from jsdev.models import RouteInfo, RouteUser, RoutePoints
 import random
@@ -112,24 +113,9 @@ def getRoutes(request,route_type):
     elif category_type == "new":
       routesList = RouteInfo.objects.filter(route_type=route_type)\
                                     .order_by('-route_date')
-      # i = 0
-      # for route in routesList:
-      #   # print route.route_id
-      #   sort_order[route.route_id] = i
-      #   i += 1
-      # print "sort order: ",sort_order
+      
     res =  routes2dic(routesList)
-    # print res
-    # res_list = sorted(routes2dic(routesList).keys(), \
-    #                     key=lambda x:sort_order[x])
-    # print res_list
-    # for i in res_list:
-    #   if i not in routes_dic.keys():
-    #     routes_dic[i] = {}
-    #   print routes_dic
-    #   print res[i]  
-    #   routes_dic[i] = res[i]
-    # print routes_dic
+    
     topic_list = json.dumps({'routes_dic': routes_dic})
     print routesList
     return render_to_response('jsdev/index_routes_ext.html', {'routes_dic': res})
@@ -138,8 +124,18 @@ def getRoutes(request,route_type):
 #Function gets json file of dictionary containing all info abut the route
 #Saves all info in DB
 #Returns empty HttpResponse()
+@csrf_exempt
 def save_route(request):
-    json_info = """{
+    route_dic = {}
+    #TODO: make user mdels and save in routes using authors
+    if request.method == "POST":
+        routes_dic = {}
+        print "Get request"
+        print request
+        route_dic = json.loads(request.POST["routes_dic"])[0]
+        print "Read!"
+    else:
+        json_info = """{
         "route_name":"NAMEE",
         "user_name":"walkyuser",
         "route_distance":"0.799",
@@ -171,8 +167,9 @@ def save_route(request):
         }
         ]
         }"""
-    route_dic = json.loads(json_info)
-    #TODO: make user mdels and save in routes using authors
+        route_dic = json.loads(json_info)    
+    print route_dic
+    print route_dic["user_name"]
     author = User.objects.get(username = route_dic["user_name"])
     print "author: ", author
     if author == None:

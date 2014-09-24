@@ -26,7 +26,8 @@ jQuery(document).ready(function() {
 		saving_route.push({
 			route_name : $('#route_name').val(),
 			/*** HARDCODED USER NAME ***/
-			user_name : "ADMIN",
+			user_name : "walkyuser",
+			route_city : "N.N.",
 			route_distance : (totalDistance / 1000).toString(), /* Distance in KM */
 			route_duration : Math.round(totalDuration / 60), /* Duration in minutes */
 			route_type : $('#selected_route_type').data('type'),
@@ -39,15 +40,13 @@ jQuery(document).ready(function() {
 		console.log(saving_route_json);
 
 		$.ajax ({
-			url: "/jsdev/saveroute/",
+			url: "/jsdev/save_route/",
 			type: "POST",
-			data: JSON.stringify(saving_route),
-			contentType: 'application/json; charset=utf-8',
-			dataType: 'json',
+			data: {"routes_dic":JSON.stringify(saving_route),},
 			success : function(data) {
 				alert("Route Saved");
 				// REDIRECTION 
-				//window.location.href = '/jsdev/';
+				window.location.href = '/jsdev/';
 			},
 			error : function(data) {
 				alert("Error. Route is NOT saved");
