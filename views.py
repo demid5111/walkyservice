@@ -45,6 +45,7 @@ def index(request):
 # if there is no route: creates three default
 # renderers in the django template"""
     routeType = "pedestrian"
+    get_route(request,1)
     # print RouteInfo.objects.all().delete()
     routesList = RouteInfo.objects.filter(route_type=routeType)\
                                     .order_by('-route_date')
@@ -130,6 +131,9 @@ def getRoutes(request,route_type):
     return render_to_response('jsdev/index_routes_ext.html', {'routes_dic': res})
   return HttpResponse(topic_list)
 
+#Function gets json file of dictionary containing all info abut the route
+#Saves all info in DB
+#Returns empty HttpResponse()
 def save_route(request):
     json_info = """{
         "route_name":"NAMEE",
@@ -189,6 +193,62 @@ def save_route(request):
         p.save()
         print p
     return HttpResponse()
+
+#Function for getting info from db about route, points, author
+#expects route like: /routes/id
+#Returns rendered in a template json 
+def get_route(request, route_id):
+    # print request.PATH
+    author_name = "walkyuser"
+    # route_id  = 1
+    author = User.objects.get(username = author_name)
+    points = RoutePoints.objects.filter(route_id = route_id)
+    route = RouteInfo.objects.get(route_id = route_id)
+    result_dic = {}
+    route_points = []
+    for point in points:
+        point_dic = {}
+        point_dic["point_id"] = point.point_order
+        point_dic["point_lat"] = point.point_latitude
+        point_dic["point_lng"] = point.point_longitude
+        point_dic["point_name"] = point.point_name
+        point_dic["point_description"] = point.point_description
+        route_points.append(point_dic)
+    
+    # print route_points
+    
+    result_dic["route_name"] = route.route_name
+    result_dic["user_name"] = route.route_author
+    result_dic["route_distance"] = route.route_length
+    result_dic["route_duration"] = route.route_duration
+    result_dic["route_type"] = route.route_type
+    result_dic["route_city"] = route.route_city
+    result_dic["route_likes"] = route.route_likes
+    result_dic["route_points"] = route_points
+
+    dmp = json.dumps(result_dic)
+    print dmp
+    return render_to_response('jsdev/map_from_db.html', \
+                            {"route_info": dmp})
+
+# def showRoute(request, routeId):
+#     # print routeId
+#     routeInfo = RouteInfo.objects.filter(route_id=routeId)
+#     routePoints = RoutePoints.objects.filter(route_id=routeId)
+
+#     js_data = {}
+#     # print allpoints[0].latitude
+
+#     points_array = {}
+#     for i in routePoints:
+#         points_array[i.point_id] = {
+#             "lat": i.point_latitude, "lon": i.point_longitude}
+#         # print i.point_id
+#     # points_array["point_0"] = {'lat':'56.268440' , 'lon':'43.877693'}
+#     # points_array["point_1"] = {'lat':'56.298745' , 'lon':'43.944931'}
+#     # points_array["point_2"] = {'lat':'56.325152' , 'lon':'44.022191'}
+#     # return HttpResponse(json.dumps(js_data), mimetype='application/json')
+#     return render_to_response('jsdev/map_from_db.html', {"obj_as_json": simplejson.dumps(points_array)})
 #############################################################
 #####Deprecated functionality
 #####Needs to be rewritten if important or to be got rid of in future releases
@@ -404,24 +464,7 @@ def authUser(environ):
 
 
 
-def showRoute(request, routeId):
-    # print routeId
-    routeInfo = RouteInfo.objects.filter(route_id=routeId)
-    routePoints = RoutePoints.objects.filter(route_id=routeId)
 
-    js_data = {}
-    # print allpoints[0].latitude
-
-    points_array = {}
-    for i in routePoints:
-        points_array[i.point_id] = {
-            "lat": i.point_latitude, "lon": i.point_longitude}
-        # print i.point_id
-    # points_array["point_0"] = {'lat':'56.268440' , 'lon':'43.877693'}
-    # points_array["point_1"] = {'lat':'56.298745' , 'lon':'43.944931'}
-    # points_array["point_2"] = {'lat':'56.325152' , 'lon':'44.022191'}
-    # return HttpResponse(json.dumps(js_data), mimetype='application/json')
-    return render_to_response('jsdev/map_from_db.html', {"obj_as_json": simplejson.dumps(points_array)})
 
 
 @csrf_exempt

@@ -22,6 +22,6 @@ urlpatterns = patterns('',
     url(r'^save_route/$', views.save_route,name='save_route'),
     # url(r'^map_from_db/$', 'jsdev.views.get_points'),
     # url(r'^map_from_db/$', 'jsdev.views.get_points'),
-    url(r'^routes/(?P<routeId>[0-9])$',views.showRoute, name='showRoute'),
+    url(r'^routes/(?P<route_id>\d+)$',views.get_route, name='get_route'),
     url(r'^(pedestrian|car|bicycle|new|top|around|favourite)',views.getRoutes, name='getRoutes'),
 )

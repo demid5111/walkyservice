@@ -117,6 +117,10 @@ function selectCategory (category) {
     })
 }
 
+
+
+
 $(document).on('click', '.type_btn', selectType);
-// $(document).on('click', '.cssmenu', selectCategory);
+$(document).on('click', '.cssmenu', selectCategory);
+
 
