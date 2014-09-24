@@ -88,6 +88,9 @@ header{
   */
 }
 
+<<<<<<< HEAD
+.clearfix div{
+=======
 .selected_city{
   cursor: pointer;
 }
@@ -119,6 +122,7 @@ header{
 }
 
 .clearfix .button_title{
+>>>>>>> ui_design
   display: block;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -157,7 +161,11 @@ html,body{height:100%;overflow: hidden;}
   height: 100%; 
   position: relative;
 
+<<<<<<< HEAD
+  padding-left: 110px;
+=======
   padding-left: 135px;
+>>>>>>> ui_design
   padding-right: 80px;
 
   background-image: url(../images/bgnew.png);
@@ -370,6 +378,11 @@ html,body{height:100%;overflow: hidden;}
   width: 100%;
 }
 
+<<<<<<< HEAD
+#build_route_button{
+  width: 100%;
+  margin-top: 15px;
+=======
 .build_route_button_container{
   margin-right: 10px;
 }
@@ -382,6 +395,7 @@ html,body{height:100%;overflow: hidden;}
 }
 #save_route_button{
   width: 100%;
+>>>>>>> ui_design
 }
 
 #continue_button{

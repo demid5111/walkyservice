@@ -1,20 +1,25 @@
 var map;
 var markers = [];
+var city = new google.maps.LatLng(56.497884, 43.732238);
+var city_name="";
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 
 var path = new google.maps.MVCArray();
 var line;
 
+var polyline_route;
+var encoded_route;
+
 var totalDistance = 0; //in metres
 var totalDuration = 0; //in seconds
 
 function initialize() {
 	$('#continue_button').addClass('disabled');
-    var NY = new google.maps.LatLng(40.739112,-73.785848);
+    //var city = new google.maps.LatLng(56.297884, 43.932238);
     var mapOptions = {
-        zoom: 16,
-        center: NY,
+        zoom: 12,
+        center: city,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     map = new google.maps.Map(document.getElementById('route_map'),mapOptions);
@@ -53,9 +58,9 @@ function initialize() {
 }
 
 function addMarker(location) {
-	$('#continue_button').addClass('disabled'); //disable Continue button while drawing route
-console.log( path.getAt(path.length-1) );
-console.log(location);
+	$('#save_route_button').addClass('disabled'); //disable Continue button while drawing route
+	console.log( path.getAt(path.length-1) );
+	console.log(location);
 
 	 
 	if( path.length>0 && path.getAt(path.length-1).equals(location) ){
@@ -65,6 +70,9 @@ console.log(location);
 
 	line.setMap(map);//show dashed line
 	directionsDisplay.setMap(null); //hide previous built route
+	if (polyline_route){
+		polyline_route.setMap(null); //hide previous built route
+	}
 
 	path.insertAt(path.length, location);
 /* 	alert("works");
@@ -97,17 +105,20 @@ console.log(location);
     markers.push(marker);
 	//<!-- alert(markers); -->
 
-	marker.setTitle("#" + path.length);
+	//marker.setTitle("#" + path.length);
 
     google.maps.event.addListener(marker, 'rightclick', function() {
-    	$('#continue_button').addClass('disabled');
+    	$('#save_route_button').addClass('disabled');
 		marker.setMap(null);
 		for (var i = 0, I = markers.length; i < I && markers[i] != marker; ++i);
 		markers.splice(i, 1);
       	path.removeAt(i);
     	line.setMap(map);//show dashed line
 		directionsDisplay.setMap(null); //hide previous built route
-      	
+		if (polyline_route){
+			polyline_route.setMap(null); //hide previous built route
+		}
+
 		if (markers.length<2){
 			$('#build_route_button').addClass('disabled');
 		}else{
@@ -117,18 +128,28 @@ console.log(location);
     });
 
     google.maps.event.addListener(marker, 'dragend', function() {
-    	$('#continue_button').addClass('disabled');
+    	$('#save_route_button').addClass('disabled');
 		for (var i = 0, I = markers.length; i < I && markers[i] != marker; ++i);
 		path.setAt(i, marker.getPosition());
 		line.setMap(map);//show dashed line
 		directionsDisplay.setMap(null); //hide previous built route
+		if (polyline_route){
+			polyline_route.setMap(null); //hide previous built route
+		}
 
-    }); 
+		if (markers.length<2){
+			$('#build_route_button').addClass('disabled');
+		}else{
+			$('#build_route_button').removeClass('disabled');
+		}
+
+    });
 	//showRoute(markers);
 
 	if (markers.length<2){
 		$('#build_route_button').addClass('disabled');
 	}else{
+
 		$('#build_route_button').removeClass('disabled');
 	}
 
@@ -188,8 +209,34 @@ function showRoute(markersArray, route_type){
 	  
 		directionsService.route(request, function(result, status) {
 			if (status == google.maps.DirectionsStatus.OK) {
-				directionsDisplay.setMap(map);
-				directionsDisplay.setDirections(result);
+				//directionsDisplay.setMap(map);
+				//directionsDisplay.setDirections(result);
+
+				//**** Route with POLYINES
+			  	polyline_route = new google.maps.Polyline({
+				  path: [],
+				  strokeColor: '#0080ff',
+				  strokeOpacity: 0.8,
+				  strokeWeight: 5
+				});
+				var bounds = new google.maps.LatLngBounds();
+
+
+				var legs = result.routes[0].legs;
+				for (i=0;i<legs.length;i++) {
+				  var steps = legs[i].steps;
+				  for (j=0;j<steps.length;j++) {
+				    var nextSegment = steps[j].path;
+				    for (k=0;k<nextSegment.length;k++) {
+				      polyline_route.getPath().push(nextSegment[k]);
+				      bounds.extend(nextSegment[k]);
+				    }
+				  }
+				}
+				polyline_route.setMap(map);
+				map.fitBounds(bounds);
+				encoded_route = google.maps.geometry.encoding.encodePath( polyline_route.getPath() );
+
 				console.log(result);
 				line.setMap(null);
 				var legs = result.routes[0].legs;
@@ -205,8 +252,8 @@ function showRoute(markersArray, route_type){
 				$('#continue_button').removeClass('disabled');
 			  
 			}else{
-			 alert('SATUS:'+response.status);
-
+			 alert('SATUS:'+ status);
+			 $('#build_route_button').removeClass('disabled');
 			}
 		});
   

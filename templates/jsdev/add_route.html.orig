@@ -20,8 +20,11 @@
 	<link href="{% static "jsdev/css/4sq_item.css" %}" rel="stylesheet">
 	<!-- jQuery UI CSS -->
 	<link rel="stylesheet" href="{% static "jsdev/css/jquery-ui.min.css" %}">
+<<<<<<< HEAD
+=======
 	<link rel="stylesheet" href="{% static "jsdev/css/jquery-ui.structure.min.css" %}">
 	<link rel="stylesheet" href="{% static "jsdev/css/jquery-ui.theme.min.css" %}">
+>>>>>>> ui_design
 	<link href="{% static "jsdev/css/route_timeline.css" %}" rel="stylesheet">
 	<link href="{% static "jsdev/css/walky_icons.css" %}" rel="stylesheet">
 	<!-- Lobster font for the logo -->
@@ -41,6 +44,8 @@
 
   <body>
 
+<<<<<<< HEAD
+=======
   	<!-- Cities Box -->
 
   	<div id="popover_content_wrapper" class="hidden" style="">
@@ -57,6 +62,7 @@
 
   	<!-- End of Cities Box -->
 
+>>>>>>> ui_design
     <div class="container">
 		<header>
 			<div class="row">
@@ -65,6 +71,31 @@
 				 </div>
 				 <div class="col-md-8">
 				 	<div class="route_info text-center">
+<<<<<<< HEAD
+					 	<div class="info_item clearfix content-heading">
+							<!--div id="distance">		</div-->	
+							<button type="button" class="btn btn-default btn-circle" disabled="disabled">
+								<i class="icon-distance"></i>
+							</button>			
+							<div id="distance_value" class="route_distance" data-toggle="tooltip" data-placement="bottom" title="2.0 km">&nbsp N / A &nbsp</div>
+						</div>
+						<div class="info_item clearfix content-heading">						
+							<!--div id="duration">		</div-->
+							<button type="button" class="btn btn-default btn-circle"  disabled="disabled">
+								<i class="icon-time"></i>
+							</button>
+							<div id="duration_value" class="route_duration" data-toggle="tooltip" data-placement="bottom" title="20 min">&nbsp N / A &nbsp</div>
+						</div>
+						<div class="info_item clearfix content-heading">
+							<!-- Route type select -->
+							<div class="btn-group dropdown">							
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+									<span class="concept" id="selected_route_type" data-type="pedestrian">Pedestrian</span> 
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									
+=======
 				 		<div class="info_item clearfix content-heading">
 							<!--div id="distance">		</div-->	
 							<button type="button" class="btn btn-default btn-circle" disabled="disabled">
@@ -80,12 +111,25 @@
 							<div class="dropdown">
 								<a id="selected_route_type" data-type="pedestrian" class="route_type button_title dropdown-toggle" data-toggle="dropdown" > Route type <b class="caret"></b> </a>
 								<ul class="dropdown-menu" role="menu">
+>>>>>>> ui_design
 									<li><a  id="pedestrian_link">Pedestrian</a></li>
 								    <li><a  id="bicycle_link">Bicycle</a></li>
 								    <li><a  id="car_link">Car</a></li>
 								</ul>
 							</div>
 						</div>
+<<<<<<< HEAD
+						<div class="info_item clearfix content-heading">
+							<!-- Build Route button -->
+							<button type="button" class="btn btn-primary disabled" id="build_route_button">Build Route </button>
+						</div>
+						<div class="info_item clearfix content-heading">
+							<!-- Continue Button -->
+							<a class="btn btn-success center-block" id="continue_button" > 
+								Continue <i class="glyphicon glyphicon-chevron-right"> </i> 
+							</a>
+						</div>
+=======
 						<!-- Build Route button -->
 						<div class="info_item clearfix content-heading build_route_button_container">
 							
@@ -128,6 +172,7 @@
 								Continue <i class="glyphicon glyphicon-chevron-right"> </i> 
 							</a>
 						</div-->
+>>>>>>> ui_design
 												
 					</div>
 				</div>
@@ -152,7 +197,11 @@
 							<button type="button" class="btn btn-default btn-circle" disabled="disabled">
 								<i class="icon-user"></i>
 							</button>							
+<<<<<<< HEAD
+							<div class="route_user" data-toggle="tooltip" data-placement="right" title="Vasyaaaaaa">&nbsp Vasyaaaaaa &nbsp</div>
+=======
 							<div class="route_user button_title" data-toggle="tooltip" data-placement="bottom" title="User">&nbsp Vasyaaaaaa &nbsp</div>
+>>>>>>> ui_design
 						</div>
 					</div>
 				</div>
@@ -198,7 +247,11 @@
 											<b> Foursquare Widget </b>
 											<ul>
 												<li> Search venues in chosen city </li>
+<<<<<<< HEAD
+												<li> Drag and Drop founded places to map </li>
+=======
 												<li> Drag and Drop places to map </li>
+>>>>>>> ui_design
 	 										</ul>
 										</div>
 										<!-- Search Form -->
@@ -281,7 +334,11 @@
 
 									<ul class="timeline">
 								        <li class="odd_li" id="point_1"> <!-- timeline-inverted -->
+<<<<<<< HEAD
+								          <div class="timeline-badge"><!--i class="glyphicon glyphicon-check"--></i></div>
+=======
 								          <div class="timeline-badge"><i class="glyphicon glyphicon-map-marker"></i></div>
+>>>>>>> ui_design
 								          <div class="timeline-panel">
 								            <div class="timeline-heading">
 								              <!--h4 class="timeline-title" id="first_point_title">Mussum ipsum cacilds</h4-->
@@ -304,7 +361,11 @@
 							</div> </div>
 
 							<!-- Save Route button -->
+<<<<<<< HEAD
+							<div class="row">
+=======
 							<!--div class="row">
+>>>>>>> ui_design
 								<div class="col-md-2 col-md-offset-1">
 									<div class="center-block" style="padding-left:10px;">
 										<button id="save_route_button" type=submit class="btn btn-success btn-lg center-block disabled"> 
@@ -313,7 +374,11 @@
 										</button>
 									</div>
 								</div>
+<<<<<<< HEAD
+							</div>
+=======
 							</div-->
+>>>>>>> ui_design
 
 						</div>
 					</div>
@@ -331,6 +396,8 @@
 
 
 	</div>
+<<<<<<< HEAD
+=======
 
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -350,6 +417,7 @@
 	    </div>
 	  </div>
 	</div>
+>>>>>>> ui_design
 	
 	<!-- Scroll To Top button -->
 	<div class="scroll-to-top"> </div>	
@@ -370,6 +438,14 @@
 
 	<script src="{% static "jsdev/js/bootstrap.min.js" %}"></script>
 
+<<<<<<< HEAD
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="{% static "jsdev/js/draw_on_map.js" %}"></script>
+    <script src="{% static "jsdev/js/scroll-to-top.js" %}"></script>
+    <script src="{% static "jsdev/js/getPlaces4sq.js" %}"> </script>
+    <script  type="text/javascript" src="{% static "jsdev/js/save_route.js" %}"> </script>
+
+=======
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCw_KEAGVLG7lDHbZLttt4Ttl93Vamu_l4&sensor=false"></script>
     <script src="{% static "jsdev/js/draw_on_map.js" %}"></script>
     <!--script src="{% static "jsdev/js/scroll-to-top.js" %}"></script-->
@@ -403,10 +479,17 @@
 
 	</script>
 
+>>>>>>> ui_design
 	<script>
     	//*******
     	//* Scroll to top script for second step of carousel
     	//*******
+<<<<<<< HEAD
+    	jQuery(document).ready(function() {
+			var offset = 200;
+			var duration = 500;
+			jQuery('#second_step').scroll(function() {
+=======
     	$(function() {
 		    $( ".button_title" ).tooltip();
 		    //$('#selected_city').popover();
@@ -417,6 +500,7 @@
 			var offset = 200;
 			var duration = 500;
 			jQuery('.second_item').scroll(function() {
+>>>>>>> ui_design
 				if (jQuery(this).scrollTop() > offset) {
 				jQuery('.scroll-to-top').fadeIn(duration);
 				} else {
@@ -426,7 +510,11 @@
 
 			jQuery('.scroll-to-top').click(function(event) {
 				event.preventDefault();
+<<<<<<< HEAD
+				jQuery('#second_step').animate({scrollTop: 0}, duration);
+=======
 				jQuery('.second_item').animate({scrollTop: 0}, duration);
+>>>>>>> ui_design
 				return false;
 			})
 		});
@@ -444,7 +532,10 @@
 			});
 
 		  	$('#prev_step_button').hide();
+<<<<<<< HEAD
+=======
 		  	$('#next_step_button').hide();
+>>>>>>> ui_design
 
 		});
 
@@ -457,7 +548,11 @@
 				$('.timeline').show();
 				$('#next_step_button').hide();
 				$('#prev_step_button').show();
+<<<<<<< HEAD
+				if (jQuery('#second_step').scrollTop() > 200) {
+=======
 				if (jQuery('.second_item').scrollTop() > 200) {
+>>>>>>> ui_design
 					jQuery('.scroll-to-top').fadeIn(300);
 				}
 			});
@@ -478,6 +573,15 @@
     	//* Route type select
     	//***************
     	$('#pedestrian_link').click(function(){
+<<<<<<< HEAD
+		  $('#selected_route_type').text("Pedestrian").data('type', "pedestrian");
+		});
+		$('#bicycle_link').click(function(){
+		  $('#selected_route_type').text("Bicycle").data('type', "bicycle");
+		});
+    	$('#car_link').click(function(){
+		  $('#selected_route_type').text("Car").data('type', "car");
+=======
 		  $('#selected_route_type').text('Pedestrian').append('<b class="caret">').data('type', "pedestrian");
 		  $('.route_type_button').find('i').removeClass().addClass('glyphicon glyphicon-hand-right');
 		});
@@ -488,6 +592,7 @@
     	$('#car_link').click(function(){
 		  $('#selected_route_type').text('Car').append('<b class="caret">').data('type', "car");
 		  $('.route_type_button').find('i').removeClass().addClass('glyphicon glyphicon-hand-left');
+>>>>>>> ui_design
 		});
 
     	//***************
@@ -504,6 +609,15 @@
     		create_timeline();
 			enable_timeline_validation();
 			$('.timeline').show();
+<<<<<<< HEAD
+    		
+    	});
+
+    	//***************
+		//* Steps animation and Continue button handler
+		//***************
+		jQuery(function($) {
+=======
 
 			$('#next_step_button').show();
 			//show_save_route_button();
@@ -541,6 +655,7 @@
 		//* Steps animation and Continue button handler (DEPRECATED FUNCTION)
 		//***************
 		/*jQuery(function($) {
+>>>>>>> ui_design
 
 		    $('#continue_button').click(function() {
 		    	
@@ -554,7 +669,11 @@
 		    });
 
 		});
+<<<<<<< HEAD
+
+=======
 		*/
+>>>>>>> ui_design
 
 	//***************
 	//* Create timeline from pushpins dynamicly 
@@ -562,6 +681,12 @@
 	function create_timeline(){
 
 		$('.timeline li:not(:first)').remove();
+<<<<<<< HEAD
+
+		for (var i = 1; i < markers.length; i++) {
+			$new_li = $("#point_1").clone();
+			$new_li.attr("id", "point_"+(i+1) );
+=======
 		$("#point_1").find('.point_title').val('');
 		$("#point_1").find('.point_description').val('');
 
@@ -570,13 +695,17 @@
 			$new_li = $("#point_1").clone();
 			$new_li.attr("id", "point_"+(i+1) );
 			$new_li.find('.point_title').val("Waypoint " + (i+1));
+>>>>>>> ui_design
 			if(Math.abs(i) % 2 == 1){
 				$new_li.addClass('timeline-inverted');
 			} 
 			$('.timeline').append($new_li);
 		};
+<<<<<<< HEAD
+=======
 		$('.timeline li:first-child .timeline-badge').find('i').removeClass().addClass("icon-start");
 		$('.timeline li:last-child .timeline-badge').find('i').removeClass().addClass("icon-finish");
+>>>>>>> ui_design
 	}
 
 

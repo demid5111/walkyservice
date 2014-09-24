@@ -23,7 +23,7 @@ from django.core.context_processors import csrf
 from django.contrib.auth.forms import UserCreationForm
 from jsdev.forms import MyRegistrationForm
 from collections import OrderedDict
-
+from django.utils.safestring import mark_safe
 
 def routes2dic(routes_list):
   """Function gets list of RouteInfo instances and convert it to the dictionary,
@@ -85,7 +85,10 @@ def index(request):
     #   i.save()
     routes_dic = routes2dic(routesList)
     print routes_dic
-    return render(request, 'jsdev/index.html', {"routes_dic": routes_dic})
+    return render(request, 'jsdev/index.html', \
+        {"routes_dic": routes_dic, \
+        "is_auth":request.user.is_authenticated(), \
+        "username":request.user})
 
 def getRoutes(request,route_type):
   # """Function gets all objects of routes of requested type 
@@ -128,6 +131,7 @@ def getRoutes(request,route_type):
     #   routes_dic[i] = res[i]
     # print routes_dic
     topic_list = json.dumps({'routes_dic': routes_dic})
+    print routesList
     return render_to_response('jsdev/index_routes_ext.html', {'routes_dic': res})
   return HttpResponse(topic_list)
 
@@ -142,6 +146,7 @@ def save_route(request):
         "route_duration":10,
         "route_type":"pedestrian",
         "route_city":"N.N.",
+        "encoded_path":"imuvI{`qjGMHi@^??CqAIiFMkHGkCGeFMyHKqGKmI_@qXCgAGsDKkHK{F?KKwFK{IE{EGcDCmCC}CAYAcBCwCG{DIuEGwA?EGa@MuHIuFIuFGiGEeE??HODGHGLIRG??LJNPHTFXH`@NnA??FSDOFI@C@A@?@AB?HAN?R@???z@?N?^AVAP?R?L???M?S@Q@W?_@???O?{@??SAO?I@C?A@A?A@ABGHENGR??OoAIa@GYIUOQMKQQGGIIKMO]??OkKGsEKcHOaKMsIMyKI_GAaAI_FCsACkCQoLIqFCyBEqB",
         "route_points":[
         {
         "point_id":0,
@@ -179,7 +184,8 @@ def save_route(request):
                      route_type=route_dic["route_type"],
                      route_length=route_dic["route_distance"],
                      route_duration=route_dic["route_duration"],
-                     route_likes = 0)
+                     route_likes = 0,
+                     route_hash = route_dic["encoded_path"])
     route.save()
     print "route: ", route.route_type
     route_points = []
@@ -201,9 +207,11 @@ def get_route(request, route_id):
     # print request.PATH
     author_name = "walkyuser"
     # route_id  = 1
-    author = User.objects.get(username = author_name)
+    
     points = RoutePoints.objects.filter(route_id = route_id)
+
     route = RouteInfo.objects.get(route_id = route_id)
+    author = User.objects.get(id = route.route_author)
     result_dic = {}
     route_points = []
     for point in points:
@@ -213,42 +221,29 @@ def get_route(request, route_id):
         point_dic["point_lng"] = point.point_longitude
         point_dic["point_name"] = point.point_name
         point_dic["point_description"] = point.point_description
+        
         route_points.append(point_dic)
     
     # print route_points
     
     result_dic["route_name"] = route.route_name
-    result_dic["user_name"] = route.route_author
+    result_dic["user_name"] = author.username
     result_dic["route_distance"] = route.route_length
     result_dic["route_duration"] = route.route_duration
     result_dic["route_type"] = route.route_type
     result_dic["route_city"] = route.route_city
     result_dic["route_likes"] = route.route_likes
+    result_dic["encoded_path"] = route.route_hash
     result_dic["route_points"] = route_points
 
     dmp = json.dumps(result_dic)
     print dmp
-    return render_to_response('jsdev/map_from_db.html', \
-                            {"route_info": dmp})
+    return render(request,'jsdev/route_view.html', \
+                            {"result_dic": mark_safe(dmp)})
 
-# def showRoute(request, routeId):
-#     # print routeId
-#     routeInfo = RouteInfo.objects.filter(route_id=routeId)
-#     routePoints = RoutePoints.objects.filter(route_id=routeId)
-
-#     js_data = {}
-#     # print allpoints[0].latitude
-
-#     points_array = {}
-#     for i in routePoints:
-#         points_array[i.point_id] = {
-#             "lat": i.point_latitude, "lon": i.point_longitude}
-#         # print i.point_id
-#     # points_array["point_0"] = {'lat':'56.268440' , 'lon':'43.877693'}
-#     # points_array["point_1"] = {'lat':'56.298745' , 'lon':'43.944931'}
-#     # points_array["point_2"] = {'lat':'56.325152' , 'lon':'44.022191'}
-#     # return HttpResponse(json.dumps(js_data), mimetype='application/json')
-#     return render_to_response('jsdev/map_from_db.html', {"obj_as_json": simplejson.dumps(points_array)})
+def addRoutePage(request):
+    #return render(request, 'jsdev/addRoute.html', {})
+    return render(request, 'jsdev/add_route.html', {})
 #############################################################
 #####Deprecated functionality
 #####Needs to be rewritten if important or to be got rid of in future releases
@@ -282,44 +277,10 @@ def get_points(request):
     return render_to_response('jsdev/map_from_db.html', {"obj_as_json": simplejson.dumps(points_array)})
 
 
-def addRoutePage(request):
-    return render(request, 'jsdev/add_route.html', {})
 
 
-@csrf_exempt
-def addRoute(environ):
-    data = {}
-    print "in addRoutes"
 
-    route_name = ""
-    route_type = ""
-    route_likes = ""
-    route_city = ""
-    route_length = ""
-    route_duration = ""
-    points = {}
-    conn = sqlite3.connect('db.sqlite3')
-    if environ.is_ajax():
-        print "is ajax"
-        jData = json.loads(environ.body)
-        for i in jData.keys():
-            data[i] = jData[i]
-        # print data["route_name"]
-        route_name = data["route_name"]
-        route_type = data["route_type"]
-        route_likes = data["route_likes"]
-        route_city = data["route_city"]
-        route_length = data["route_length"]
-        route_duration = data["route_duration"]
-        for i in data["points"].keys():
-            print "Key = ",  i,  " Latitude = ", data["points"][i]['lat'], " Longitude = ", data["points"][i]['lon']
 
-        # sqlQuery = "INSERT INTO jsdev_routeinfo(route_name, route_likes, route_city, route_length, route_duration) values(" + route_name + "," + route_likes + "," + route_city + "," + route_length + "," + route_duration + ")"
-        # conn.execute(sqlQuery)
-        # conn.commit()
-        # conn.close
-    # return render(environ,'jsdev/main_page.html', {})
-    return HttpResponse()
 
 
 @csrf_exempt
@@ -366,7 +327,8 @@ def loggedin(request):
 
 def logout(request):
   auth.logout(request)
-  return render_to_response('jsdev/logout.html')
+  #return render_to_response('jsdev/logout.html')
+  return HttpResponseRedirect('../')
 
 def invalid(request):
   return render_to_response('jsdev/invalid.html')  
@@ -550,4 +512,5 @@ def showRoute(request, routeId):
     # points_array["point_1"] = {'lat':'56.298745' , 'lon':'43.944931'}
     # points_array["point_2"] = {'lat':'56.325152' , 'lon':'44.022191'}
     # return HttpResponse(json.dumps(js_data), mimetype='application/json')
-    return render_to_response('jsdev/map_from_db.html', {"obj_as_json": simplejson.dumps(points_array)})
+    #return render_to_response('jsdev/map_from_db.html', {"obj_as_json": simplejson.dumps(points_array)})
+    return render_to_response('jsdev/route_view.html', {"obj_as_json": simplejson.dumps(points_array)})

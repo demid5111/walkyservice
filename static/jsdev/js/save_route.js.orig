@@ -30,7 +30,10 @@ jQuery(document).ready(function() {
 			route_distance : (totalDistance / 1000).toString(), /* Distance in KM */
 			route_duration : Math.round(totalDuration / 60), /* Duration in minutes */
 			route_type : $('#selected_route_type').data('type'),
+<<<<<<< HEAD
+=======
 			encoded_path : encoded_route,
+>>>>>>> ui_design
 			route_points : route_points
 		}); 
 			
@@ -39,7 +42,11 @@ jQuery(document).ready(function() {
 		console.log(saving_route_json);
 
 		$.ajax ({
+<<<<<<< HEAD
 			url: "/jsdev/saveroute/",
+=======
+			url: "/jsdev/addNewRoute/",
+>>>>>>> ui_design
 			type: "POST",
 			data: JSON.stringify(saving_route),
 			contentType: 'application/json; charset=utf-8',

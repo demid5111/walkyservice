@@ -1,10 +1,18 @@
 @font-face {
 	font-family: 'walky_icons';
+<<<<<<< HEAD
+	src:url('../fonts/walky_icons.eot?-tw83cc');
+	src:url('../fonts/walky_icons.eot?#iefix-tw83cc') format('embedded-opentype'),
+		url('../fonts/walky_icons.woff?-tw83cc') format('woff'),
+		url('../fonts/walky_icons.ttf?-tw83cc') format('truetype'),
+		url('../fonts/walky_icons.svg?-tw83cc#walky_icons') format('svg');
+=======
 	src:url('../fonts/walky_icons.eot?m68p2z');
 	src:url('../fonts/walky_icons.eot?#iefixm68p2z') format('embedded-opentype'),
 		url('../fonts/walky_icons.woff?m68p2z') format('woff'),
 		url('../fonts/walky_icons.ttf?m68p2z') format('truetype'),
 		url('../fonts/walky_icons.svg?m68p2z#walky_icons') format('svg');
+>>>>>>> ui_design
 	font-weight: normal;
 	font-style: normal;
 }
@@ -53,9 +61,12 @@
 .icon-user:before {
 	content: "\e609";
 }
+<<<<<<< HEAD
+=======
 .icon-city:before {
 	content: "\e60d";
 }
+>>>>>>> ui_design
 .icon-envelope:before {
 	content: "\e60a";
 }
@@ -68,6 +79,15 @@
 .icon-user2:before {
 	content: "\e613";
 }
+<<<<<<< HEAD
+.icon-key:before {
+	content: "\e60d";
+}
+.icon-key2:before {
+	content: "\e60e";
+}
+=======
+>>>>>>> ui_design
 .icon-lock:before {
 	content: "\e60f";
 }
