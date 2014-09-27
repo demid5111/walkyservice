@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.template import loader
 from django.template.loader import render_to_string
-from django.utils import simplejson
+import json
 import sqlite3
 from jsdev.models import RouteInfo, RouteUser, RoutePoints
 import random
@@ -24,7 +24,7 @@ from django.core.context_processors import csrf
 from django.contrib.auth.forms import UserCreationForm
 from jsdev.forms import MyRegistrationForm
 from collections import OrderedDict
-
+from django.utils.safestring import mark_safe
 
 def routes2dic(routes_list):
   """Function gets list of RouteInfo instances and convert it to the dictionary,
@@ -46,6 +46,7 @@ def index(request):
 # if there is no route: creates three default
 # renderers in the django template"""
     routeType = "pedestrian"
+    get_route(request,1)
     # print RouteInfo.objects.all().delete()
     routesList = RouteInfo.objects.filter(route_type=routeType)\
                                     .order_by('-route_date')
@@ -85,7 +86,10 @@ def index(request):
     #   i.save()
     routes_dic = routes2dic(routesList)
     print routes_dic
-    return render(request, 'jsdev/index.html', {"routes_dic": routes_dic, "is_auth":request.user.is_authenticated(), "username":request.user})
+    return render(request, 'jsdev/index.html', \
+        {"routes_dic": routes_dic, \
+        "is_auth":request.user.is_authenticated(), \
+        "username":request.user})
 
 def getRoutes(request,route_type):
   # """Function gets all objects of routes of requested type 
@@ -109,37 +113,36 @@ def getRoutes(request,route_type):
     elif category_type == "new":
       routesList = RouteInfo.objects.filter(route_type=route_type)\
                                     .order_by('-route_date')
-      # i = 0
-      # for route in routesList:
-      #   # print route.route_id
-      #   sort_order[route.route_id] = i
-      #   i += 1
-      # print "sort order: ",sort_order
+      
     res =  routes2dic(routesList)
-    # print res
-    # res_list = sorted(routes2dic(routesList).keys(), \
-    #                     key=lambda x:sort_order[x])
-    # print res_list
-    # for i in res_list:
-    #   if i not in routes_dic.keys():
-    #     routes_dic[i] = {}
-    #   print routes_dic
-    #   print res[i]  
-    #   routes_dic[i] = res[i]
-    # print routes_dic
+    
     topic_list = json.dumps({'routes_dic': routes_dic})
     print routesList
     return render_to_response('jsdev/index_routes_ext.html', {'routes_dic': res})
   return HttpResponse(topic_list)
 
+#Function gets json file of dictionary containing all info abut the route
+#Saves all info in DB
+#Returns empty HttpResponse()
+@csrf_exempt
 def save_route(request):
-    json_info = """{
+    route_dic = {}
+    #TODO: make user mdels and save in routes using authors
+    if request.method == "POST":
+        routes_dic = {}
+        print "Get request"
+        print request
+        route_dic = json.loads(request.POST["routes_dic"])[0]
+        print "Read!"
+    else:
+        json_info = """{
         "route_name":"NAMEE",
         "user_name":"walkyuser",
         "route_distance":"0.799",
         "route_duration":10,
         "route_type":"pedestrian",
         "route_city":"N.N.",
+        "encoded_path":"imuvI{`qjGMHi@^??CqAIiFMkHGkCGeFMyHKqGKmI_@qXCgAGsDKkHK{F?KKwFK{IE{EGcDCmCC}CAYAcBCwCG{DIuEGwA?EGa@MuHIuFIuFGiGEeE??HODGHGLIRG??LJNPHTFXH`@NnA??FSDOFI@C@A@?@AB?HAN?R@???z@?N?^AVAP?R?L???M?S@Q@W?_@???O?{@??SAO?I@C?A@A?A@ABGHENGR??OoAIa@GYIUOQMKQQGGIIKMO]??OkKGsEKcHOaKMsIMyKI_GAaAI_FCsACkCQoLIqFCyBEqB",
         "route_points":[
         {
         "point_id":0,
@@ -164,8 +167,9 @@ def save_route(request):
         }
         ]
         }"""
-    route_dic = json.loads(json_info)
-    #TODO: make user mdels and save in routes using authors
+        route_dic = json.loads(json_info)    
+    print route_dic
+    print route_dic["user_name"]
     author = User.objects.get(username = route_dic["user_name"])
     print "author: ", author
     if author == None:
@@ -177,7 +181,8 @@ def save_route(request):
                      route_type=route_dic["route_type"],
                      route_length=route_dic["route_distance"],
                      route_duration=route_dic["route_duration"],
-                     route_likes = 0)
+                     route_likes = 0,
+                     route_hash = route_dic["encoded_path"])
     route.save()
     print "route: ", route.route_type
     route_points = []
@@ -191,6 +196,51 @@ def save_route(request):
         p.save()
         print p
     return HttpResponse()
+
+#Function for getting info from db about route, points, author
+#expects route like: /routes/id
+#Returns rendered in a template json 
+def get_route(request, route_id):
+    # print request.PATH
+    author_name = "walkyuser"
+    # route_id  = 1
+    
+    points = RoutePoints.objects.filter(route_id = route_id)
+
+    route = RouteInfo.objects.get(route_id = route_id)
+    author = User.objects.get(id = route.route_author)
+    result_dic = {}
+    route_points = []
+    for point in points:
+        point_dic = {}
+        point_dic["point_id"] = point.point_order
+        point_dic["point_lat"] = point.point_latitude
+        point_dic["point_lng"] = point.point_longitude
+        point_dic["point_name"] = point.point_name
+        point_dic["point_description"] = point.point_description
+        
+        route_points.append(point_dic)
+    
+    # print route_points
+    
+    result_dic["route_name"] = route.route_name
+    result_dic["user_name"] = author.username
+    result_dic["route_distance"] = route.route_length
+    result_dic["route_duration"] = route.route_duration
+    result_dic["route_type"] = route.route_type
+    result_dic["route_city"] = route.route_city
+    result_dic["route_likes"] = route.route_likes
+    result_dic["encoded_path"] = route.route_hash
+    result_dic["route_points"] = route_points
+
+    dmp = json.dumps(result_dic)
+    print dmp
+    return render(request,'jsdev/route_view.html', \
+                            {"result_dic": mark_safe(dmp)})
+
+def addRoutePage(request):
+    #return render(request, 'jsdev/addRoute.html', {})
+    return render(request, 'jsdev/add_route.html', {})
 #############################################################
 #####Deprecated functionality
 #####Needs to be rewritten if important or to be got rid of in future releases
@@ -229,40 +279,8 @@ def addRoutePage(request):
     return render(request, 'jsdev/add_route.html', {})
 
 
-@csrf_exempt
-def addRoute(environ):
-    data = {}
-    print "in addRoutes"
 
-    route_name = ""
-    route_type = ""
-    route_likes = ""
-    route_city = ""
-    route_length = ""
-    route_duration = ""
-    points = {}
-    conn = sqlite3.connect('db.sqlite3')
-    if environ.is_ajax():
-        print "is ajax"
-        jData = json.loads(environ.body)
-        for i in jData.keys():
-            data[i] = jData[i]
-        # print data["route_name"]
-        route_name = data["route_name"]
-        route_type = data["route_type"]
-        route_likes = data["route_likes"]
-        route_city = data["route_city"]
-        route_length = data["route_length"]
-        route_duration = data["route_duration"]
-        for i in data["points"].keys():
-            print "Key = ",  i,  " Latitude = ", data["points"][i]['lat'], " Longitude = ", data["points"][i]['lon']
 
-        # sqlQuery = "INSERT INTO jsdev_routeinfo(route_name, route_likes, route_city, route_length, route_duration) values(" + route_name + "," + route_likes + "," + route_city + "," + route_length + "," + route_duration + ")"
-        # conn.execute(sqlQuery)
-        # conn.commit()
-        # conn.close
-    # return render(environ,'jsdev/main_page.html', {})
-    return HttpResponse()
 
 
 @csrf_exempt
@@ -417,24 +435,7 @@ def authUser(environ):
 
 
 
-def showRoute(request, routeId):
-    # print routeId
-    routeInfo = RouteInfo.objects.filter(route_id=routeId)
-    routePoints = RoutePoints.objects.filter(route_id=routeId)
 
-    js_data = {}
-    # print allpoints[0].latitude
-
-    points_array = {}
-    for i in routePoints:
-        points_array[i.point_id] = {
-            "lat": i.point_latitude, "lon": i.point_longitude}
-        # print i.point_id
-    # points_array["point_0"] = {'lat':'56.268440' , 'lon':'43.877693'}
-    # points_array["point_1"] = {'lat':'56.298745' , 'lon':'43.944931'}
-    # points_array["point_2"] = {'lat':'56.325152' , 'lon':'44.022191'}
-    # return HttpResponse(json.dumps(js_data), mimetype='application/json')
-    return render_to_response('jsdev/map_from_db.html', {"obj_as_json": simplejson.dumps(points_array)})
 
 
 @csrf_exempt

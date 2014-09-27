@@ -264,7 +264,7 @@
 			$('.route_user').text(json_obj['user_name']).prop('title', json_obj['user_name']);
 			$('.route_distance').text(json_obj['route_distance'] + ' km').prop('title', json_obj['route_distance'] + ' km');
 			$('.route_duration').text(json_obj['route_duration'] + ' min').prop('title', json_obj['route_duration'] + ' min');
-			
+			$('.route_likes').text(json_obj['route_likes']).prop('title', json_obj['route_likes']);
 			$('.route_title').text(json_obj['route_name']);
 			create_timeline();
 	  	});
@@ -355,39 +355,39 @@
     <!--script src="js/scroll-to-top.js"></script-->
     <!--script src="https://maps.gstatic.com/intl/ru_ru/mapfiles/api-3/17/8/main.js" type="text/javascript"></script-->
     <script type="text/javascript" src="{% static "jsdev/js/route_from_db.js" %}"></script>
-    <script> var json_obj = //[
-								{
-								"route_name":"qw",
-								"user_name":"ADMIN",
-								"route_distance":"3.766",
-								"route_duration":47,
-								"route_type":"pedestrian",
-								"encoded_path":"imuvI{`qjGMHi@^??CqAIiFMkHGkCGeFMyHKqGKmI_@qXCgAGsDKkHK{F?KKwFK{IE{EGcDCmCC}CAYAcBCwCG{DIuEGwA?EGa@MuHIuFIuFGiGEeE??HODGHGLIRG??LJNPHTFXH`@NnA??FSDOFI@C@A@?@AB?HAN?R@???z@?N?^AVAP?R?L???M?S@Q@W?_@???O?{@??SAO?I@C?A@A?A@ABGHENGR??OoAIa@GYIUOQMKQQGGIIKMO]??OkKGsEKcHOaKMsIMyKI_GAaAI_FCsACkCQoLIqFCyBEqB",
-								"route_points":[
-								{
-								"point_id":0,
-								"point_lat":56.31203508628452,
-								"point_lng":43.83768081665039,
-								"point_name":"Waypoint 1",
-								"point_description":""
-								},
-								{
-								"point_id":1,
-								"point_lat":56.31260637415924,
-								"point_lng":43.87063980102539,
-								"point_name":"Waypoint 2",
-								"point_description":""
-								},
-								{
-								"point_id":2,
-								"point_lat":56.31451060536088,
-								"point_lng":43.891239166259766,
-								"point_name":"Waypoint 3",
-								"point_description":""
-								}
-								]
-								}
-							//]
+    <script> var json_obj = {{result_dic}}
+							// 	{
+							// 	"route_name":"qw",
+							// 	"user_name":"ADMIN",
+							// 	"route_distance":"3.766",
+							// 	"route_duration":47,
+							// 	"route_type":"pedestrian",
+							// 	"encoded_path":"imuvI{`qjGMHi@^??CqAIiFMkHGkCGeFMyHKqGKmI_@qXCgAGsDKkHK{F?KKwFK{IE{EGcDCmCC}CAYAcBCwCG{DIuEGwA?EGa@MuHIuFIuFGiGEeE??HODGHGLIRG??LJNPHTFXH`@NnA??FSDOFI@C@A@?@AB?HAN?R@???z@?N?^AVAP?R?L???M?S@Q@W?_@???O?{@??SAO?I@C?A@A?A@ABGHENGR??OoAIa@GYIUOQMKQQGGIIKMO]??OkKGsEKcHOaKMsIMyKI_GAaAI_FCsACkCQoLIqFCyBEqB",
+							// 	"route_points":[
+							// 	{
+							// 	"point_id":0,
+							// 	"point_lat":56.31203508628452,
+							// 	"point_lng":43.83768081665039,
+							// 	"point_name":"Waypoint 1",
+							// 	"point_description":""
+							// 	},
+							// 	{
+							// 	"point_id":1,
+							// 	"point_lat":56.31260637415924,
+							// 	"point_lng":43.87063980102539,
+							// 	"point_name":"Waypoint 2",
+							// 	"point_description":""
+							// 	},
+							// 	{
+							// 	"point_id":2,
+							// 	"point_lat":56.31451060536088,
+							// 	"point_lng":43.891239166259766,
+							// 	"point_name":"Waypoint 3",
+							// 	"point_description":""
+							// 	}
+							// 	]
+							// 	}
+							// //]
 	</script>
   </body>
 </html>
