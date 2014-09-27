@@ -59,6 +59,7 @@ function initialize() {
 
 function addMarker(location) {
 	$('#save_route_button').addClass('disabled'); //disable Continue button while drawing route
+	$('#next_step_button').hide(); //disable sliding right to timeline unless route is built
 	console.log( path.getAt(path.length-1) );
 	console.log(location);
 
@@ -108,7 +109,8 @@ function addMarker(location) {
 	//marker.setTitle("#" + path.length);
 
     google.maps.event.addListener(marker, 'rightclick', function() {
-    	$('#save_route_button').addClass('disabled');
+    	$('#save_route_button').addClass('disabled'); 
+    	$('#next_step_button').hide(); //disable sliding right to timeline unless route is built
 		marker.setMap(null);
 		for (var i = 0, I = markers.length; i < I && markers[i] != marker; ++i);
 		markers.splice(i, 1);
@@ -129,6 +131,7 @@ function addMarker(location) {
 
     google.maps.event.addListener(marker, 'dragend', function() {
     	$('#save_route_button').addClass('disabled');
+    	$('#next_step_button').hide(); //disable sliding right to timeline unless route is built
 		for (var i = 0, I = markers.length; i < I && markers[i] != marker; ++i);
 		path.setAt(i, marker.getPosition());
 		line.setMap(map);//show dashed line

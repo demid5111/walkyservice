@@ -133,6 +133,10 @@ h2{
   display: inline;
 }
 
+#cssmenu li a{
+  cursor: pointer;
+}
+
 #thumbnail_wrapper{
   margin: 0 -3px 0 -3px;
 }

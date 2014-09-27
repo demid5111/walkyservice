@@ -10,6 +10,7 @@ from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.template import loader
+from django.template.loader import render_to_string
 from django.utils import simplejson
 import sqlite3
 from jsdev.models import RouteInfo, RouteUser, RoutePoints
@@ -291,16 +292,25 @@ def login(request):
   c.update(csrf(request))
   return render_to_response('jsdev/marat_login.html', c)
 
-def auth_view(request):
+@csrf_exempt
+def auth_view(request):  
   username = request.POST.get('username', '')  
   password = request.POST.get('password', '') 
+  print username
+  print password
+
   user = auth.authenticate(username = username,  password = password)
 
   if user is not None:
     auth.login(request, user)
-    return HttpResponseRedirect('../loggedin') 
+    t = render_to_string('jsdev/login_box.html', {"is_auth":request.user.is_authenticated(), "username":request.user})
+    success_response = json.dumps({"response_code":200, "message":"user authenticated", "template":t});
+    #return render_to_response("jsdev/index.html", {"is_auth":request.user.is_authenticated(), "username":request.user}, context_instance = RequestContext(request))
+    return HttpResponse(success_response)
   else:
-    return HttpResponseRedirect('../invalid')
+    error_response = json.dumps({"response_code":-100, "message":"Error: invalid login or password"});
+    #return render_to_response("jsdev/index.html", {"is_auth":request.user.is_authenticated(), "username":request.user}, context_instance = RequestContext(request))
+    return HttpResponse(error_response)
 
 
 def loggedin(request):

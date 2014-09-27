@@ -66,8 +66,8 @@
 	      </div>
 	      <div class="modal-body">
 	      		<div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
-	        	<form action="auth_view/" method="post" role="form">
-	        		{% csrf_token %}
+	        	<form id = "login_form" action="auth_view/" method="post" role="form">
+	        		{% csrf_token %} 
 				    <div class="form-group">
 				      <label for="user">User</label>
 				      <input type="text" class="form-control" name = "username" id="username" placeholder="User">
@@ -79,8 +79,8 @@
 		                	<input id="login-remember" type="checkbox" name="remember"> Remember me
 		                </label>
                   	</div-->
-				    <button type="submit" class="btn btn-primary center-block">Log In</button>
-			  	</form>
+				    <button type = "submit" class="btn btn-primary center-block">Log In</button>
+			  	<!-- </form> -->
 	      </div>
 	      <div class="modal-footer">
 	      	<div class="register_label">
@@ -108,7 +108,7 @@
 					
 				</div>
 				<div class="col-md-2 col-sm-2 col-md-offset-1 col-sm-offset-1">
-					{%if is_auth%}
+					{%if is_auth %}
 						<div class="auth_user_container text-center"> 
 							<div class="info_item clearfix content-heading">
 								<!--div id="user">		</div-->
@@ -120,7 +120,7 @@
 						</div>
 
 						<!-- Logout popover -->
-					  	<div id="popover_content_wrapper" class="hidden" style="">
+					  	<div id="popover_content_wrapper" data-trigger="focus" class="hidden" style="">
 						    <a class="btn btn-default center-block" href="logout/"> Log out </a>						
 						</div>
 					  	<!-- End of Logout popover -->
@@ -152,7 +152,11 @@
 				<ul>
 				   <li class='active' id="top" onClick="selectCategory(this.id)"><a href='#'><span>Top</span></a></li>
 				<li id="new" onClick="selectCategory(this.id)"><a href='#' ><span>New</span></a></li>
-				<li><a href='add' ><span>Add</span></a></li>
+				{%if is_auth %}
+					<li id="add"><a href='add' ><span>Add</span></a></li>
+				{%else%}
+					<li id="add"><a onClick="force_login()" ><span>Add</span></a></li>
+				{%endif%}
 				<li id="around" onClick="selectCategory(this.id)"><a href='#' id="around_category"><span>Around Me</span></a></li>
 				<li class='last' id="favourite" onClick="selectCategory(this.id)"><a href='#'><span>Favourite</span></a></li>
 				</ul>
@@ -175,35 +179,12 @@
 		</div>		
 						
 												
-						
-<!-- 					</li>
-					
-					<li><a href="#">English</a></li>
-					<li><a href="#">Art and Design</a></li>
-					<li><a href="#">Drama</a></li>
-					<li><a href="#">Music</a></li>
-					<li><a href="#">Physics</a></li>
-					<li><a href="#">Chemistry</a></li>
-					<li><a href="#">Biology</a></li>
-					<li><a href="#">Home economics</a></li>
-					<li><a href="#">Physical Education</a></li>
-					<li><a href="#">Computing Science</a></li>
-					<li><a href="#">French</a></li>
-					<li><a href="#">German</a></li>
-					<li><a href="#">Mandarin</a></li>
-					<li><a href="#">Religious Education</a></li>
-					<li><a href="#">Modern Studies</a></li>
-					<li><a href="#">Geography</a></li>
-					<li><a href="#">History</a></li>
-					<li><a href="#">Creative computing</a></li>
-					<li><a href="#">Craft, Design and Technology</a></li>
-				</ul>
- -->			</div>
-		
 		</div>
+		
+	</div>
 		
 
-		</div>
+	</div>
 	
 	<div class="scroll-to-top"> </div>	
 
@@ -259,6 +240,7 @@
 
     <script src="{% static "jsdev/js/bootstrap.min.js" %}"></script>
 	<script src="{% static "jsdev/js/fixNavigation.js" %}"></script>
+	<script src = "{% static "jsdev/js/loginelo.js" %}"></script> 
 
 	<!-- Login Script -->
 	<script>
@@ -268,9 +250,12 @@
 		 $(document).ready(function() 
 		 {
 		    $('#cssmenu ul li').click(function(e) 
-		    { 
-		    	$('#cssmenu ul li').removeClass('active');
-		    	$(this).addClass('active');
+		    {
+		    	if ($(this).attr('id') != "add"){
+		    		$('#cssmenu ul li').removeClass('active');
+		    		$(this).addClass('active');
+		    	}
+		    	
 		    });
 		 });
 
