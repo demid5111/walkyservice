@@ -19,8 +19,7 @@
     <link href="{% static "jsdev/css/hover.css" %}" rel="stylesheet">
 	<link href="{% static "jsdev/css/jumbotron.css" %}" rel="stylesheet">
 	<link href="{% static "jsdev/css/walky_icons.css" %}" rel="stylesheet">
-	<!-- Lobster font for the logo -->
-	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+
 	<!--link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'-->
 	<!-- Flexslider -->
 	<link rel="stylesheet" href="{% static "jsdev/css/flexslider.css" %}" type="text/css">
@@ -53,7 +52,7 @@
   			<div class="type_car type_btn">  		</div>
   		</a>
   	</div>
-  	<!-- end of left panel -->
+  	<!-- End of left panel -->
 
   	<!-- Login form -->
   	<!-- Modal -->
@@ -108,25 +107,8 @@
 					
 				</div>
 				<div class="col-md-2 col-sm-2 col-md-offset-1 col-sm-offset-1">
-					{%if is_auth %}
-						<div class="auth_user_container text-center"> 
-							<div class="info_item clearfix content-heading">
-								<!--div id="user">		</div-->
-								<button type="button" class="btn btn-default btn-circle" disabled="disabled">
-									<i class="icon-user"></i>
-								</button>							
-								<a class="username button_title"> {{username}}</a>
-							</div>
-						</div>
-
-						<!-- Logout popover -->
-					  	<div id="popover_content_wrapper" data-trigger="focus" class="hidden" style="">
-						    <a class="btn btn-default center-block" href="logout/"> Log out </a>						
-						</div>
-					  	<!-- End of Logout popover -->
-					{%else%}
-						<a class="btn btn-primary" role="button" id="login_button" data-toggle="modal" data-target="#loginModal"> Log In or Sign Up </a>
-					{%endif%}
+					<!-- Login box template -->
+					{% include "jsdev/login_box.html" %}
 				</div>
 			</div>
 			
@@ -138,15 +120,6 @@
 		
 		<div class="col-md-10 col-md-offset-1" id="content_wrapper">
 			
-			<!--div id="navigation" class="">
-				<ul class="nav nav-justified">
-					<li><a href="#" class="nav-justified">Top</a></li>
-					<li><a href="#" class="nav-justified">New</a></li>
-					<li><a href="#" class="nav-justified">Add</a></li>
-					<li><a href="#" class="nav-justified">Around Me</a></li>
-					<li><a href="#" class="nav-justified">Favourite</a></li>
-				</ul>
-			</div-->
 			<div id="navigation">
 			<div id='cssmenu'>
 				<ul>
@@ -188,9 +161,6 @@
 	
 	<div class="scroll-to-top"> </div>	
 
-	<!--footer>
-        <p>Walky &copy; Company 2014</p>
-    </footer-->
     <footer>
 	    <div class="container">
 	        <div class="row">
@@ -231,7 +201,8 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src = "{% static "jsdev/js/jquery.js" %}"></script>
+    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script-->
     
 	<!-- Geolocation services -->
 	<script src="{% static "jsdev/js/city_locator.js" %}"></script>
@@ -239,7 +210,7 @@
 
     <script src="{% static "jsdev/js/bootstrap.min.js" %}"></script>
 	<script src="{% static "jsdev/js/fixNavigation.js" %}"></script>
-	<script src = "{% static "jsdev/js/loginelo.js" %}"></script> 
+	 <script src = "{% static "jsdev/js/loginelo.js" %}"></script>
 
 	<!-- Login Script -->
 	<script>
@@ -258,26 +229,15 @@
 		    });
 		 });
 
-		//***************
-	    // User logout popover 
-	    //***************
-		$(".username").popover({
-		    html: true,
-		    trigger: 'click', 
-			content: function() {
-		          return $('#popover_content_wrapper').html();
-		        },
-		    placement: 'bottom'
-		});
+		
 	</script>
 
 	<script>
+	//****************
+	//* Place footer block in the bottom of the page
+	//****************
 	$(document).ready(function() 
 	{
-		console.log($(window).height());
-		console.log($('#mapbox').offset().top);
-		console.log($('footer').height());
-
 		$('#mapbox').css('min-height', $(window).height() - ($('#mapbox').offset().top + $('footer').height() + 20)  );
 		if($('body').find('.container').height() + $('footer').height() < $(window).height() ){
 		    $('footer').css({

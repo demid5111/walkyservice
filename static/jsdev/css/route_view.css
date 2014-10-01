@@ -46,7 +46,10 @@ header{
   display: inline-block;
   /*margin-top: -20px;*/
 }
-
+/*Removes standart bootstrap brder around pressed button*/
+.btn:focus {
+  outline: none;
+}
 .route_info{
   /*transform: translateY(-25%);*/
   position: relative;
@@ -109,12 +112,21 @@ header{
   padding-top: 5px;
   /*display: inline-block;*/
 }
+#login_button{
+  margin-top: 10px;
+}
 .auth_user_container{
-  /*transform: translateY(55%);*/
   position: relative;
-  padding-top: 15px;
+  padding-top: 0px;
   padding-right: 30px;
-  /*display: inline-block;*/
+  color:#fff;
+}
+.auth_user_container .username{
+  color:#fff;
+}
+.auth_user_container .username:hover{
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .route_title{

@@ -12,6 +12,13 @@ body {
 }
 
 @font-face {
+  font-family: 'Lobster';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/Lobster.ttf') format('truetype');
+}
+
+@font-face {
 font-family: 'Myriad Pro Bold Condensed';
 font-style: normal;
 font-weight: 400;
@@ -145,6 +152,7 @@ h2{
 }
 .thumbnail .img_wrapper{
   overflow: hidden;
+  margin: 3px 3px 3px 3px;
 }
 .thumbnail img{
   -webkit-transform: scale(1,1);

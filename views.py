@@ -5,15 +5,16 @@
 
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 import json
 from django.template import loader
 from django.template.loader import render_to_string
 import json
 import sqlite3
-from jsdev.models import RouteInfo, RouteUser, RoutePoints
+from jsdev.models import RouteInfo, RoutePoints, RouteImages, UserLikes
 import random
 from django.core import serializers
 from django.conf import settings
@@ -25,6 +26,7 @@ from django.contrib.auth.forms import UserCreationForm
 from jsdev.forms import MyRegistrationForm
 from collections import OrderedDict
 from django.utils.safestring import mark_safe
+
 
 def routes2dic(routes_list):
   """Function gets list of RouteInfo instances and convert it to the dictionary,
@@ -39,6 +41,9 @@ def routes2dic(routes_list):
     routes_dic[route.route_id]["route_city"] = route.route_city
     routes_dic[route.route_id]["route_length"] = route.route_length
     routes_dic[route.route_id]["route_duration"] = route.route_duration
+    #Load the same map image for all routes in dictionary
+    #routes_dic[route.route_id]["route_image_url"] = RouteImages.objects.get(route_id=54).route_img.url
+    routes_dic[route.route_id]["route_image_url"] = RouteImages.objects.get(route_id=route.route_id).route_img.url
   return routes_dic
 
 def index(request):
@@ -46,44 +51,47 @@ def index(request):
 # if there is no route: creates three default
 # renderers in the django template"""
     routeType = "pedestrian"
-    get_route(request,1)
+    #get_route(request,1)
     # print RouteInfo.objects.all().delete()
     routesList = RouteInfo.objects.filter(route_type=routeType)\
                                     .order_by('-route_date')
     print "list: ",routesList
     if len(routesList) == 0:
-        tmp1 = RouteInfo(route_name="My first {} route".format(routeType),
-                         route_author=1,
-                         route_city="N.N.",
-                         route_type=routeType,
-                         route_length=random.random(),
-                         route_duration=random.random(),
-                         route_likes = 1)
-        tmp1.save()
-        tmp2 = RouteInfo(route_name="My second {} route".format(routeType),
-                         route_author=2,
-                         route_city="N.N.",
-                         route_type=routeType,
-                         route_length=random.random(),
-                         route_duration=random.random(),
-                         route_likes = 2)
-        tmp2.save()
-        tmp3 = RouteInfo(route_name="My third {} route".format(routeType),
-                         route_author=3,
-                         route_city="N.N.",
-                         route_type=routeType,
-                         route_length=random.random(),
-                         route_duration=random.random(),
-                         route_likes = 3)
-        tmp3.save()
+        #Pass empty dictioanary to template
+        routes_dic = OrderedDict()
+        return render(request, 'jsdev/index.html', \
+            {"routes_dic": routes_dic, \
+            "is_auth":request.user.is_authenticated(), \
+            "username":request.user})
+        #Unused template route creation
+        """tmp1 = RouteInfo(route_name="My first {} route".format(routeType),
+                                                 route_author=1,
+                                                 route_city="N.N.",
+                                                 route_type=routeType,
+                                                 route_length=random.random(),
+                                                 route_duration=random.random(),
+                                                 route_likes = 1)
+                                tmp1.save()
+                                tmp2 = RouteInfo(route_name="My second {} route".format(routeType),
+                                                 route_author=2,
+                                                 route_city="N.N.",
+                                                 route_type=routeType,
+                                                 route_length=random.random(),
+                                                 route_duration=random.random(),
+                                                 route_likes = 2)
+                                tmp2.save()
+                                tmp3 = RouteInfo(route_name="My third {} route".format(routeType),
+                                                 route_author=3,
+                                                 route_city="N.N.",
+                                                 route_type=routeType,
+                                                 route_length=random.random(),
+                                                 route_duration=random.random(),
+                                                 route_likes = 3)
+                                tmp3.save()
+                        
+                                routesList = RouteInfo.objects.filter(route_type=routeType)\
+                                                            .order_by('-route_date')"""
 
-        routesList = RouteInfo.objects.filter(route_type=routeType)\
-                                    .order_by('-route_date')
-    # j = 1
-    # for i in routesList:
-    #   i.route_likes = j
-    #   j += 1
-    #   i.save()
     routes_dic = routes2dic(routesList)
     print routes_dic
     return render(request, 'jsdev/index.html', \
@@ -175,6 +183,8 @@ def save_route(request):
     if author == None:
         print "No such author"
         return
+
+    
     route = RouteInfo(route_name=route_dic["route_name"],
                      route_author=author.id,
                      route_city=route_dic["route_city"],
@@ -184,6 +194,12 @@ def save_route(request):
                      route_likes = 0,
                      route_hash = route_dic["encoded_path"])
     route.save()
+
+    #Save route path image to RouteImages table via save()
+    map_image = RouteImages(route_id=route.route_id)
+    #Save to media/map_privew/
+    map_image.save()
+
     print "route: ", route.route_type
     route_points = []
     for point in route_dic["route_points"]:
@@ -235,12 +251,41 @@ def get_route(request, route_id):
 
     dmp = json.dumps(result_dic)
     print dmp
+    has_liked = UserLikes.objects.filter(route_id = route_id, route_author = request.user.id)
+    print has_liked
     return render(request,'jsdev/route_view.html', \
-                            {"result_dic": mark_safe(dmp)})
+                            {"result_dic": mark_safe(dmp), \
+                            "is_auth":request.user.is_authenticated(), \
+                            "username":request.user, \
+                            "has_liked":has_liked})
 
+#Function for like mechanism
+#expects route like: /routes/id/like_view
+#Returns json HttpResponse with success_code(200) or error(-100)
+@csrf_exempt  
+def like_route(request, route_id):
+    route = RouteInfo.objects.get(route_id = route_id)
+    if route is not None:
+        route.route_likes += 1
+        route.save()
+        like_author = UserLikes(route_id = route, route_author = request.user)
+        like_author.save()
+        success_response = json.dumps({"response_code":200, "message":"route is liked"});
+        return HttpResponse(success_response)
+    else:
+        error_response = json.dumps({"response_code":-100, "message":"Error: route is not liked:not found"});
+        return HttpResponse(error_response)
+
+#@login_required(login_url='/login/')
 def addRoutePage(request):
     #return render(request, 'jsdev/addRoute.html', {})
-    return render(request, 'jsdev/add_route.html', {})
+    if request.user.is_authenticated():
+      return render(request, 'jsdev/add_route.html', {"username":request.user})
+    else:
+        #return HttpResponseForbidden()
+        from django.core.exceptions import PermissionDenied
+        raise PermissionDenied()
+        
 #############################################################
 #####Deprecated functionality
 #####Needs to be rewritten if important or to be got rid of in future releases
@@ -272,14 +317,6 @@ def get_points(request):
     points_array["point_2"] = {'lat': '56.325152', 'lon': '44.022191'}
     # return HttpResponse(json.dumps(js_data), mimetype='application/json')
     return render_to_response('jsdev/map_from_db.html', {"obj_as_json": simplejson.dumps(points_array)})
-
-
-def addRoutePage(request):
-    #return render(request, 'jsdev/addRoute.html', {})
-    return render(request, 'jsdev/add_route.html', {})
-
-
-
 
 
 

@@ -1,5 +1,6 @@
 from django.db import models
 from PIL import Image
+from django.contrib.auth.models import User
 # Create your models here.
 class RouteInfo(models.Model):
 	route_id = models.AutoField(primary_key=True,blank=False)
@@ -31,28 +32,55 @@ class RoutePoints(models.Model):
 class RouteImages(models.Model):
 	image_id = models.AutoField(primary_key=True,blank=False)
 	route_id = models.IntegerField(blank=False)
-	image_name = models.CharField(max_length=45,blank=False)
-	image_path = models.CharField(max_length=200,blank=False)
+	#image_name = models.CharField(max_length=45,blank=False)
+	#image_path = models.CharField(max_length=200,blank=False)
+	route_img = models.ImageField(upload_to="map_preview/",blank=True, null=True)
 	#image_entity = models.ImageField(upload_to='.')
 
-	def __unicode__(self):
-		return self.route_id
-
-class RouteComments(models.Model):
-	comment_id = models.AutoField(primary_key=True,blank=False)
-	route_id = models.IntegerField(blank=False)
-	user_id = models.IntegerField(blank=False)
-	comment_name = models.CharField(max_length=45,blank=False)
-	comment_text = models.TextField(blank=False)
-
-	def __unicode__(self):
-		return self.comment_name
-
-class RouteUser(models.Model):
-	user_id = models.AutoField(primary_key=True,blank=False)
-	user_name = models.CharField(max_length=45,blank=False)
-	user_password = models.CharField(max_length=45,blank=False)
-	user_email = models.EmailField(blank=False)
+	def save(self, *args, **kwargs):
+		if self.route_id:
+			import urllib, os
+			from jsdev.models import RouteInfo 
+			image_url_base = "http://maps.googleapis.com/maps/api/staticmap?size=400x200&path=weight:5|color:blue|enc:"
+			file_save_dir = "media/map_preview/"
+			route = RouteInfo.objects.get(route_id=self.route_id)
+			filename = str(route.route_id)+".jpg"
+			image_url=image_url_base + str(route.route_hash)
+			print image_url
+			f = open(os.path.join(file_save_dir, filename), 'wb')
+			f.write( urllib.urlopen(image_url).read() )
+			f.close();
+			print "written"
+			self.route_img = os.path.join(file_save_dir, filename)
+		super(RouteImages, self).save()
 
 	def __unicode__(self):
-		return self.user_name
+		return str(self.route_id)
+
+
+class UserLikes(models.Model):
+	id = models.AutoField(primary_key=True,blank=False)
+	route_id = models.ForeignKey('RouteInfo', db_column='route_id')
+	route_author = models.ForeignKey(User, db_column='route_author')
+
+	def __unicode__(self):
+		return str(self.route_id)
+
+#class RouteComments(models.Model):
+#	comment_id = models.AutoField(primary_key=True,blank=False)
+#	route_id = models.IntegerField(blank=False)
+#	user_id = models.IntegerField(blank=False)
+#	comment_name = models.CharField(max_length=45,blank=False)
+#	comment_text = models.TextField(blank=False)
+#
+#	def __unicode__(self):
+#		return self.comment_name
+#
+#class RouteUser(models.Model):
+#	user_id = models.AutoField(primary_key=True,blank=False)
+#	user_name = models.CharField(max_length=45,blank=False)
+#	user_password = models.CharField(max_length=45,blank=False)
+#	user_email = models.EmailField(blank=False)
+#
+#	def __unicode__(self):
+#		return self.user_name

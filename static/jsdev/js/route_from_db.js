@@ -21,7 +21,7 @@
 		var start, end;
 
 		//var route_json = JSON.parse(json_obj);
-		alert("Got " + Object.keys(json_obj['route_points']).length + " points");
+		//alert("Got " + Object.keys(json_obj['route_points']).length + " points");
 		if (Object.keys(json_obj['route_points']).length==0) return;
 
 		var route_points = json_obj['route_points'];

@@ -1,5 +1,24 @@
-$(document).ready(function() { 
+$(document).ready(function() {
 
+
+	//***************
+    // User logout popover 
+    //***************
+	$(".username").popover({
+	    html: true,
+	    trigger: 'click', 
+		content: function() {
+	          return $('#popover_content_wrapper').html();
+	        },
+	    placement: 'bottom'
+	}); 
+
+	$('#popover_content_wrapper').find('a').attr('href', ""+window.location.href+"/logout/");
+	//***************
+	//* Log In button handler
+	//* Send POST request
+	//* Change content on page depending on response
+	//***************
 	$('#login_form').submit(function() {
 		var username = document.getElementById('username').value;
 		var password = document.getElementById('password').value;

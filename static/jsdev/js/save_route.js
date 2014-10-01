@@ -1,3 +1,6 @@
+//URL to get Static Map Image
+var imageURL = "http://maps.googleapis.com/maps/api/staticmap?size=400x400&path=weight:5|color:blue|enc:";
+
 jQuery(document).ready(function() {
 	$("#save_route_button").click(function () {
 
@@ -45,6 +48,8 @@ jQuery(document).ready(function() {
 			data: {"routes_dic":JSON.stringify(saving_route),},
 			success : function(data) {
 				alert("Route Saved");
+				//Send Route Preview Image
+				sendMapPreview(imageURL+encoded_route, "/jsdev/save_route/")
 				// REDIRECTION 
 				window.location.href = '/jsdev/';
 			},
@@ -58,3 +63,34 @@ jQuery(document).ready(function() {
 
 	});
 });
+
+
+function sendMapPreview(imageURL, serverURL){
+  var xhr = new XMLHttpRequest();
+  xhr.open( "GET", imageURL, true );
+  xhr.responseType = "arraybuffer";
+  xhr.onload = function( e ) {
+    // Obtain a blob: URL for the image data.
+    var arrayBufferView = new Uint8Array( this.response );
+    var blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );
+    console.log(blob);
+
+    var fd = new FormData();
+    fd.append('fname', 'map_preview.jpeg');
+    fd.append('data', blob);
+    
+    $.ajax({
+      type: 'UPDATE',
+      url: serverURL,
+      data: fd,
+      processData: false,
+      contentType: false
+    }).done(function(data) {
+           console.log(data);
+    });
+
+  };
+
+  xhr.send();    
+
+};
