@@ -38,10 +38,20 @@ h2{
     margin-top: -20px;
 }
 
-/*.row img{
-  width: 80%;
-  height: auto;
-}*/
+/* Styles for city box list */
+#city_list li{
+  width:50%;
+}
+#city_list li a{
+  color: #000;
+  cursor: pointer;
+  font-size: 16px;
+}
+#city_list li a:hover{
+  text-decoration: underline;
+}
+/* END Styles for city box list */
+
 /* Styles for route type menu */
 .type_pedestrian, .type_bicycle, .type_car{
   background: url(../images/leftPanel_2.png) no-repeat;

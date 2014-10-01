@@ -1,6 +1,8 @@
 from django.db import models
 from PIL import Image
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
+
 # Create your models here.
 class RouteInfo(models.Model):
 	route_id = models.AutoField(primary_key=True,blank=False)
@@ -12,7 +14,6 @@ class RouteInfo(models.Model):
 	route_length = models.FloatField(blank=False)
 	route_duration = models.FloatField(blank=False)
 	route_type = models.CharField(default="pedestrian",blank="False",max_length=45)
-	route_date = models.DateTimeField(auto_now_add=True, blank=True)
 	route_hash = models.CharField(max_length=1000,blank=False)
 	def __unicode__(self):
 		return "<RouteInfo name:{}>".format(self.route_name) 
@@ -71,6 +72,11 @@ class UserLikes(models.Model):
 #	route_id = models.IntegerField(blank=False)
 #	user_id = models.IntegerField(blank=False)
 #	comment_name = models.CharField(max_length=45,blank=False)
+class Cities(models.Model):
+	city_id = models.AutoField(primary_key=True,blank=False)
+	city_name = models.CharField(max_length=45,blank=False)
+	city_lattitude = models.FloatField(blank=False)
+	city_longitude = models.FloatField(blank=False)
 #	comment_text = models.TextField(blank=False)
 #
 #	def __unicode__(self):

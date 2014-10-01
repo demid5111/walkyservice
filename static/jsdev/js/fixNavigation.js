@@ -69,8 +69,6 @@ jQuery(document).ready(function() {
 });
 
 //****  ROUTE TYPE ANIMATION
-var route_type = "pedestrian"
-var category = "top"
 var selectType = function (event) {
     
     event.preventDefault(); 
@@ -91,48 +89,38 @@ var selectType = function (event) {
         $(this).addClass("selected");
     }  
     var classList = this.className.split(' ')
-    
+    var type = "pedestrian"
     if (classList.indexOf("type_pedestrian") > -1  ){
         // alert("pedestrian call")
-        route_type = "pedestrian"
+        type = "pedestrian"
     }
     else if (classList.indexOf("type_bicycle") > -1  ){
         // alert("bicycle")
-        route_type = "bicycle"
+        type = "bicycle"
     }
     else if (classList.indexOf("type_car") > -1  ){
         // alert("car")
-        route_type = "car"
+        type = "car"
     }
     //alert ("get route type: " + route_type)
     $.ajax({
-      route_type: "get",
-      url: route_type,
-      data: {"route_type":route_type,'category_type':category},
-      success : function(data){
+      type: "get",
+      url: type
+      success : function(data, status, xhr){
                $('#thumbnail_wrapper').html(data);
              }
     })
 
 }
 
+$(document).on('click', '.type_btn', selectType);
+// $(document).on('click', 'cssmenu', selectType);
 
-//function gets the type of category chosen and sends "GET"
-//request to the server
-function selectCategory (category) {
-    alert("Category chosen! " + category + ' in ' + route_type);
-    
-    $.ajax({
-      type: "get",
-      url: category,
-      data: {"route_type":route_type,'category_type':category},
-      success : function(data){
                $('#thumbnail_wrapper').html(data);
                alert("Render!")
-             }
-    })
-}
 
+    alert("Category chosen!")
+    // $selected_types = $('#category_menu').find('.selected');
 
 
 
