@@ -32,6 +32,7 @@ urlpatterns = patterns('',
     # url(r'^map_from_db/$', 'jsdev.views.get_points'),
     url(r'^routes/(?P<route_id>\d+)/?$',views.get_route, name='get_route'),
     url(r'^city_info',views.city_info, name='city_info'),
+    url(r'^(pedestrian|car|bicycle|new|top|around|favourite)',views.getRoutes, name='getRoutes'),
     #URL to handle LIKE requests
     url(r'^routes/(?P<route_id>\d+)/like_view/$',views.like_route, name='like_route'),
 )

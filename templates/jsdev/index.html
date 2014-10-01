@@ -28,18 +28,10 @@
 	<link rel='stylesheet' type='text/css' href="{% static 'jsdev/css/nav_style.css' %}" />
 
 
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
 
   <body>
-  <h1><a href="{% url "socialauth_begin" "facebook" %}">Login</a></h1>
+  
   
 
   	<!-- route type -->
@@ -58,6 +50,31 @@
 
   	<!-- Login form -->
   	<!-- Modal -->
+	<div class="modal fade" id="cityModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			<label for="City_choose">Choose your city</label>
+			<input type="text" class="form-control"   placeholder="Enter your city" onkeyup="filter(this)">
+		<div class="modal-body">
+		
+		<div style="display:none" id="login-alert" class="alert alert-danger col-sm-12">
+		</div>
+		
+		<ul id = "city_list">
+		</ul>
+		</div>
+		<div class="modal-footer">
+		<div class="register_label">
+
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+	</div>
+  	<!-- Modal -->
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
@@ -73,17 +90,10 @@
   	<!-- End of Login form -->
   	<!-- City box -->
 
-<!-- Modal -->
-<div class="modal fade" id="cityModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 
 				    <div class="form-group">
 				      <label for="user">User</label>
-<label for="City_choose">Choose your city</label>
-<input type="text" class="form-control"   placeholder="Enter your city" onkeyup="filter(this)">
+
 				      <input type="text" class="form-control" name = "username" id="username" placeholder="User">
 				      <label for="password">Password</label>
 				      <input type="password" class="form-control" name = "password" id="password" placeholder="Password">
@@ -104,19 +114,8 @@
 	      </div>
 	    </div>
 	  </div>
-<div class="modal-body">
-<div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
-	<ul id = "city_list">
-	</ul>
-</div>
-<div class="modal-footer">
-<div class="register_label">
+	</div>
 
-</div>
-</div>
-</div>
-</div>
-</div>
 
     <div class="container">
 		<header> 
@@ -169,7 +168,7 @@
 		<div class="route_list" id="mapbox">
 
 			<div class="row" id="thumbnail_wrapper">
-
+				
 				{% block routes %}{% load staticfiles %}{% include "jsdev/index_routes_ext.html" %}{% endblock%}
 
 			</div>
@@ -230,21 +229,17 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script> var json_obj = {{ obj_as_json|safe }}; </script>
+    <script> var json_obj = {{ cities_json|safe }};  console.log(json_obj);</script>
     <script src="{% static "jsdev/js/jquery.js" %}"></script>
     <script src="{% static "jsdev/js/city_info_from_db.js" %}"> </script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script src = "{% static "jsdev/js/jquery.js" %}"></script>
-    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script-->
-   
-    
 	<!-- Geolocation services -->
 	<script src="{% static "jsdev/js/city_locator.js" %}"></script>
-	<!--script src="http://j.maxmind.com/app/geoip.js"></script>< For our fallback -->
 
     <script src="{% static "jsdev/js/bootstrap.min.js" %}"></script>
 	<script src="{% static "jsdev/js/fixNavigation.js" %}"></script>
-	 <script src = "{% static "jsdev/js/loginelo.js" %}"></script>
+	<script src = "{% static "jsdev/js/loginelo.js" %}"></script>
 	<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
 	<script type="text/javascript">stLight.options({publisher: "f0e2e300-ba28-4b2f-84ea-ec51d13e85f8", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
 	
