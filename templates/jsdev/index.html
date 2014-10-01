@@ -40,6 +40,7 @@
   </head>
 
   <body>
+  <h1><a href="{% url "socialauth_begin" "facebook" %}">Login</a></h1>
   
   	<div style="display:none">
     	<input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}"/>
@@ -78,7 +79,7 @@
 </div>
 <div class="modal-body">
 <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
-	<ul id = "list">
+	<ul id = "city_list">
 
 	</ul>
 </div>
@@ -185,7 +186,9 @@
 	            </div>
 	            <div class="col-md-3 social">
 	            	<h3>Social networks</h3>
-	            	<img src="{% static "jsdev/images/social.png" %}" />
+	            	<span class='st_facebook_large' displayText='Facebook'></span>
+					<span class='st_twitter_large' displayText='Tweet'></span>
+					<span class='st_vkontakte_large' displayText='Vkontakte'></span>
 	            </div>
 	            <div class="col-md-3 copyright">
 	            	<p>
@@ -217,6 +220,8 @@
 
     <script src="{% static "jsdev/js/bootstrap.min.js" %}"></script>
 	<script src="{% static "jsdev/js/fixNavigation.js" %}"></script>
+	<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+	<script type="text/javascript">stLight.options({publisher: "f0e2e300-ba28-4b2f-84ea-ec51d13e85f8", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
 	
 	
 	<!-- Login Script -->
